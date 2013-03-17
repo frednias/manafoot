@@ -1,0 +1,11 @@
+manafoot_home_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: ManafootHomeBundle:Default:index }
+
+_index:
+    pattern: /contact/
+    defaults: { _controller: ManafootHomeBundle:Contact:Index }
+
+_submit:
+    pattern: /contact/submit
+    defaults: { _controller: ManafootHomeBundle:Contact:Submit }

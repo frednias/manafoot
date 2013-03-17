@@ -1,0 +1,5 @@
+manafoot_home:
+    resource: "@ManafootHomeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+

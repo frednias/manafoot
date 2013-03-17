@@ -1,0 +1,7 @@
+parameters:
+#    manafoot_home.example.class: Manafoot\HomeBundle\Example
+
+services:
+#    manafoot_home.example:
+#        class: %manafoot_home.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
