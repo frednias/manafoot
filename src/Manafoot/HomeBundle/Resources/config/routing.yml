@@ -9,3 +9,7 @@ _index:
 _submit:
     pattern: /contact/submit
     defaults: { _controller: ManafootHomeBundle:Contact:Submit }
+
+_index:
+    pattern: /
+    defaults: { _controller: ManafootHomeBundle:Home:Index }
