@@ -13,3 +13,19 @@ _submit:
 _index:
     pattern: /
     defaults: { _controller: ManafootHomeBundle:Home:Index }
+
+_login:
+    pattern: /login
+    defaults: { _controller: ManafootHomeBundle:Login:Login }
+
+_logout:
+    pattern: /logout
+    defaults: { _controller: ManafootHomeBundle:Login:Logout }
+
+_login_new_user:
+    pattern: /login/new
+    defaults: { _controller: ManafootHomeBundle:Login:LoginNewUser }
+
+_password_lost:
+    pattern: /login/passwordlost
+    defaults: { _controller: ManafootHomeBundle:Login:PasswordLost }
