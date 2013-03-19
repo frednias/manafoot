@@ -1,0 +1,7 @@
+manafoot_game_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: ManafootGameBundle:Default:index }
+
+_new_game:
+    pattern: /game/new
+    defaults: { _controller: ManafootGameBundle:NewGame:NewGame }

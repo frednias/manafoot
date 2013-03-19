@@ -1,0 +1,7 @@
+parameters:
+#    manafoot_game.example.class: Manafoot\GameBundle\Example
+
+services:
+#    manafoot_game.example:
+#        class: %manafoot_game.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
