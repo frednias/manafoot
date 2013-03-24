@@ -9,7 +9,6 @@ class Calendar {
 
 	public function __construct () {
 		$this->startDate = new \DateTime('2013-07-15');
-		// TODO : compute ELO ranking for first date
 	}
 }
 

@@ -13,6 +13,8 @@ class NewGameController extends Controller
 	$calendar = new Calendar;
 	$startDate = $calendar->startDate->format('c');
 
+	// TODO : compute ELO ranking for first date
+
         return $this->render('ManafootGameBundle:NewGame:NewGame.html.twig', array('startDate' => $startDate));
     }
 
