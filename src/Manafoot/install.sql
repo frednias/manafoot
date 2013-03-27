@@ -526,3 +526,74 @@ INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1060);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1060);
 INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Belgique de football',1060);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (60,512);
+
+INSERT INTO cou_country (cou_name) VALUES ('Biélorussie'); -- 61
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1061,'Fédération biélorusse de football',61);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1061);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1061);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Biélorussie de football',1061);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (61,634);
+
+INSERT INTO cou_country (cou_name) VALUES ('Bosnie-Herzégovine'); -- 62
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1062,'Fédération de football de Bosnie-Herzégovine',62);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1062);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1062);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Bosnie-Herzégovine de football',1062);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (62,534);
+
+INSERT INTO cou_country (cou_name) VALUES ('Bulgarie'); -- 63
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1063,'Fédération de Bulgarie de football',63);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1063);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1063);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Bulgarie de football',1063);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (63,557);
+
+INSERT INTO cou_country (cou_name) VALUES ('Chypre'); -- 64
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1064,'Fédération chypriote de football',64);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1064);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1064);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Chypre de football',1064);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (64,376);
+
+INSERT INTO cou_country (cou_name) VALUES ('Croatie'); -- 65
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1065,'Fédération croate de football',65);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1065);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1065);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Croatie de football',1065);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (65,1071);
+
+INSERT INTO cou_country (cou_name) VALUES ('Danemark'); -- 66
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1066,'Fédération danoise de football',66);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1066);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1066);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Danemark de football',1066);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (66,788);
+
+INSERT INTO cou_country (cou_name) VALUES ('Écosse'); -- 67
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1067,'Fédération écossaise de football',67);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1067);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1067);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Écosse de football',1067);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (67,551);
+
+INSERT INTO cou_country (cou_name) VALUES ('Estonie'); -- 68
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1068,'Fédération estonienne de football',68);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1068);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1068);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Estonie de football',1068);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (68,407);
+
+INSERT INTO cou_country (cou_name) VALUES ('îles Féroé'); -- 69
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1069,'Fédération des îles Féroé de football',69);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1069);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1069);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des îles Féroé de football',1069);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (69,171);
+
+INSERT INTO cou_country (cou_name) VALUES ('Finlande'); -- 70
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1070,'Association finlandaise de football',70);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1070);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1070);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Finlande de football',1070);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (70,427);
+
