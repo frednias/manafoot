@@ -597,3 +597,95 @@ INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1070);
 INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Finlande de football',1070);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (70,427);
 
+INSERT INTO cou_country (cou_name) VALUES ('France'); -- 71
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1071,'Fédération française de football',71);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1071);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1071);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de France de football',1071);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (71,913);
+
+INSERT INTO cou_country (cou_name) VALUES ('Géorgie'); -- 72
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1072,'Fédération de Géorgie de football',72);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1072);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1072);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Géorgie de football',1072);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (72,469);
+
+INSERT INTO cou_country (cou_name) VALUES ('Grèce'); -- 73
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1073,'Fédération hellénique de football',73);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1073);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1073);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Grèce de football',1073);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (73,1038);
+
+INSERT INTO cou_country (cou_name) VALUES ('Hongrie'); -- 74
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1074,'Fédération hongroise de football',74);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1074);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1074);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Hongrie de football',1074);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (74,654);
+
+INSERT INTO cou_country (cou_name) VALUES ('Irlande'); -- 75
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1075,'Fédération d''Irlande de football',75);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1075);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1075);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de République d''Irlande de football',1075);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (75,699);
+
+INSERT INTO cou_country (cou_name) VALUES ('Irlande Du Nord'); -- 76
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1076,'Association irlandaise de football',76);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1076);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1076);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Irlande du Nord de football',1076);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (76,605);
+
+INSERT INTO cou_country (cou_name) VALUES ('Islande'); -- 77
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1077,'Fédération d''Islande de football',77);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1077);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1077);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Islande de football',1077);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (77,256);
+
+INSERT INTO cou_country (cou_name) VALUES ('Israël'); -- 78
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1078,'Fédération d''Israël de football',78);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1078);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1078);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Israël de football',1078);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (78,532);
+
+INSERT INTO cou_country (cou_name) VALUES ('Italie'); -- 79
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1079,'Fédération italienne de football',79);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1079);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1079);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Italie de football',1079);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (79,957);
+
+INSERT INTO cou_country (cou_name) VALUES ('Kazakhstan'); -- 80
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1080,'Fédération du Kazakhstan de football',80);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1080);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1080);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Kazakhstan de football',1080);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (80,178);
+
+INSERT INTO cou_country (cou_name) VALUES ('Lettonie'); -- 81
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1081,'Fédération de Lettonie de football',81);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1081);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1081);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Lettonie de football',1081);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (81,448);
+
+INSERT INTO cou_country (cou_name) VALUES ('Liechtenstein'); -- 82
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1082,'Fédération du Liechtenstein de football',82);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1082);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1082);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipu de Liechtenstein de football',1082);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (82,134);
+
+INSERT INTO cou_country (cou_name) VALUES ('Lituanie'); -- 83
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1083,'Fédération de Lituanie de football',83);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1083);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (11,1083);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipu de Lituanie de football',1083);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (83,541);
+
+
