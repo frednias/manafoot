@@ -879,3 +879,20 @@ INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1109);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (105,1109);
 INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Cap-Vert de football',1109);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (109,464);
+
+INSERT INTO cou_country (cou_name) VALUES ('Gambie'); -- 110
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1110,'Fédération de Gambie de football',110);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1110);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1110);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (105,1110);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Gambie de football',1110);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (110,464);
+
+
+
+
+
+
+
+
+
