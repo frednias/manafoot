@@ -886,9 +886,23 @@ INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1110);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1110);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (105,1110);
 INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Gambie de football',1110);
-INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (110,464);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (110,297);
 
+INSERT INTO cou_country (cou_name) VALUES ('Guinée'); -- 111
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1111,'Fédération guinéenne de football',111);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1111);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1111);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (105,1111);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Guinée de football',1111);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (111,569);
 
+INSERT INTO cou_country (cou_name) VALUES ('Guinée-Bissau'); -- 112
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1112,'Fédération de Guinée-Bissau de football',112);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1112);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1112);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (105,1112);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Guinée-Bissau de football',1112);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (112,168);
 
 
 
