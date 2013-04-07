@@ -79,6 +79,12 @@ INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (104,'Union nord
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,104);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (105,'Union des fédérations ouest-africaines de football',NULL);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,105);
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (106,'Union des fédérations de football d''Afrique centrale',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,106);
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (107,'Council for East and Central Africa Football Association',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,107);
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (108,'Council of Southern Africa Football Associations',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,108);
 
 
 INSERT INTO cou_country (cou_name) VALUES ('Espagne'); -- 1
@@ -1004,7 +1010,7 @@ INSERT INTO cou_country (cou_name) VALUES ('Cameroun'); -- 125
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1125,'Fédération camerounaise de football',125);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1125);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1125);
-INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (105,1125);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1125);
 INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Cameroun de football',1125);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (125,580);
 
@@ -1012,8 +1018,267 @@ INSERT INTO cou_country (cou_name) VALUES ('République centrafricaine'); -- 126
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1126,'Fédération centrafricaine de football',126);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1126);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1126);
-INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (105,1126);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1126);
 INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de République centrafricaine de football',1126);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (126,263);
 
+INSERT INTO cou_country (cou_name) VALUES ('Congo'); -- 127
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1127,'Fédération congolaise de football',127);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1127);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1127);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1127);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Congo de football',1127);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (127,240);
+
+INSERT INTO cou_country (cou_name) VALUES ('RD Congo'); -- 128
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1128,'Fédération congolaise de football association',128);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1128);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1128);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1128);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de République démocratique du Congo de football',1128);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (128,232);
+
+INSERT INTO cou_country (cou_name) VALUES ('Gabon'); -- 129
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1129,'Fédération gabonaise de football',129);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1129);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1129);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1129);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Gabon de football',1129);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (129,526);
+
+INSERT INTO cou_country (cou_name) VALUES ('Guinée équatoriale'); -- 130
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1130,'Fédération de Guinée équatoriale de football',130);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1130);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1130);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1130);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Guinée équatoriale de football',1130);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (130,113);
+
+INSERT INTO cou_country (cou_name) VALUES ('Sao Tomé-et-Principe'); -- 131
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1131,'Fédération de Sao Tomé-et-Principe de football',131);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1131);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1131);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1131);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Sao Tomé-et-Principe de football',1131);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (131,0);
+
+INSERT INTO cou_country (cou_name) VALUES ('Tchad'); -- 132
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1132,'Fédération tchadienne de football',132);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1132);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1132);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (106,1132);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Tchad de football',1132);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (132,135);
+
+INSERT INTO cou_country (cou_name) VALUES ('Burundi'); -- 133
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1133,'Fédération de football du Burundi',133);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1133);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1133);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1133);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Burundi de football',1133);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (133,133);
+
+INSERT INTO cou_country (cou_name) VALUES ('Djibouti'); -- 134
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1134,'Fédération djiboutienne de football',134);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1134);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1134);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1134);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Djibouti de football',1134);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (134,15);
+
+INSERT INTO cou_country (cou_name) VALUES ('Érythrée'); -- 135
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1135,'Fédération d''Érythrée de football',135);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1135);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1135);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1135);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Érythrée de football',1135);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (135,40);
+
+INSERT INTO cou_country (cou_name) VALUES ('Éthiopie'); -- 136
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1136,'Fédération d''Éthiopie de football',136);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1136);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1136);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1136);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Éthiopie de football',1136);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (136,231);
+
+INSERT INTO cou_country (cou_name) VALUES ('Kenya'); -- 137
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1137,'Fédération du Kenya de football',137);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1137);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1137);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1137);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Kenya de football',1137);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (137,202);
+
+INSERT INTO cou_country (cou_name) VALUES ('Ouganda'); -- 138
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1138,'Fédération d''Ouganda de football',138);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1138);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1138);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1138);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Ouganda de football',1138);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (138,385);
+
+INSERT INTO cou_country (cou_name) VALUES ('Rwanda'); -- 139
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1139,'Fédération rwandaise de football amateur',139);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1139);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1139);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1139);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Rwanda de football',1139);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (139,175);
+
+INSERT INTO cou_country (cou_name) VALUES ('Somalie'); -- 140
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1140,'Fédération de Somalie de football',140);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1140);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1140);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1140);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Somalie de football',1140);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (140,23);
+
+INSERT INTO cou_country (cou_name) VALUES ('Soudan'); -- 141
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1141,'Fédération du Soudan de football',141);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1141);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1141);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1141);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Soudan de football',1141);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (141,298);
+
+INSERT INTO cou_country (cou_name) VALUES ('Soudan du Sud'); -- 142
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1142,'Fédération de football du Soudan du Sud',142);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1142);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1142);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1142);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Soudan du Sud de football',1142);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (142,0);
+
+INSERT INTO cou_country (cou_name) VALUES ('Tanzanie'); -- 143
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1143,'Fédération de Tanzanie de football',143);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1143);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1143);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1143);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Tanzanie de football',1143);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (143,235);
+
+INSERT INTO cou_country (cou_name) VALUES ('Zanzibar'); -- 144
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1144,'Fédération de Zanzibar de football',144);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1144);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (107,1144);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Zanzibar de football',1144);
+
+INSERT INTO cou_country (cou_name) VALUES ('Afrique du Sud'); -- 145
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1145,'Fédération sud-africaine de football',145);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1145);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1145);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1145);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Afrique du Sud de football',1145);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (145,566);
+
+INSERT INTO cou_country (cou_name) VALUES ('Angola'); -- 146
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1146,'Fédération d''Angola de football',146);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1146);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1146);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1146);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Angola de football',1146);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (146,299);
+
+INSERT INTO cou_country (cou_name) VALUES ('Botswana'); -- 147
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1147,'Fédération du Botswana de football',147);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1147);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1147);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1147);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Botswana de football',1147);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (147,487);
+
+INSERT INTO cou_country (cou_name) VALUES ('Comores'); -- 148
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1148,'Fédération comorienne de football',148);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1148);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1148);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1148);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Comores de football',1148);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (148,19);
+
+INSERT INTO cou_country (cou_name) VALUES ('Lesotho'); -- 149
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1149,'Fédération du Lesotho de football',149);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1149);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1149);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1149);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Lesotho de football',1149);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (149,62);
+
+INSERT INTO cou_country (cou_name) VALUES ('Madagascar'); -- 150
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1150,'Fédération malgache de football',150);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1150);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1150);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1150);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Madagascar de football',1150);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (150,91);
+
+INSERT INTO cou_country (cou_name) VALUES ('Malawi'); -- 151
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1151,'Fédération du Malawi de football',151);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1151);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1151);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1151);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Malawi de football',1151);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (151,381);
+
+INSERT INTO cou_country (cou_name) VALUES ('Maurice'); -- 152
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1152,'Fédération de Maurice de football',152);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1152);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1152);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1152);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Maurice de football',1152);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (152,16);
+
+INSERT INTO cou_country (cou_name) VALUES ('Mozambique'); -- 153
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1153,'Fédération du Mozambique de football',153);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1153);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1153);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1153);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Mozambique de football',1153);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (153,368);
+
+INSERT INTO cou_country (cou_name) VALUES ('Namibie'); -- 154
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1154,'Fédération de Namibie de football',154);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1154);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1154);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1154);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Namibie de football',1154);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (154,139);
+
+INSERT INTO cou_country (cou_name) VALUES ('Seychelles'); -- 155
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1155,'Fédération des Seychelles de football',155);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1155);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1155);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1155);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Seychelles de football',1155);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (155,10);
+
+INSERT INTO cou_country (cou_name) VALUES ('Swaziland'); -- 156
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1156,'Fédération du Swaziland de football',156);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1156);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1156);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1156);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Swaziland de football',1156);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (156,86);
+
+INSERT INTO cou_country (cou_name) VALUES ('Zambie'); -- 157
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1157,'Fédération de Zambie de football',157);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1157);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1157);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1157);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Zambie de football',1157);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (157,333);
+
+INSERT INTO cou_country (cou_name) VALUES ('Zimbabwe'); -- 158
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1158,'Fédération du Zimbabwe de football',158);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1158);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1158);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1158);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Zimbabwe de football',1158);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (158,214);
+
+INSERT INTO cou_country (cou_name) VALUES ('Réunion'); -- 159
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1159,'Ligue réunionnaise de football',159);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1159);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1159);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de La Réunion de football',1159);
 
