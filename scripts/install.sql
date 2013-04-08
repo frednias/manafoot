@@ -1282,3 +1282,24 @@ INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (12,1159);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (108,1159);
 INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de La Réunion de football',1159);
 
+INSERT INTO cou_country (cou_name) VALUES ('Afghanistan'); -- 160
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1160,'Fédération d''Afghanistan de football',160);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1160);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (13,1160);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Afghanistan de football',1160);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (160,190);
+
+INSERT INTO cou_country (cou_name) VALUES ('Arabie saoudite'); -- 161
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1161,'Fédération d''Arabie saoudite de football',161);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1161);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (13,1161);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Arabie saoudite de football',1161);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (161,327);
+
+INSERT INTO cou_country (cou_name) VALUES ('Australie'); -- 162
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1162,'Fédération d''Australie de football',162);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,1162);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (13,1162);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe d''Australie de football',1162);
+INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (162,634);
+
