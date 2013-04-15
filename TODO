@@ -1,0 +1,28 @@
+event
+	name
+	callback
+	params
+
+competition
+	owner
+	organizer
+	name
+	parent
+
+match
+	equipe 1
+	equipe 2
+	compet
+	step
+
+planning
+	compet
+	date step X
+
+step
+	compet
+	champ/cup
+	aller/retour
+	in
+	out
+	params

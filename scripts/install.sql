@@ -33,12 +33,18 @@ CREATE TABLE tea_team (
 DROP SCHEMA init CASCADE;
 CREATE SCHEMA init;
 
-CREATE TABLE init.hst_history (
-	hst_id SERIAL,
-	hst_date DATE,
-	hst_descr TEXT
+DROP TYPE E_VISIBILITY;
+CREATE TYPE E_VISIBILITY AS ENUM ('background', 'foreground');
+CREATE TABLE init.evt_event (
+	evt_id SERIAL,
+	evt_date DATE,
+	evt_descr TEXT,
+	evt_ass_id INTEGER,
+	evt_function TEXT,
+	evt_params TEXT,
+	evt_visibility E_VISIBILITY
 );
--- "hst_history_hst_id_seq"
+-- "evt_event_evt_id_seq"
 
 CREATE TABLE init.elo_elo (
 	elo_tea_id INTEGER,
@@ -48,17 +54,9 @@ CREATE TABLE init.elo_elo (
 
 -- DATA
 
-INSERT INTO
-	init.hst_history
-(
-	hst_date,
-	hst_descr
-)
-VALUES (
-	'2011-03-09',
-	'Classement mondial FIFA - Mars 2011'
-);
-
+INSERT INTO init.evt_event ( evt_date, evt_descr, evt_ass_id, evt_function, evt_visibility) VALUES ( '2011-03-09', 'Classement mondial FIFA - Mars 2011', 1, 'Fifa.Elo.pub', 'foreground');
+INSERT INTO init.evt_event ( evt_date, evt_descr, evt_function, evt_visibility) VALUES ( '2011-03-10', 'Preparation des Éliminatoires de la coupe du monde de football 2014', 'Fifa.Cdm.start', 'background');
+-- INSERT INTO init.evt_event ( evt_date, evt_descr) VALUES ( '2011-03-10', 'Tirage au sort Éliminatoires de la coupe du monde de football 2014 : zone Amérique du Nord, Centrale et Caraïbes', 16, 'Concacaf.cdm');
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1,'FIFA',NULL);
 
