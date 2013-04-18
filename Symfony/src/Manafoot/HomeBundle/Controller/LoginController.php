@@ -15,7 +15,7 @@ class LoginController extends Controller
     }
     public function LoginAction()
     {
-        if ($_POST['email']=='dev' && $_POST['password']=='dev') {
+        if (isset($_POST['email']) && $_POST['email']=='dev' && $_POST['password']=='dev') {
             $this->session->set('email','dev');
 	    return $this->render('ManafootHomeBundle:Login:Dashboard.html.twig', array('name' => 'fred'));
         }
