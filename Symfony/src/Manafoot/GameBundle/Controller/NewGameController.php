@@ -24,11 +24,12 @@ class NewGameController extends Controller
 	$gameName = $g->getName();
 	$this->session->set('gameName', $gameName);
 
-	$startDate = $g->getFirstDate();
-	$this->session->set('current_date', $startDate);
+	//$startDate = $g->getFirstDate();
+	//$this->session->set('current_date', $startDate);
 
 	// redirect to continue
 	
+        return $this->redirect("/resume/$gameName");
         return $this->render('ManafootGameBundle:NewGame:NewGame.html.twig', array(
 		'startDate' => $startDate,
 		'gameName' => $gameName
