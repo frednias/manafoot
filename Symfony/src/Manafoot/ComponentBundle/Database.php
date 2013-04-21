@@ -13,6 +13,12 @@ class Database {
         }
     }
 
+    public function select($sql) {
+	$res = pg_query($sql);
+        $ret = pg_fetch_object($res);
+	return $ret;
+    }
+
     public function schemaExists($name) {
         $sql = "select * from pg_namespace where nspname='$name'";
         $res = pg_query($sql);

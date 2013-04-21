@@ -51,6 +51,9 @@ class Game extends Entity {
          return 'g_';
     }
 
+    public function setResumeDate($date) {
+        $this->params['gam_resume_date'] = $date;
+    }
 }
 
 

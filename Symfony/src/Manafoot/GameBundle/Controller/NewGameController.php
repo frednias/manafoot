@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Manafoot\ComponentBundle\Calendar;
 use Manafoot\ComponentBundle\Game;
+use Manafoot\ComponentBundle\Event;
 
 class NewGameController extends Controller
 {
@@ -23,6 +24,11 @@ class NewGameController extends Controller
 
 	$gameName = $g->getName();
 	$this->session->set('gameName', $gameName);
+
+	$e = Event::getFirst($gameName);
+
+	$g->setResumeDate($e->getDate());
+	$g->update();
 
 	//$startDate = $g->getFirstDate();
 	//$this->session->set('current_date', $startDate);

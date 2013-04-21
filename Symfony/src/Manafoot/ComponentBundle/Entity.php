@@ -46,6 +46,16 @@ class Entity {
         $this->id = $last_id;
     }
 
+    public function update() {
+        $sql = "update {$this->table} set ";
+        foreach( $this->params as $key => $value) {
+            $sql .= "$key = '$value',";
+        }
+        $sql = substr($sql,0,-1);
+        $sql .= " where ".$this->prefix."id = ".$this->id;
+        $ress = pg_query($sql);
+    }
+
     public function getId() {
         return $this->id;
     }
