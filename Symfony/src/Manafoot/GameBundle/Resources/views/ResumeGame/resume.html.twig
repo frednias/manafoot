@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Game dashboard{% endblock %}
+
+{% block body %}
+
+{% for event in events %}
+<p>{{event.date}} : {{event.descr}}</p>
+{% endfor %}
+
+{% endblock %}

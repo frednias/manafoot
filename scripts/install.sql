@@ -51,6 +51,13 @@ CREATE TABLE init.elo_elo (
 	elo_points INTEGER
 );
 
+CREATE TABLE init.elh_elo_history (
+    elh_tea_id INTEGER,
+    elh_points INTEGER,
+    elh_evt_id INTEGER,
+    elh_date DATE
+);
+
 
 -- DATA
 

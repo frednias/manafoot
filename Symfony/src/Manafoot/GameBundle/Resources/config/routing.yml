@@ -5,3 +5,7 @@ manafoot_game_homepage:
 _new_game:
     pattern: /game/new
     defaults: { _controller: ManafootGameBundle:NewGame:NewGame }
+
+resume:
+    pattern: /resume/{name}
+    defaults: { _controller: ManafootGameBundle:ResumeGame:resume }

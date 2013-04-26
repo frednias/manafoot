@@ -9,16 +9,21 @@ class Game extends Entity {
 
     private $db;
 
+    protected static $table;
+    protected static $prefix;
+    protected static $sequence;
+
     public function __construct() {
-        $this->table = 'gam_game';
-        $this->prefix = 'gam_';
-        $this->sequence = 'gam_game_gam_id_seq';
+        self::$table = 'gam_game';
+        self::$prefix = 'gam_';
+        self::$sequence = 'gam_game_gam_id_seq';
         $this->params = array(
         );
         parent::__construct();
         $this->db = new Database;
     }
 
+    // Start and initialize a new Game
     public function init() {
 
         // new instance of game
@@ -26,6 +31,12 @@ class Game extends Entity {
         
         // schema duplication
         $this->duplicateSchema();
+    }
+
+    // Reload existing Game
+    public function load($name) {
+        $id = substr($name,2);
+        $this->get($id);
     }
 
     public function destroy() {
@@ -53,6 +64,9 @@ class Game extends Entity {
 
     public function setResumeDate($date) {
         $this->params['gam_resume_date'] = $date;
+    }
+    public function getResumeDate() {
+        return $this->params['gam_resume_date'];
     }
 }
 

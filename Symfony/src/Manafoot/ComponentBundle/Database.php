@@ -14,9 +14,18 @@ class Database {
     }
 
     public function select($sql) {
-	$res = pg_query($sql);
-        $ret = pg_fetch_object($res);
-	return $ret;
+        $ret = [];
+        $ress = pg_query($sql);
+        $n = pg_num_rows($ress);
+        while ($obj = pg_fetch_object($ress)) {
+            $ret[] = $obj;
+        }
+        return $ret;
+    }
+
+    // Other queries, no treatment
+    public function query($sql) {
+        pg_query($sql);
     }
 
     public function schemaExists($name) {

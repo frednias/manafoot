@@ -17,13 +17,13 @@ class LoginController extends Controller
     {
         if (isset($_POST['email']) && $_POST['email']=='dev' && $_POST['password']=='dev') {
             $this->session->set('email','dev');
-	    return $this->render('ManafootHomeBundle:Login:Dashboard.html.twig', array('name' => 'fred'));
+            return $this->render('ManafootHomeBundle:Login:Dashboard.html.twig', array('name' => 'fred'));
         }
         elseif ($this->session->get('email')=='dev') {
-	    return $this->render('ManafootHomeBundle:Login:Dashboard.html.twig', array('name' => 'fred'));
+            return $this->render('ManafootHomeBundle:Login:Dashboard.html.twig', array('name' => 'fred'));
         }
         else {
-	    return $this->render('ManafootHomeBundle:Login:Login.html.twig', array('name' => 'fred'));
+            return $this->render('ManafootHomeBundle:Login:Login.html.twig', array('name' => 'fred'));
         }
     }
 
