@@ -18,28 +18,24 @@ class NewGameController extends Controller
     }
     public function NewGameAction()
     {
-	// Copy init to $gameName
-	$g = new Game;
-	$g->init();
+        // Copy init to $gameName
+        $g = new Game;
+        $g->init();
 
-	$gameName = $g->getName();
-	$this->session->set('gameName', $gameName);
+        $gameName = $g->getName();
+        $this->session->set('gameName', $gameName);
 
-	$e = Event::getFirst($gameName);
+        $e = Event::getFirst($gameName);
 
-	$g->setResumeDate($e->getDate());
-	$g->update();
+        $g->setResumeDate($e->getDate());
+        $g->update();
 
-	//$startDate = $g->getFirstDate();
-	//$this->session->set('current_date', $startDate);
+        //$startDate = $g->getFirstDate();
+        //$this->session->set('current_date', $startDate);
 
-	// redirect to continue
-	
+        // redirect to continue
+    
         return $this->redirect("/resume/$gameName");
-        return $this->render('ManafootGameBundle:NewGame:NewGame.html.twig', array(
-		'startDate' => $startDate,
-		'gameName' => $gameName
-	));
     }
 
 }

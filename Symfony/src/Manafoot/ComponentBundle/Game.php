@@ -45,10 +45,23 @@ class Game extends Entity {
 
     public function duplicateSchema() {
         $this->db->createSchema($this->getName());
+
+        $sql = file_get_contents(__DIR__."/../../../../scripts/init.sql");
+        $sql = str_replace('init', $this->getName(), $sql);
+        $this->db->query($sql);
+
+        /*
         $tables = $this->db->getTables('init');
         foreach($tables as $key => $table) {
-            $this->db->copyTable('init.'.$table['tablename'], $this->getName().'.'.$table['tablename']);
+            //$this->db->copyTable('init.'.$table['tablename'], $this->getName().'.'.$table['tablename']);
+            $sql = "insert into ".$this->getName().'.'.$table['tablename']. " select * from init.".$table['tablename'];
+            $this->db->query($sql);
         }
+        */
+
+        $sql = file_get_contents(__DIR__."/../../../../scripts/data_init.sql");
+        $sql = str_replace('init', $this->getName(), $sql);
+        $this->db->query($sql);
     }
 
     public function getName() {

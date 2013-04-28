@@ -46,12 +46,12 @@ class Entity {
         $this->listKey = array();
         $this->listValue = array();
 
-        $this->params[static::$prefix.'ins_date'] = 'now()';
-
         foreach( $this->params as $key => $value) {
-		$this->listKey[] = $key;
-                $this->listValue[] = $value;
+            $this->listKey[] = $key;
+            $this->listValue[] = "'".$value."'";
         }
+        $this->listKey[] = static::$prefix.'ins_date';
+        $this->listValue[] = 'now()';
         $keys = implode(',',$this->listKey);
         $values = implode(',',$this->listValue);
 
@@ -87,7 +87,8 @@ class Entity {
     }
 
     public static function select($sql) {
-        $ress = self::$db->select($sql);
+        $db = new Database;
+        $ress = $db->select($sql);
         return $ress;
     }
 }

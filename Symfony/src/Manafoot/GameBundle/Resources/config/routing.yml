@@ -9,3 +9,11 @@ _new_game:
 resume:
     pattern: /resume/{name}
     defaults: { _controller: ManafootGameBundle:ResumeGame:resume }
+
+continue:
+    pattern: /continue
+    defaults: { _controller: ManafootGameBundle:ContinueGame:continue }
+
+continue_fast:
+    pattern: /continue/fast
+    defaults: { _controller: ManafootGameBundle:ContinueGame:continueFast }

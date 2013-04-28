@@ -24,6 +24,7 @@ class ResumeGameController extends Controller
         $this->session->set('schema', $g->getName());
 
         $resumeDate = $g->getResumeDate();
+        $this->session->set('resumeDate', $resumeDate);
 
         $eventList = Event::getNextEvent($g->getName(), $resumeDate, $limit=5);
 
