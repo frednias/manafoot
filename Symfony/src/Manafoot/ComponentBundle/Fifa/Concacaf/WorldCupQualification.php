@@ -9,6 +9,7 @@ use \Manafoot\ComponentBundle\Game;
 use \Manafoot\ComponentBundle\Event;
 use \Manafoot\ComponentBundle\Competition;
 use \Manafoot\ComponentBundle\Match;
+use \Manafoot\ComponentBundle\Flash;
 
 class WorldCupQualification {
 
@@ -25,6 +26,7 @@ class WorldCupQualification {
         $evtId = $event->getId();
         $teams = array();
         $params = json_decode($event->getParams());
+        $li = '';
 
         // find and sort available team by elo points
         $sql = "
@@ -86,6 +88,8 @@ class WorldCupQualification {
             $mat2->setTeam2($e1->elh_tea_id);
             $mat2->setDate($d2->format('Y-m-d'));
             $mat2->save();
+
+            $li .= "<li>".$e1->cou_name." - ".$e2->cou_name."</li>";
         }
 
         $d = new \DateTime($event->getDate());
@@ -98,6 +102,19 @@ class WorldCupQualification {
         $e->setDescr('Tirage au sort du 2e tour de qualifications de la Coupe du Monde, zone Concacaf');
         $e->setStatus('todo');
         $e->save();
+
+        $body = "
+            <p>Le tirage au sort du 1er tour de qualification pour la Coupe du Monde zone Concacaf, a eu lieu aujourd'hui a Rio de Janeiro</p>
+            <p>Les matchs aller se derouleront le 11 juillet. les matchs retour le 18 juillet.</p>
+            <p>Les rencontres :<br>
+            <ul>
+                $li
+            </ul></p>
+        ";
+        $f = new Flash($schema);
+        $f->setSubject('Tirage au sort du 1er tour de qualification pour la Coupe du Monde zone Concacaf');
+        $f->setBody($body);
+        $f->save();
     }
 
 }
