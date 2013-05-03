@@ -33,6 +33,17 @@ class Event extends Entity {
         return $e;
     }
 
+    public function load($id) {
+        $sql = "select * from ".self::$table." where evt_id = $id";
+        $obj = $this->select($sql)[0];
+        $this->params['evt_date'] = $obj->evt_date;
+        $this->params['evt_descr'] = $obj->evt_descr;
+        $this->params['evt_function'] = $obj->evt_function;
+        $this->params['evt_visibility'] = $obj->evt_visibility;
+        $this->params['evt_params'] = $obj->evt_params;
+        $this->id = $this->params['evt_id'] = $obj->evt_id;
+    }
+
     // Get next event for a day
     static public function getNext($schema, $resumeDate, $limit) {
         return self::getNextEvent($schema, $resumeDate, $limit);
@@ -48,6 +59,7 @@ class Event extends Entity {
             $e->params['evt_function'] = $object->evt_function;
             $e->id = $e->params['evt_id'] = $object->evt_id;
             $e->params['evt_visibility'] = $object->evt_visibility;
+            $e->params['evt_params'] = $object->evt_params;
             $eventList[] = $e;
         }
         return $eventList;
@@ -85,6 +97,10 @@ class Event extends Entity {
 
     public function setStatus($status) {   
         $this->params['evt_status'] = $status;
+    }
+
+    public function getParams() {
+        return $this->params['evt_params'];
     }
 
 }

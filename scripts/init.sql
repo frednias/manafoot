@@ -28,3 +28,22 @@ CREATE TABLE init.elh_elo_history (
     elh_date DATE
 );
 
+CREATE TABLE init.cpi_competition_instance (
+    cpi_id SERIAL,
+    cpi_ins_date DATE,
+    cpi_cpt_id INTEGER,
+    cpi_milesime TEXT,
+    cpi_data TEXT
+);
+
+CREATE TABLE init.mat_match (
+    mat_id SERIAL,
+    mat_ins_date DATE,
+    mat_cpi_id INTEGER,
+    mat_round TEXT,
+    mat_tea_id__1 INTEGER,
+    mat_tea_id__2 INTEGER,
+    mat_score__1 INTEGER,
+    mat_score__2 INTEGER,
+    mat_date DATE
+);

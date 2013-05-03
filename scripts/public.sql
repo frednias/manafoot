@@ -39,3 +39,10 @@ DROP TABLE gam_game;
 	gam_resume_date DATE
  );
 
+DROP TABLE cpt_competition;
+CREATE TABLE cpt_competition (
+    cpt_id SERIAL,
+    cpt_name TEXT,
+    cpt_ass_id INTEGER
+);
+

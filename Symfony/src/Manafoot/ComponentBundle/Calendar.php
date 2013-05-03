@@ -8,7 +8,7 @@ class Calendar {
 	public $currentDate;
 
 	public function __construct () {
-		$this->startDate = new \DateTime('2013-07-15');
+		$this->startDate = new \DateTime('2010-07-12');
 	}
 }
 

@@ -6,6 +6,8 @@ class Database {
 
     private static $dbconn;
 
+    private $query_result;
+
     public function __construct() {
         if (is_null(self::$dbconn)) {
             $conf = parse_ini_file('/etc/manafoot.conf');
@@ -25,7 +27,12 @@ class Database {
 
     // Other queries, no treatment
     public function query($sql) {
-        pg_query($sql);
+        $this->qr = pg_query($sql);
+        return $this->qr;
+    }
+
+    public function fetch() {
+        return pg_fetch_object($this->qr);
     }
 
     public function schemaExists($name) {

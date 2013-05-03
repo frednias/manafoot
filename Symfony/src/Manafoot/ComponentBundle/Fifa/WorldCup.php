@@ -8,20 +8,33 @@ use \Manafoot\ComponentBundle\Database;
 use \Manafoot\ComponentBundle\Game;
 use \Manafoot\ComponentBundle\Event;
 
-class Elo {
+class WorldCup {
+
+    private $game;
+    private $event;
 
     // Publish new Elo ranking
-    public function pub (Game $game, Event $event) {
+    public function  start (Game $game, Event $event) {
+        $this->game = $game;
+        $this->event = $event;
 
         $db = new Database;
+        $schema = $this->game->getName();
 
-        $schema = $game->getName();
+        // dispatch on every international federation
+        // concacaf
+        // conmebol
+        // afc
+        // uefa
+        // ofc
+        // caf
 
-        $sql = "insert into $schema.elh_elo_history select elo_tea_id,elo_points,{$event->getId()}, '{$event->getDate()}' from $schema.elo_elo";
-        $db->query($sql);
+        $concacaf = new Concacaf/WorldCupQualification;
+        $concacaf->start($game, $event);
 
         // new Message
 
+/*
         // next Elo publishing
         $d = new \DateTime($event->getDate());
         $d->modify('+1 month');
@@ -33,6 +46,8 @@ class Elo {
         $e->setDescr('Classement mondial FIFA - '.$d->format('F Y'));
         $e->setStatus('todo');
         $e->save();
+*/
+
     }
 
 }

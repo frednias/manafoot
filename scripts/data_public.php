@@ -2,6 +2,7 @@
 
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1,'FIFA',NULL);
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id) values ('Coupe du Monde', 1);
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (11,'UEFA',NULL);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (12,'CAF',NULL);
@@ -9,6 +10,7 @@ INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (13,'AFC',NULL);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (14,'OFC',NULL);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (15,'CONMABOL',NULL);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (16,'CONCACAF',NULL);
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id) values ('Qualification de la Coupe du Monde - Zone CONCACAF', 16);
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (101,'Union nord-américaine de football',NULL);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (16,101);
