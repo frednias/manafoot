@@ -45,5 +45,18 @@ CREATE TABLE init.mat_match (
     mat_tea_id__2 INTEGER,
     mat_score__1 INTEGER,
     mat_score__2 INTEGER,
-    mat_date DATE
+    mat_date DATE,
+    mat_mtt_id INTEGER
+);
+
+CREATE TABLE init.fla_flash (
+    fla_id SERIAL,
+    fla_ins_date DATE,
+    fla_subject TEXT,
+    fla_body TEXT
+);
+
+CREATE TABLE init.mar_match_referer (
+    mar_mat_id INTEGER,
+    mar_mat_id__referer INTEGER
 );

@@ -32,6 +32,10 @@ class WorldCup {
         $concacaf = new Concacaf/WorldCupQualification;
         $concacaf->start($game, $event);
 
+
+        $event->setStatus('ok');
+        $event->save();
+
         // new Message
 
 /*

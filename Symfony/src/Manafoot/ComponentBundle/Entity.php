@@ -48,7 +48,7 @@ class Entity {
 
         foreach( $this->params as $key => $value) {
             $this->listKey[] = $key;
-            $this->listValue[] = "'".$value."'";
+            $this->listValue[] = pg_escape_literal($value);
         }
         $this->listKey[] = static::$prefix.'ins_date';
         $this->listValue[] = 'now()';

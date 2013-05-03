@@ -27,12 +27,12 @@ class Database {
 
     // Other queries, no treatment
     public function query($sql) {
-        $this->qr = pg_query($sql);
-        return $this->qr;
+        $this->query_result = pg_query($sql);
+        return $this->query_result;
     }
 
     public function fetch() {
-        return pg_fetch_object($this->qr);
+        return pg_fetch_object($this->query_result);
     }
 
     public function schemaExists($name) {

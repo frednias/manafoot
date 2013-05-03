@@ -79,6 +79,7 @@ class WorldCupQualification {
             $mat1->setTeam1($e1->elh_tea_id);
             $mat1->setTeam2($e2->elh_tea_id);
             $mat1->setDate($d1->format('Y-m-d'));
+            $mat1->setType(4);
             $mat1->save();
 
             $mat2 = new Match($schema);
@@ -87,7 +88,9 @@ class WorldCupQualification {
             $mat2->setTeam1($e2->elh_tea_id);
             $mat2->setTeam2($e1->elh_tea_id);
             $mat2->setDate($d2->format('Y-m-d'));
+            $mat2->setType(5);
             $mat2->save();
+            $mat2->setMatchReferer($mat1->getId());
 
             $li .= "<li>".$e1->cou_name." - ".$e2->cou_name."</li>";
         }

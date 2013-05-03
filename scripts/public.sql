@@ -43,6 +43,13 @@ DROP TABLE cpt_competition;
 CREATE TABLE cpt_competition (
     cpt_id SERIAL,
     cpt_name TEXT,
-    cpt_ass_id INTEGER
+    cpt_ass_id INTEGER,
+    cpt_elo_level INTEGER
+);
+
+DROP TABLE mtt_match_type;
+CREATE TABLE mtt_match_type (
+    mtt_id SERIAL,
+    mtt_label TEXT
 );
 

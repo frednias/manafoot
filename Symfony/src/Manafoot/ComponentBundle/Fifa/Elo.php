@@ -35,6 +35,53 @@ class Elo {
         $e->save();
     }
 
+    public function getEstimatedResult($elo1,$elo2) {
+        $dr1 = $elo1+100-$elo2;
+        $We1 = 1/(1+pow(10,(0-$dr1)/400));
+        $dr2 = $elo2-100-$elo1;
+        $We2 = 1/(1+pow(10,(0-$dr2)/400));
+        $c = 100*$We1;
+        return $c;
+    }
+
+    public function computeNewElo($elo1,$elo2,$goal1,$goal2,$K) {
+        $dr1 = $elo1+100-$elo2;
+        $We1 = 1/(1+pow(10,(0-$dr1)/400));
+        $dr2 = $elo2-100-$elo1;
+        $We2 = 1/(1+pow(10,(0-$dr2)/400));
+
+        $d = abs($goal1-$goal2);
+        switch($d) {
+            case 0:
+            case 1:
+                $G = 1;
+            case 2:
+                $G = 1.5;
+            default:
+                $G = (11+$d)/8;
+        }
+        if($goal1>$goal2) {
+            $elo1 = $elo1 + $K*$G*(1 - $We1);
+            $elo2 = $elo2 + $K*$G*(0 - $We2);
+        }
+        else if ($goal1==$goal2) {
+            $elo1 = $elo1 + $K*$G*(0.5 - $We1);
+            $elo2 = $elo2 + $K*$G*(0.5 - $We2);
+        }
+        else {
+            $elo1 = $elo1 + $K*$G*(0 - $We1);
+            $elo2 = $elo2 + $K*$G*(1 - $We2);
+        }
+        if ($elo1<0) {
+            $elo1 = 0;
+        }
+        if ($elo2<0) {
+            $elo2 = 0;
+        }
+        $elo1 = round($elo1);
+        $elo2 = round($elo2);
+        return [$elo1,$elo2];
+    }
 }
 
 
