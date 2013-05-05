@@ -103,6 +103,10 @@ class Event extends Entity {
         return $this->params['evt_params'];
     }
 
+    public function setParams($params) {
+        $this->params['evt_params'] = $params;
+    }
+
 }
 
 

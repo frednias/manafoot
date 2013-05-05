@@ -13,7 +13,7 @@ class WorldCup {
     private $game;
     private $event;
 
-    // Publish new Elo ranking
+    // must be set to third monday of july
     public function  start (Game $game, Event $event) {
         $this->game = $game;
         $this->event = $event;

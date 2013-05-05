@@ -35,6 +35,12 @@ class Elo {
         $e->save();
     }
 
+    public function update($schema, $tea_id, $elo_points) {
+        $db = new Database;
+        $sql = "update $schema.elo_elo set elo_points={$elo_points} where elo_tea_id={$tea_id}";
+        $db->query($sql);
+    }
+
     public function getEstimatedResult($elo1,$elo2) {
         $dr1 = $elo1+100-$elo2;
         $We1 = 1/(1+pow(10,(0-$dr1)/400));

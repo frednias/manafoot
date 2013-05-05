@@ -65,7 +65,9 @@ class Entity {
     public function update() {
         $sql = "update ".static::$table." set ";
         foreach( $this->params as $key => $value) {
-            $sql .= "$key = '$value',";
+            if (!is_null($value)) {
+                $sql .= "$key = '$value',";
+            }
         }
         $sql = substr($sql,0,-1);
         $sql .= " where ".static::$prefix."id = ".$this->id;

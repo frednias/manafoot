@@ -2,7 +2,7 @@
 
 namespace Manafoot\ComponentBundle;
 
-require('../../../../tests/autoload.php');
+//require('../../../../tests/autoload.php');
 use \Manafoot\ComponentBundle\Entity;
 use \Manafoot\ComponentBundle\Database;
 
@@ -58,6 +58,13 @@ class Match extends Entity {
         $this->params['mat_score__1'] = $score;
     }
 
+    public function setTab1($tab1) {
+        $this->params['mat_tab__1'] = $tab1;
+    }
+    public function setTab2($tab2) {
+        $this->params['mat_tab__2'] = $tab2;
+    }
+
     public function load($id) {
         $this->get($id);
     }
@@ -73,7 +80,7 @@ class Match extends Entity {
         $elo = new Fifa\Elo;
 
         $sql = "
-            select m1.mat_id, t1.tea_name as e1, e1.elo_points as elo1, t2.tea_name as e2, e2.elo_points as elo2, cpt_elo_level, m1.mat_mtt_id, mr.mat_score__1, mr.mat_score__2
+            select m1.mat_id, t1.tea_name as e1, e1.elo_points as elo1, t2.tea_name as e2, e2.elo_points as elo2, cpt_elo_level, m1.mat_mtt_id, mr.mat_score__1, mr.mat_score__2, mar_mat_id, mar_mat_id__referer, m1.mat_tea_id__1, m1.mat_tea_id__2
             from g_4.mat_match  m1
             inner join tea_team t1 on m1.mat_tea_id__1=t1.tea_id 
             inner join tea_team t2 on m1.mat_tea_id__2=t2.tea_id 
@@ -103,6 +110,8 @@ class Match extends Entity {
                 list($goal1,$goal2) = $this->play($goal1,$goal2,30,$est);
                 if ($goal1==$goal2) {
                     list($tab1,$tab2) = $this->tab($est);
+                    $mat->setTab1($tab1);
+                    $mat->setTab2($tab2);
                 }
             }
 
@@ -119,6 +128,8 @@ class Match extends Entity {
                     $tot2 = $goal2 + $match->mat_score__1;
                     if ($tot1==$tot2 && $goal2==$match->mat_score__2) {
                         list($tab1,$tab2) = $this->tab($est);
+                        $mat->setTab1($tab1);
+                        $mat->setTab2($tab2);
                     }
                 }
             }
@@ -128,6 +139,8 @@ class Match extends Entity {
             $mat->save();
 
             list($newelo1,$newelo2) = $elo->computeNewElo($elo1,$elo2,$goal1,$goal2,$K);
+            $elo->update($schema, $match->mat_tea_id__1, $newelo1);
+            $elo->update($schema, $match->mat_tea_id__2, $newelo2);
         }
     }
 
@@ -156,8 +169,12 @@ class Match extends Entity {
     }
 }
 
+/*
 $g = new Game;
 $g->load('g_4');
 $w = new Match('g_4');
 $w->computeAll($g->getResumeDate());
 //$w->load(162);
+*/
+
+

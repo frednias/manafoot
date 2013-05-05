@@ -46,7 +46,9 @@ CREATE TABLE init.mat_match (
     mat_score__1 INTEGER,
     mat_score__2 INTEGER,
     mat_date DATE,
-    mat_mtt_id INTEGER
+    mat_mtt_id INTEGER,
+    mat_tab__1 INTEGER,
+    mat_tab__2 INTEGER
 );
 
 CREATE TABLE init.fla_flash (

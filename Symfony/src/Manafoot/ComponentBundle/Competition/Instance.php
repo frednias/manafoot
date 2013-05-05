@@ -31,6 +31,9 @@ class Instance extends Entity {
     public function setData($data) {
         $this->params['cpi_data'] = $data;
     }
+    public function getData() {
+        return $this->params['cpi_data'];
+    }
 
     public function setCompetition($cpt_id) {
         $this->params['cpi_cpt_id'] = $cpt_id;
