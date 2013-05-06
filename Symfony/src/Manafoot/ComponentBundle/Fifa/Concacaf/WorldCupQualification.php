@@ -175,13 +175,13 @@ class WorldCupQualification {
         $pot5 = [];
         $pot6 = [];
         $pot7 = [];
-        for($i=7;$i<=12;$i++) {
+        for($i=6;$i<=11;$i++) {
             $pot4[] = $data[$i]->elh_tea_id;
         }
-        for($i=13;$i<=18;$i++) {
+        for($i=12;$i<=17;$i++) {
             $pot5[] = $data[$i]->elh_tea_id;
         }
-        for($i=19;$i<=24;$i++) {
+        for($i=18;$i<=23;$i++) {
             $pot6[] = $data[$i]->elh_tea_id;
         }
         $pot7 = array_merge($teamRound1,[$data[25]->elh_tea_id]);
@@ -315,7 +315,6 @@ class WorldCupQualification {
         return $cal;
     }
 }
-
 
 /*
 $g = new Game;
