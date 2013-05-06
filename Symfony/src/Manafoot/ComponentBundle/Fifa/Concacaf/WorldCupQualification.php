@@ -13,6 +13,7 @@ use \Manafoot\ComponentBundle\Competition;
 use \Manafoot\ComponentBundle\Competition\Instance;
 use \Manafoot\ComponentBundle\Match;
 use \Manafoot\ComponentBundle\Flash;
+use \Manafoot\ComponentBundle\Championship;
 
 class WorldCupQualification {
 
@@ -216,52 +217,12 @@ class WorldCupQualification {
         $d->modify('+3 day');
         $schedule[] = $d->format('Y-m-d');
 
-
         // compute round robin
+        $chrr = new Championship;
 
         foreach($group as $n => $g) {
-            $cal = $this->roundRobin($group[$n]);
-            $nc = count($cal);
-            $ng = $n+1;
-            foreach ($cal as $round => $matchs) {
-                $mat1 = new Match($schema);
-                $mat1->setCompetitionInstance($ci->getId());
-                $mat1->setRound('2g'.$ng.'.'.$round);
-                $mat1->setTeam1($matchs[0][0]);
-                $mat1->setTeam2($matchs[0][1]);
-                $mat1->setDate($schedule[$round]);
-                $mat1->setType(2);
-                $mat1->save();
-
-                $mat2 = new Match($schema);
-                $mat2->setCompetitionInstance($ci->getId());
-                $mat2->setRound('2g'.$ng.'.'.$round);
-                $mat2->setTeam1($matchs[1][0]);
-                $mat2->setTeam2($matchs[1][1]);
-                $mat2->setDate($schedule[$round]);
-                $mat2->setType(2);
-                $mat2->save();
-
-                $rr = $round + $nc;
-
-                $matr1 = new Match($schema);
-                $matr1->setCompetitionInstance($ci->getId());
-                $matr1->setRound('2g'.$ng.'.'.$rr);
-                $matr1->setTeam1($matchs[0][1]);
-                $matr1->setTeam2($matchs[0][0]);
-                $matr1->setDate($schedule[$rr]);
-                $matr1->setType(2);
-                $matr1->save();
-
-                $matr2 = new Match($schema);
-                $matr2->setCompetitionInstance($ci->getId());
-                $matr2->setRound('2g'.$ng.'.'.$rr);
-                $matr2->setTeam1($matchs[1][1]);
-                $matr2->setTeam2($matchs[1][0]);
-                $matr2->setDate($schedule[$rr]);
-                $matr2->setType(2);
-                $matr2->save();
-            }
+            $g = $n+1;
+            $cal = $chrr->roundRobin($schema, $group[$n], $ci, $schedule, "2g$g.");
         }
 
         $d->modify('+1 day');
@@ -274,53 +235,138 @@ class WorldCupQualification {
         $e->setStatus('todo');
         $e->setParams('{"ci":'.$ci->getId().'}');
         $e->save();
+
+        //petit message Flash ?
     }
 
-    public function roundRobin($listTeam) {
-        $n = count($listTeam);
-        $cal = [];
-        for($i=1;$i<=$n;$i++) {
-            for($j=$i;$j<=$n;$j++) {
-                $m = null;
-                if ($j!=$n && $i!=$n && $i!=$j) {
-                    if ($i+$j-1 < $n) {
-                        $r = $i + $j - 1 ;
-                        $m = [$listTeam[$i-1], $listTeam[$j-1]];
-                    }
-                    if ($i+$j-1 >= $n) {
-                        $r = $i + $j - $n;
-                        $m = [$listTeam[$i-1], $listTeam[$j-1]];
-                    }
-                    if ((($i+$j)%2) == 0) {
-                        $tmp = $m;
-                        $m[0] = $tmp[1];
-                        $m[1] = $tmp[0];
-                    }
-                }
-                if ($j==$n && $i!=$j) {
-                    if ((2*$i) <= $n) {
-                        $r = 2 * $i - 1;
-                        $m = [$listTeam[$i-1], $listTeam[$j-1]];
-                    }
-                    if ((2*$i) > $n) {
-                        $r = 2 * $i - $n;
-                        $m = [$listTeam[$j-1], $listTeam[$i-1]];
-                    }
-                }
-                if ($m) {
-                    $cal[$r][] = $m;
+    public function round3($game, $event) {
+        $db = new Database;
+        $schema = $game->getName();
+        $params = json_decode($event->getParams());
+        $ci_id = $params->ci;
+        $ci = new Competition\Instance($schema);
+        $ci->get($ci_id);
+        $data = json_decode($ci->getData());
+
+        $pot1 = [$data[0]->elh_tea_id, $data[1]->elh_tea_id, $data[2]->elh_tea_id];
+        $pot2 = [$data[3]->elh_tea_id, $data[4]->elh_tea_id, $data[5]->elh_tea_id];
+
+        for($g=1;$g<=6;$g++) {
+            $cla = $this->getRank($schema, $ci_id, "2g$g%");
+            $pot3[] = $cla[0]['tea_id'];
+        }
+
+        shuffle($pot1);
+        shuffle($pot2);
+        shuffle($pot3);
+
+        $group = array(
+            array( array_pop($pot1), array_pop($pot2), array_pop($pot3), array_pop($pot3)),
+            array( array_pop($pot1), array_pop($pot2), array_pop($pot3), array_pop($pot3)),
+            array( array_pop($pot1), array_pop($pot2), array_pop($pot3), array_pop($pot3)),
+        );
+
+        $schedule = [0];
+        $d = new \DateTime($event->getDate()); // 2011-11-15
+        $d->modify('+206 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+5 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+86 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+4 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+31 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+4 day');
+        $schedule[] = $d->format('Y-m-d');
+
+        // compute round robin
+        $chrr = new Championship;
+
+        foreach($group as $n => $g) {
+            $g = $n+1;
+            $cal = $chrr->roundRobin($schema, $group[$n], $ci, $schedule, "3g$g.");
+        }
+
+        $d->modify('+1 day');
+        $e = new Event($schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(16);
+        $e->setFunction('Fifa.Concacaf.WorldCupQualification.round4');
+        $e->setVisibility('foreground');
+        $e->setDescr('Tirage au sort du 4e tour de qualifications de la Coupe du Monde, zone Concacaf');
+        $e->setStatus('todo');
+        $e->setParams('{"ci":'.$ci->getId().'}');
+        $e->save();
+    }
+
+    public function getRank($schema, $cpi_id, $round = '%') {
+        $db = new Database;
+        $listTeam = [];
+        $qualteam = $f = $a = $w = $d = $l = $pts = $diff = [];
+
+        $sql = "
+            select * 
+            from $schema.mat_match  
+            where mat_round like '$round' and mat_cpi_id='$cpi_id'
+            order by mat_date asc;
+        ";
+        $db->query($sql);
+        while ($obj = $db->fetch()) {
+            $listTeam[] = $obj->mat_tea_id__1;
+            $listTeam[] = $obj->mat_tea_id__2;
+
+            if ($obj->mat_score__1 > $obj->mat_score__2) {
+                $w[$obj->mat_tea_id__1] ++;
+                $l[$obj->mat_tea_id__2] ++;
+            }
+            else if ($obj->mat_score__1 < $obj->mat_score__2) {
+                $l[$obj->mat_tea_id__1] ++;
+                $w[$obj->mat_tea_id__2] ++;
+            }
+            else {
+                $d[$obj->mat_tea_id__1] ++;
+                $d[$obj->mat_tea_id__2] ++;
+            }
+            $f[$obj->mat_tea_id__1] += $obj->mat_score__1;
+            $f[$obj->mat_tea_id__2] += $obj->mat_score__2;
+            $a[$obj->mat_tea_id__1] += $obj->mat_score__2;
+            $a[$obj->mat_tea_id__2] += $obj->mat_score__1;
+        }
+        $listTeam = array_unique($listTeam);
+        $cla = array();
+        foreach($listTeam as $n => $tea_id) {
+            $clan['tea_id'] = $tea_id;
+            $clan['win'] = $w[$tea_id];
+            $clan['draw'] = $d[$tea_id];
+            $clan['loose'] = $l[$tea_id];
+            $clan['for'] = $f[$tea_id];
+            $clan['against'] = $a[$tea_id];
+            $clan['pts'] = 3*$clan['win']+$clan['draw'];
+            $clan['diff'] = $clan['for'] - $clan['against'];
+            $cla[] = $clan;
+        }
+        for ($i=0;$i<count($listTeam)-1;$i++) {
+            for ($j=$i;$j<count($listTeam);$j++) {
+                if ($cla[$i]['pts'] < $cla[$j]['pts'] || $cla[$i]['pts'] == $cla[$j]['pts'] && $cla[$i]['diff'] < $cla[$j]['diff']) {
+                    $tmp = $cla[$i];
+                    $cla[$i] = $cla[$j];
+                    $cla[$j] = $tmp;
                 }
             }
         }
-        return $cal;
+        return $cla;
     }
+
 }
 
 /*
 $g = new Game;
 $g->load('g_4');
 $e = new Event('g_4');
-$e->load(14);
+$e->load(23);
 $w = new WorldCupQualification;
-$w->round2($g,$e);
+$w->round4($g,$e);
 */
+
