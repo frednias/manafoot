@@ -81,7 +81,7 @@ class Match extends Entity {
 
         $sql = "
             select m1.mat_id, t1.tea_name as e1, e1.elo_points as elo1, t2.tea_name as e2, e2.elo_points as elo2, cpt_elo_level, m1.mat_mtt_id, mr.mat_score__1, mr.mat_score__2, mar_mat_id, mar_mat_id__referer, m1.mat_tea_id__1, m1.mat_tea_id__2
-            from g_4.mat_match  m1
+            from $schema.mat_match  m1
             inner join tea_team t1 on m1.mat_tea_id__1=t1.tea_id 
             inner join tea_team t2 on m1.mat_tea_id__2=t2.tea_id 
             inner join $schema.elo_elo e1 on e1.elo_tea_id=m1.mat_tea_id__1 
