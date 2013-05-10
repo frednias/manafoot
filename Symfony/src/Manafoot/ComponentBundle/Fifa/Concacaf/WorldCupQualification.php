@@ -14,6 +14,7 @@ use \Manafoot\ComponentBundle\Competition\Instance;
 use \Manafoot\ComponentBundle\Match;
 use \Manafoot\ComponentBundle\Flash;
 use \Manafoot\ComponentBundle\Championship;
+use \Manafoot\ComponentBundle\Team;
 
 class WorldCupQualification {
 
@@ -301,6 +302,82 @@ class WorldCupQualification {
         $e->save();
     }
 
+    public function round4($game, $event) {
+        $db = new Database;
+        $schema = $game->getName();
+        $params = json_decode($event->getParams());
+        $ci_id = $params->ci;
+        $ci = new Competition\Instance($schema);
+        $ci->get($ci_id);
+        $data = json_decode($ci->getData());
+
+        $pot = [];
+        for($g=1;$g<=3;$g++) {
+            $cla = $this->getRank($schema, $ci_id, "3g$g%");
+            $pot[] = $cla[0]['tea_id'];
+            $pot[] = $cla[1]['tea_id']; // first and second qualifier
+        }
+
+        shuffle($pot);
+
+        $schedule = [0];
+        $d = new \DateTime($event->getDate()); // 2012-10-17
+        $d->modify('+112 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+44 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+4 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+73 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+4 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+7 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+80 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+4 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+31 day');
+        $schedule[] = $d->format('Y-m-d');
+        $d->modify('+4 day');
+        $schedule[] = $d->format('Y-m-d');
+
+        // compute round robin
+        $chrr = new Championship;
+
+        $cal = $chrr->roundRobin($schema, $pot, $ci, $schedule, "4g.");
+
+        $d->modify('+1 day');
+        $e = new Event($schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(16);
+        $e->setFunction('Fifa.Concacaf.WorldCupQualification.barrage');
+        $e->setVisibility('foreground');
+        $e->setDescr('Tirage au sort du barrage de qualifications de la Coupe du Monde, zone Concacaf / Ofc');
+        $e->setStatus('todo');
+        $e->setParams('{"ci":'.$ci->getId().'}');
+        $e->save();
+    }
+
+    public function barrage($game, $event) {
+        $db = new Database;
+        $schema = $game->getName();
+        $params = json_decode($event->getParams());
+        $ci_id = $params->ci;
+        $ci = new Competition\Instance($schema);
+        $ci->get($ci_id);
+        $data = json_decode($ci->getData());
+
+        $cla = $this->getRank($schema, $ci_id, "4g%");
+
+        foreach($cla as $rank) {
+            $team = new Team;
+            $team->get($rank['tea_id']);
+            echo $team->getName()."\n";
+        }
+    }
+
     public function getRank($schema, $cpi_id, $round = '%') {
         $db = new Database;
         $listTeam = [];
@@ -365,8 +442,8 @@ class WorldCupQualification {
 $g = new Game;
 $g->load('g_4');
 $e = new Event('g_4');
-$e->load(23);
+$e->load(26);
 $w = new WorldCupQualification;
-$w->round4($g,$e);
+$w->barrage($g,$e);
 */
 

@@ -47,43 +47,28 @@ class Championship {
         $nc = count($cal);
         $ng = $n+1;
         foreach ($cal as $round => $matchs) {
-            $mat1 = new Match($schema);
-            $mat1->setCompetitionInstance($ci->getId());
-            $mat1->setRound($prefix.$round);
-            $mat1->setTeam1($matchs[0][0]);
-            $mat1->setTeam2($matchs[0][1]);
-            $mat1->setDate($schedule[$round]);
-            $mat1->setType(2);
-            $mat1->save();
+            foreach($matchs as $i => $dual) {
+                $mat1 = new Match($schema);
+                $mat1->setCompetitionInstance($ci->getId());
+                $mat1->setRound($prefix.$round);
+                $mat1->setTeam1($dual[0]);
+                $mat1->setTeam2($dual[1]);
+                $mat1->setDate($schedule[$round]);
+                $mat1->setType(2);
+                $mat1->save();
 
-            $mat2 = new Match($schema);
-            $mat2->setCompetitionInstance($ci->getId());
-            $mat2->setRound($prefix.$round);
-            $mat2->setTeam1($matchs[1][0]);
-            $mat2->setTeam2($matchs[1][1]);
-            $mat2->setDate($schedule[$round]);
-            $mat2->setType(2);
-            $mat2->save();
+                $rr = $round + $nc;
 
-            $rr = $round + $nc;
+                $mat2 = new Match($schema);
+                $mat2->setCompetitionInstance($ci->getId());
+                $mat2->setRound($prefix.$round);
+                $mat2->setTeam1($dual[0]);
+                $mat2->setTeam2($dual[1]);
+                $mat2->setDate($schedule[$rr]);
+                $mat2->setType(2);
+                $mat2->save();
+            }
 
-            $matr1 = new Match($schema);
-            $matr1->setCompetitionInstance($ci->getId());
-            $matr1->setRound($prefix.$rr);
-            $matr1->setTeam1($matchs[0][1]);
-            $matr1->setTeam2($matchs[0][0]);
-            $matr1->setDate($schedule[$rr]);
-            $matr1->setType(2);
-            $matr1->save();
-
-            $matr2 = new Match($schema);
-            $matr2->setCompetitionInstance($ci->getId());
-            $matr2->setRound($prefix.$rr);
-            $matr2->setTeam1($matchs[1][1]);
-            $matr2->setTeam2($matchs[1][0]);
-            $matr2->setDate($schedule[$rr]);
-            $matr2->setType(2);
-            $matr2->save();
         }
 
         return $cal;

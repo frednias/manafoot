@@ -174,7 +174,5 @@ $g = new Game;
 $g->load('g_4');
 $w = new Match('g_4');
 $w->computeAll($g->getResumeDate());
-//$w->load(162);
 */
-
 
