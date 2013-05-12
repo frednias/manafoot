@@ -25,7 +25,7 @@ class Match extends Entity {
     }
 
     public function getId() {
-        return $this->params['mat_id'];
+        return $this->id;
     }
 
     public function setCompetitionInstance($cpi_id) {

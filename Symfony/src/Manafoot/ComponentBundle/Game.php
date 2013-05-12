@@ -65,7 +65,7 @@ class Game extends Entity {
     }
 
     public function getName() {
-	return 'g_'.$this->getId();
+        return 'g_'.$this->getId();
     }
 
     public function getFirstDate() {

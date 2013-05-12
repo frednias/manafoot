@@ -5,6 +5,15 @@
 {% block body %}
 <p>Dashboard
 
+{% if games|length > 0 %}
+<p>Continuer la partie :
+    <ul>
+        {% for game in games %}
+            <li><a href='/resume/g_{{ game }}'>{{game}}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 <p><a href="/game/new">Start new Game</a>
 
 {% endblock %}

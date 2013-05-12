@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Manafoot\ComponentBundle\Game;
 use Manafoot\ComponentBundle\Event;
+use Manafoot\ComponentBundle\Flash;
 
 class ResumeGameController extends Controller
 {
@@ -28,6 +29,17 @@ class ResumeGameController extends Controller
 
         $eventList = Event::getNextEvent($g->getName(), $resumeDate, $limit=5);
 
-        return $this->render('ManafootGameBundle:ResumeGame:resume.html.twig', array('events' => $eventList));
+        $flashList = Flash::getRecentFlash($g->getName(), $resumeDate, $limit=10);
+
+        $twigParams = array(
+            'events' => $eventList,
+            'date' => $resumeDate,
+            'flashs' => $flashList,
+        );
+        return $this->render('ManafootGameBundle:ResumeGame:resume.html.twig', $twigParams);
+    }
+
+    public function getRecentFlash()
+    {
     }
 }

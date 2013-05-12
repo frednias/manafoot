@@ -30,6 +30,21 @@ class Flash extends Entity {
     public function setBody($body) {
         $this->params['fla_body'] = $body;
     }
+
+    public static function getRecentFlash($schema, $date, $limit)
+    {
+        $db = new Database;
+        $flashList = array();
+
+        $sql = "select * from $schema.fla_flash order by fla_id desc limit $limit";
+        $db->query($sql);
+        while ($row = $db->fetch()) {
+            $flashList[] = $row;
+        }
+
+        return $flashList;
+    }
+
 }
 
 

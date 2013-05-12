@@ -6,9 +6,42 @@
 
 <div class="container-fluid">
 <div class="row-fluid">
-  <div class="span11">
+  <div class="span2">
+    <ul class="nav nav-list">
+      <li class="nav-header">Home</li>
+      <li class="active"><a href="#">Overview</a></li>
+      <li class="nav-header">Organisations</li>
+      <li><a href="#">FIFA</a></li>
+      <li><a href="#">UEFA</a></li>
+      ...
+    </ul>
+  </div>
+  <div class="span9">
+    <p>
+    {{date}}
+
+    <p><b>Flashs :</b><br>
+    <div class="accordion" id="accordion2">
+        {% for flash in flashs %}
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{loop.index}}">
+            {{flash.fla_subject}}
+          </a>
+        </div>
+        <div id="collapse{{loop.index}}" class="accordion-body collapse">
+          <div class="accordion-inner">
+            {{flash.fla_body|raw}}
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+    </div>
+
+    <p><b>Prochains événements :</b><br>
     {% for event in events %}
-    <p>{{event.date}} : {{event.descr}}</p>
+    {{event.date}} : {{event.descr}}</p>
+    <br>
     {% endfor %}
   </div>
   <div class="class1">

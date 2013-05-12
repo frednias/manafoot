@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use \Manafoot\ComponentBundle\Database;
 use \Manafoot\ComponentBundle\Game;
 use \Manafoot\ComponentBundle\Event;
+use \Manafoot\ComponentBundle\Flash;
 
 class Elo {
 
@@ -20,7 +21,16 @@ class Elo {
         $sql = "insert into $schema.elh_elo_history select elo_tea_id,elo_points,{$event->getId()}, '{$event->getDate()}' from $schema.elo_elo";
         $db->query($sql);
 
+        $sql = "select tea_id,cou_name from g_2.elh_elo_history inner join tea_team on elh_tea_id=tea_id inner join ass_association on ass_id=tea_ass_id inner join cou_country on cou_id=ass_cou_id order by elh_points desc limit 5;";
+        $db->query($sql);
+        $first = $db->fetch();
+        $name = $first->cou_name;
+
         // new Message
+        $m = new Flash($schema);
+        $m->setSubject($event->getDescr());
+        $m->setBody("$name est en tête du classement");
+        $m->save();
 
         // next Elo publishing
         $d = new \DateTime($event->getDate());

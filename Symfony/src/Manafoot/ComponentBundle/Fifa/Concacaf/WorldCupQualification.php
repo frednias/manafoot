@@ -70,8 +70,8 @@ class WorldCupQualification {
         $matchs = array();
         $d1 = new \DateTime($event->getDate());
         $d2 = new \DateTime($event->getDate());
-        $x = 123;
-        $y = 130;
+        $x = 122;
+        $y = 129;
         $d1->modify("+$x day");
         $d2->modify("+$y day");
         for($m=1;$m<=$n-30;$m++) {
@@ -113,13 +113,12 @@ class WorldCupQualification {
         $e->setParams('{"ci":'.$ci->getId().'}');
         $e->save();
 
-        $body = "
-            <p>Le tirage au sort du 1er tour de qualification pour la Coupe du Monde zone Concacaf, a eu lieu aujourd'hui a Rio de Janeiro</p>
-            <p>Les matchs aller se derouleront le 11 juillet. les matchs retour le 18 juillet.</p>
+        $body = "Le tirage au sort du 1er tour de qualification pour la Coupe du Monde zone Concacaf, a eu lieu aujourd'hui a Rio de Janeiro</p>
+            <p>Les matchs aller se derouleront le 10 juillet. les matchs retour le 17 juillet.</p>
             <p>Les rencontres :<br>
             <ul>
                 $li
-            </ul></p>
+            </ul>
         ";
         $f = new Flash($schema);
         $f->setSubject('Tirage au sort du 1er tour de qualification pour la Coupe du Monde zone Concacaf');

@@ -37,6 +37,7 @@ class ContinueGameController extends Controller
             $twigParams = array(
                 'resumeDate' => $this->session->get('resumeDate'),
             );
+            return $this->redirect('/resume/'.$game->getName());
             return $this->render('ManafootGameBundle:ContinueGame:continue.html.twig', $twigParams);
         }
         else {
