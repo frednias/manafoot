@@ -17,3 +17,27 @@ continue:
 continue_fast:
     pattern: /continue/fast
     defaults: { _controller: ManafootGameBundle:ContinueGame:continueFast }
+
+fifa:
+    pattern: /fifa
+    defaults: { _controller: ManafootGameBundle:World:fifa }
+
+fifa_world_cup:
+    pattern: /fifa/worldCup
+    defaults: { _controller: ManafootGameBundle:World:fifaWorldCup }
+
+fifa_world_cup_edition:
+    pattern: /fifa/worldCup/{edition}
+    defaults: { _controller: ManafootGameBundle:World:fifaWorldCupEdition }
+
+fifa_concacaf_world_cup_qualification:
+    pattern: /fifa/concacaf/worldCupQualification
+    defaults: { _controller: ManafootGameBundle:World:fifaConcacafWorldCupQualification }
+
+fifa_concacaf_world_cup_qualification_edition:
+    pattern: /fifa/concacaf/worldCupQualification/{edition}
+    defaults: { _controller: ManafootGameBundle:World:fifaConcacafWorldCupQualificationEdition }
+
+fifa_concacaf:
+    pattern: /fifa/concacaf
+    defaults: { _controller: ManafootGameBundle:World:fifaConcacaf }

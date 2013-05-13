@@ -185,7 +185,7 @@ class WorldCupQualification {
         for($i=18;$i<=23;$i++) {
             $pot6[] = $data[$i]->elh_tea_id;
         }
-        $pot7 = array_merge($teamRound1,[$data[25]->elh_tea_id]);
+        $pot7 = array_merge($teamRound1,[$data[24]->elh_tea_id]);
 
         shuffle($pot4);
         shuffle($pot5);

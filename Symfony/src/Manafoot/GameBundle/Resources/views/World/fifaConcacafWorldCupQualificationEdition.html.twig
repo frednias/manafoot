@@ -1,0 +1,68 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Fifa - Manafoot{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<div class="row-fluid">
+  <div class="span2">
+    <ul class="nav nav-list">
+      <li class="nav-header">Home</li>
+      <li class="active"><a href="#">Overview</a></li>
+      <li class="nav-header">Organisations</li>
+      <li><a href="/fifa">FIFA</a></li>
+      <li><a href="#">UEFA</a></li>
+      ...
+    </ul>
+  </div>
+  <div class="span9">
+    <ul class="breadcrumb">
+        <li>Home <span class="divider">/</span></li>
+        <li>Fifa <span class="divider">/</span></li>
+        <li>Coupe du Monde  <span class="divider">/</span></li>
+        <li>{{edition}} <span class="divider">/</span></li>
+        <li class="active">Concacaf</li>
+    </ul>
+    <h1>Qualifications pour la Coupe du Monde {{edition}} - Zone Concacaf</h1>
+    <h2>Equipes engagées</h2>
+        <div style="column-count: 5; -moz-column-count: 5; -webkit-column-count: 5">
+        <ol>
+        {% for team in cpi_data %}
+            <li>{{team.cou_name}}
+        {% endfor %}
+        </ol>
+        </div>
+    <h2>Premier Tour</h2>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>Equipe 1</th>
+                    <th>Résultat</th>
+                    <th>Equipe 2</th>
+                    <th>Aller</th>
+                    <th>Retour</th>
+                    <th>t.a.b.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in duals %}
+                    <tr>
+                        <td>{{d.c2name}}</td>
+                        <td>{{d.mr2+d.ma1}} - {{d.ma2+d.mr1}}</td>
+                        <td>{{d.c1name}}</td>
+                        <td>{{d.ma1}} - {{d.ma2}}</td>
+                        <td>{{d.mr2}} - {{d.mr1}}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    <h2>2e tour</h2>
+  </div>
+  <div class="span1">
+  </div>
+</div>
+</div>
+
+{% endblock %}

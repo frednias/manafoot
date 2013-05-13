@@ -84,6 +84,21 @@ class Entity {
         $this->id = $id;
     }
 
+    public function findOne($params)
+    {
+        foreach ($params as $key => $value) {
+            $where = "$key = '$value' and";
+        }
+        $where = substr($where,0,-4);
+        $sql = "select * from ".static::$table." where $where";
+        $ress = pg_query($sql);
+        $res = pg_fetch_array($ress,null,PGSQL_ASSOC);
+        foreach($res as $key => $value) {
+            $this->params[$key] = $value;
+        }
+        $this->id = $this->params[static::$prefix.'id'];
+    }
+
     public function getId() {
         return $this->id;
     }

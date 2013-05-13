@@ -7,15 +7,23 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use \Manafoot\ComponentBundle\Database;
 use \Manafoot\ComponentBundle\Game;
 use \Manafoot\ComponentBundle\Event;
+use \Manafoot\ComponentBundle\Competition;
 
 class WorldCup {
 
     private $game;
     private $event;
 
+    const CPT_ID = 1;
+
     // must be set to third monday of july, 2010-07-19
     public function  start (Game $game, Event $event) {
 
+        $HOST_COUNTRY = array(
+            2014 => array('tea_id'=>44, 'host_name'=>'Brésil'),
+            2018 => array('tea_id'=>94, 'host_name'=>'Russie'),
+            2022 => array('tea_id'=>195, 'host_name'=>'Quatar'),
+        );
         $this->game = $game;
         $this->event = $event;
 
@@ -26,6 +34,13 @@ class WorldCup {
 
         $evt_date = new \DateTime($event->getDate());
         $year =  4 + $evt_date->format('Y');
+
+        $comp = new Competition($schema);
+        $comp->get(WorldCup::CPT_ID);
+        $ci_params = json_encode(array(
+            'year' => $year,
+        ));
+        $ci = $comp->makeInstance($year,json_encode($ci_params));
 
         // dispatch on every international federation
         // concacaf : 
@@ -39,7 +54,9 @@ class WorldCup {
         $d->modify('+234 day'); // 2011-03-10
 
         $params = json_encode(array(
-            'year' => $year
+            'year' => $year,
+            'host_tea_id' => $HOST_COUNTRY[$year]['tea_id'],
+            'master_ci_id' => $ci->getId(),
         ));
         $e = new Event($schema);
         $e->setDate($d->format('Y-m-d'));
@@ -59,21 +76,6 @@ class WorldCup {
         $event->save();
 
         // new Message
-
-/*
-        // next Elo publishing
-        $d = new \DateTime($event->getDate());
-        $d->modify('+1 month');
-        $e = new Event($schema);
-        $e->setDate($d->format('Y-m-d'));
-        $e->setAssociation(1);
-        $e->setFunction('Fifa.Elo.pub');
-        $e->setVisibility('foreground');
-        $e->setDescr('Classement mondial FIFA - '.$d->format('F Y'));
-        $e->setStatus('todo');
-        $e->save();
-*/
-
     }
 
 }

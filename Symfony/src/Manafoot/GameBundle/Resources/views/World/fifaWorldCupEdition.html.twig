@@ -1,0 +1,35 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Fifa - Manafoot{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<div class="row-fluid">
+  <div class="span2">
+    <ul class="nav nav-list">
+      <li class="nav-header">Home</li>
+      <li class="active"><a href="#">Overview</a></li>
+      <li class="nav-header">Organisations</li>
+      <li><a href="/fifa">FIFA</a></li>
+      <li><a href="#">UEFA</a></li>
+      ...
+    </ul>
+  </div>
+  <div class="span9">
+    <p>Home / Fifa / Coupe du Monde / {{edition}}
+    <p>Eliminatoires :
+    <ul>
+        <li><a href="/fifa/concacaf/worldCupQualification/{{edition}}">Zone Concacaf</a>
+        <li>Conmebol
+        <li>Uefa
+        <li>Afc
+        <li>Ofc
+        <li>Caf
+    </ul>
+  </div>
+  <div class="span1">
+  </div>
+</div>
+</div>
+
+{% endblock %}
