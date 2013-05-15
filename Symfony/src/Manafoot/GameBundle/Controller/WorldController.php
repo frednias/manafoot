@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use Manafoot\ComponentBundle\Database;
 use Manafoot\ComponentBundle\Competition;
+use Manafoot\ComponentBundle\Fifa;
 
 class WorldController extends Controller
 {
@@ -78,12 +79,34 @@ class WorldController extends Controller
         while ($obj = $this->db->fetch()) {
             $duals[] = $obj;
         }
-//print_r($duals);
+
+        // second round
+        $wcq = new Fifa\Concacaf\WorldCupQualification;
+        $cla2 = [];
+        $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g1%");
+        $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g2%");
+        $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g3%");
+        $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g4%");
+        $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g5%");
+        $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g6%");
+
+        // third round
+        $cla3 = [];
+        $cla3[] = $wcq->getRank($schema, $cpi->getId(), "3g1%");
+        $cla3[] = $wcq->getRank($schema, $cpi->getId(), "3g2%");
+        $cla3[] = $wcq->getRank($schema, $cpi->getId(), "3g3%");
+
+        // fourth round
+        $cla4 = [];
+        $cla4[] = $wcq->getRank($schema, $cpi->getId(), "4%");
+
+        $cla = [ $cla2, $cla3, $cla4 ];
 
         $twigParams = [
             'edition' => $edition,
             'cpi_data' => $cpi_data,
             'duals' => $duals,
+            'cla' => $cla,
         ];
         return $this->render('ManafootGameBundle:World:fifaConcacafWorldCupQualificationEdition.html.twig', $twigParams);
     }

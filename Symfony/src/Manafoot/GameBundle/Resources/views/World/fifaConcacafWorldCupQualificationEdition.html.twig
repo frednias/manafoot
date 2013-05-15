@@ -58,7 +58,44 @@
             </tbody>
         </table>
 
-    <h2>2e tour</h2>
+    {% for clat in cla %}
+    <h2>{{loop.index+1}}e tour</h2>
+        {% for clag in clat %}
+        <h3>Groupe {{loop.index}}</h3>
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                    <th>#</td>
+                    <th>Nom</td>
+                    <th>Pts</td>
+                    <th>J</td>
+                    <th>G</td>
+                    <th>N</td>
+                    <th>P</td>
+                    <th>Bp</td>
+                    <th>Bp</td>
+                    <th>Diff</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank in clag %}
+                        <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{rank.tea_name}}</td>
+                        <td>{{rank.pts}}</td>
+                        <td>{{rank.win+rank.draw+rank.lose}}</td>
+                        <td>{{rank.win}}</td>
+                        <td>{{rank.draw}}</td>
+                        <td>{{rank.lose}}</td>
+                        <td>{{rank.for}}</td>
+                        <td>{{rank.against}}</td>
+                        <td>{{rank.diff}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    {% endfor %}
   </div>
   <div class="span1">
   </div>

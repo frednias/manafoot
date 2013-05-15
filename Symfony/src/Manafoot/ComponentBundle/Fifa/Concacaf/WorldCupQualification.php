@@ -383,15 +383,30 @@ class WorldCupQualification {
         $qualteam = $f = $a = $w = $d = $l = $pts = $diff = [];
 
         $sql = "
-            select * 
+            select t1.tea_name as t1name, t2.tea_name as t2name, * 
             from $schema.mat_match  
+            inner join tea_team t1 on t1.tea_id=mat_tea_id__1
+            inner join tea_team t2 on t2.tea_id=mat_tea_id__2
             where mat_round like '$round' and mat_cpi_id='$cpi_id'
             order by mat_date asc;
         ";
         $db->query($sql);
         while ($obj = $db->fetch()) {
-            $listTeam[] = $obj->mat_tea_id__1;
-            $listTeam[] = $obj->mat_tea_id__2;
+            //$listTeam[] = array($obj->mat_tea_id__1,$obj->t1name);
+            //$listTeam[] = array($obj->mat_tea_id__2,$obj->t2name);
+            if (!isset($listTeam[$obj->mat_tea_id__1])) $listTeam[$obj->mat_tea_id__1] = $obj->t1name;
+            if (!isset($listTeam[$obj->mat_tea_id__2])) $listTeam[$obj->mat_tea_id__2] = $obj->t2name;
+
+            if (!isset($w[$obj->mat_tea_id__1])) $w[$obj->mat_tea_id__1] = 0;
+            if (!isset($d[$obj->mat_tea_id__1])) $d[$obj->mat_tea_id__1] = 0;
+            if (!isset($l[$obj->mat_tea_id__1])) $l[$obj->mat_tea_id__1] = 0;
+            if (!isset($f[$obj->mat_tea_id__1])) $f[$obj->mat_tea_id__1] = 0;
+            if (!isset($a[$obj->mat_tea_id__1])) $a[$obj->mat_tea_id__1] = 0;
+            if (!isset($w[$obj->mat_tea_id__2])) $w[$obj->mat_tea_id__2] = 0;
+            if (!isset($d[$obj->mat_tea_id__2])) $d[$obj->mat_tea_id__2] = 0;
+            if (!isset($l[$obj->mat_tea_id__2])) $l[$obj->mat_tea_id__2] = 0;
+            if (!isset($f[$obj->mat_tea_id__2])) $f[$obj->mat_tea_id__2] = 0;
+            if (!isset($a[$obj->mat_tea_id__2])) $a[$obj->mat_tea_id__2] = 0;
 
             if ($obj->mat_score__1 > $obj->mat_score__2) {
                 $w[$obj->mat_tea_id__1] ++;
@@ -412,11 +427,12 @@ class WorldCupQualification {
         }
         $listTeam = array_unique($listTeam);
         $cla = array();
-        foreach($listTeam as $n => $tea_id) {
+        foreach($listTeam as $tea_id => $tea_name) {
             $clan['tea_id'] = $tea_id;
+            $clan['tea_name'] = $tea_name;
             $clan['win'] = $w[$tea_id];
             $clan['draw'] = $d[$tea_id];
-            $clan['loose'] = $l[$tea_id];
+            $clan['lose'] = $l[$tea_id];
             $clan['for'] = $f[$tea_id];
             $clan['against'] = $a[$tea_id];
             $clan['pts'] = 3*$clan['win']+$clan['draw'];
