@@ -2,7 +2,7 @@
 
 namespace Manafoot\ComponentBundle\Fifa\Ofc;
 
-require "/home/www/manafoot.com/tests/autoload.php";
+//require "/home/www/manafoot.com/tests/autoload.php";
 
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -95,11 +95,12 @@ class WorldCupQualification {
 }
 
 
+/*
 $g = new Game;
 $g->load('g_5');
 $e = new Event('g_5');
 $e->load(6);
 $w = new WorldCupQualification;
 $w->start($g,$e);
-
+*/
 

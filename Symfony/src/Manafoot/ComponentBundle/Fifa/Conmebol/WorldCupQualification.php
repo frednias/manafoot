@@ -77,7 +77,7 @@ class WorldCupQualification {
         $e->setAssociation(15);
         $e->setFunction('Fifa.Conmebol.WorldCupQualification.barrage');
         $e->setVisibility('foreground');
-        $e->setDescr('Fin du tour preliminaire de la Coupe du Monde, zone Concacaf');
+        $e->setDescr('Fin du tour preliminaire de la Coupe du Monde, zone Conmebol');
         $e->setStatus('todo');
         $e->setParams('{"ci":'.$ci->getId().'}');
         $e->save();
