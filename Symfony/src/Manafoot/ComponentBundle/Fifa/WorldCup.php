@@ -80,6 +80,15 @@ class WorldCup {
         $e->setStatus('todo');
         $e->save();
 
+        $e = new Event($schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setDescr('Tirage au sort des éliminatoires de la coupe du monde de football 2014 : zone Océanie');
+        $e->setAssociation(14);
+        $e->setFunction('Fifa.Ofc.WorldCupQualification.start');
+        $e->setParams($params);
+        $e->setVisibility('foreground');
+        $e->setStatus('todo');
+        $e->save();
 
         $event->setStatus('ok');
         $event->save();

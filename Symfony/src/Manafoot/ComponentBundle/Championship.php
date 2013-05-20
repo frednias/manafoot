@@ -8,7 +8,7 @@ use \Manafoot\ComponentBundle\Database;
 
 class Championship {
 
-    public function roundRobin($schema, $items, $ci, $schedule = null, $prefix = '') {
+    public function roundRobin($schema, $items, $ci, $schedule = null, $prefix = '', $homeaway = true) {
         $n = count($items);
         if ($n%2==1) $items[] = 0;
         $n = count($items);
@@ -60,16 +60,18 @@ class Championship {
                     $mat1->setType(2);
                     $mat1->save();
 
-                    $rr = $round + $nc;
+                    if ($homeaway) {
+                        $rr = $round + $nc;
 
-                    $mat2 = new Match($schema);
-                    $mat2->setCompetitionInstance($ci->getId());
-                    $mat2->setRound($prefix.$rr);
-                    $mat2->setTeam1($dual[0]);
-                    $mat2->setTeam2($dual[1]);
-                    $mat2->setDate($schedule[$rr]);
-                    $mat2->setType(2);
-                    $mat2->save();
+                        $mat2 = new Match($schema);
+                        $mat2->setCompetitionInstance($ci->getId());
+                        $mat2->setRound($prefix.$rr);
+                        $mat2->setTeam1($dual[0]);
+                        $mat2->setTeam2($dual[1]);
+                        $mat2->setDate($schedule[$rr]);
+                        $mat2->setType(2);
+                        $mat2->save();
+                    }
                 }
             }
         }

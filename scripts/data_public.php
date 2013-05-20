@@ -12,6 +12,7 @@ INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (15,'CONMABOL',N
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (16,'CONCACAF',NULL);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone CONCACAF', 16, 40);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone CONMEBOL', 15, 40);
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone Océanie', 14, 40);
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (101,'Union nord-américaine de football',NULL);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (16,101);
