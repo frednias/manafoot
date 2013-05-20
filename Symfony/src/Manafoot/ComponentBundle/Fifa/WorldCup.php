@@ -68,8 +68,17 @@ class WorldCup {
         $e->setStatus('todo');
         $e->save();
 
-        //$concacaf = new Concacaf/WorldCupQualification;
-        //$concacaf->start($game, $event);
+        $d->modify('+142 day'); // 2011-07-30
+
+        $e = new Event($schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setDescr('Tirage au sort des éliminatoires de la coupe du monde de football 2014 : zone Conmebol');
+        $e->setAssociation(15);
+        $e->setFunction('Fifa.Conmebol.WorldCupQualification.start');
+        $e->setParams($params);
+        $e->setVisibility('foreground');
+        $e->setStatus('todo');
+        $e->save();
 
 
         $event->setStatus('ok');
