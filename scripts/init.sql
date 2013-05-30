@@ -48,7 +48,8 @@ CREATE TABLE init.mat_match (
     mat_date DATE,
     mat_mtt_id INTEGER,
     mat_tab__1 INTEGER,
-    mat_tab__2 INTEGER
+    mat_tab__2 INTEGER,
+    mat_played BOOLEAN
 );
 
 CREATE TABLE init.fla_flash (

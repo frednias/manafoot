@@ -2,7 +2,8 @@
 
 namespace Manafoot\ComponentBundle;
 
-//require('../../../../tests/autoload.php');
+//require(__DIR__.'/../../../../tests/autoload.php');
+
 use \Manafoot\ComponentBundle\Entity;
 use \Manafoot\ComponentBundle\Database;
 
@@ -136,12 +137,17 @@ class Match extends Entity {
 
             $mat->setScore1($goal1);
             $mat->setScore2($goal2);
+            $mat->setPlayed(1);
             $mat->save();
 
             list($newelo1,$newelo2) = $elo->computeNewElo($elo1,$elo2,$goal1,$goal2,$K);
             $elo->update($schema, $match->mat_tea_id__1, $newelo1);
             $elo->update($schema, $match->mat_tea_id__2, $newelo2);
         }
+    }
+
+    public function setPlayed($played) {
+        $this->params['mat_played'] = $played;
     }
 
     public function tab($est) {
@@ -171,8 +177,8 @@ class Match extends Entity {
 
 /*
 $g = new Game;
-$g->load('g_4');
-$w = new Match('g_4');
+$g->load('g_5');
+$w = new Match('g_5');
 $w->computeAll($g->getResumeDate());
 */
 
