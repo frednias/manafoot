@@ -51,13 +51,15 @@ class WorldCup {
         // caf
 
         $d = new \DateTime($game->getResumeDate());
-        $d->modify('+234 day'); // 2011-03-10
+        $d->modify('+254 day'); // 2011-03-30
 
         $params = json_encode(array(
             'year' => $year,
             'host_tea_id' => $HOST_COUNTRY[$year]['tea_id'],
             'master_ci_id' => $ci->getId(),
+            'master_cpi_id' => $ci->getId(),
         ));
+
         $e = new Event($schema);
         $e->setDate($d->format('Y-m-d'));
         $e->setDescr('Tirage au sort des éliminatoires de la coupe du monde de football 2014 : zone Concacaf');
@@ -68,7 +70,17 @@ class WorldCup {
         $e->setStatus('todo');
         $e->save();
 
-        $d->modify('+142 day'); // 2011-07-30
+        $e = new Event($schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setDescr('Tirage au sort des éliminatoires de la coupe du monde de football 2014 : zone Asie');
+        $e->setAssociation(13);
+        $e->setFunction('Fifa.Afc.WorldCupQualification.start');
+        $e->setParams($params);
+        $e->setVisibility('foreground');
+        $e->setStatus('todo');
+        $e->save();
+
+        $d->modify('+122 day'); // 2011-07-30
 
         $e = new Event($schema);
         $e->setDate($d->format('Y-m-d'));
