@@ -81,7 +81,7 @@ class Championship {
     }
 
     // compute ranking
-    public function getRank($schema, $cpi_id, $round = '%') {
+    public function getRank($schema, $cpi_id, $round = '%', $withoutTeam = '0') {
         $db = new Database;
         $listTeam = [];
         $qualteam = $f = $a = $w = $d = $l = $pts = $diff = [];
@@ -93,8 +93,11 @@ class Championship {
             inner join tea_team t2 on t2.tea_id=mat_tea_id__2
             where mat_round like '$round' and mat_cpi_id='$cpi_id'
             and mat_played=true
+            and mat_tea_id__1 != $withoutTeam
+            and mat_tea_id__2 != $withoutTeam
             order by mat_date asc;
         ";
+
         $db->query($sql);
         while ($obj = $db->fetch()) {
             //$listTeam[] = array($obj->mat_tea_id__1,$obj->t1name);
@@ -156,6 +159,18 @@ class Championship {
         return $cla;
     }
 
+    public function sort($listTeam) {
+        for ($i=0;$i<count($listTeam)-1;$i++) {
+            for ($j=$i;$j<count($listTeam);$j++) {
+                if ($listTeam[$i]['pts'] < $listTeam[$j]['pts'] || $listTeam[$i]['pts'] == $listTeam[$j]['pts'] && $listTeam[$i]['diff'] < $listTeam[$j]['diff']) {
+                    $tmp = $listTeam[$i];
+                    $listTeam[$i] = $listTeam[$j];
+                    $listTeam[$j] = $tmp;
+                }
+            }
+        }
+        return $listTeam;
+    }
 }
 
 /*

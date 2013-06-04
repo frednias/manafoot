@@ -39,8 +39,9 @@ class WorldCup {
         $comp->get(WorldCup::CPT_ID);
         $ci_params = json_encode(array(
             'year' => $year,
+            'qualTeams' => [],
         ));
-        $ci = $comp->makeInstance($year,json_encode($ci_params));
+        $ci = $comp->makeInstance($year,$ci_params);
 
         // dispatch on every international federation
         // concacaf : 
@@ -112,10 +113,32 @@ class WorldCup {
         $e->setStatus('todo');
         $e->save();
 
+        $e = new Event($schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setDescr('Tirage au sort des éliminatoires de la coupe du monde de football 2014 : zone Europe');
+        $e->setAssociation(11);
+        $e->setFunction('Fifa.Uefa.WorldCupQualification.start');
+        $e->setParams($params);
+        $e->setVisibility('foreground');
+        $e->setStatus('todo');
+        $e->save();
+
         $event->setStatus('ok');
         $event->save();
 
         // new Message
+    }
+
+    public function addQualifiedTeams ($schema, $cpi_id, $ass_id, $teams) {
+        $cpi = new Competition\Instance($schema);
+        $cpi->get($cpi_id);
+        $data = json_decode($cpi->getData());
+        $col = "qualified_$ass_id";
+        $haveTeams = is_array($data->$col) ? $data->$col : [] ;
+        $haveTeams = array_merge($haveTeams,$teams);
+        $data->$col = $haveTeams;
+        $cpi->setData(json_encode($data));
+        $cpi->save();
     }
 
 }
