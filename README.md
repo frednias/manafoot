@@ -2,4 +2,4 @@ manafoot
 ========
 
 Currently suppport :
-* World Cup preliminary of all 6 worldwide confederation
+* World Cup qualification of all 6 worldwide confederation
