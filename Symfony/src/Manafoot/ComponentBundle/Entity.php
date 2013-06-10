@@ -86,8 +86,9 @@ class Entity {
 
     public function findOne($params)
     {
+        $where = '';
         foreach ($params as $key => $value) {
-            $where = "$key = '$value' and";
+            $where .= "$key = '$value' and ";
         }
         $where = substr($where,0,-4);
         $sql = "select * from ".static::$table." where $where";

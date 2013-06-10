@@ -39,7 +39,7 @@ class WorldCup {
         $comp->get(WorldCup::CPT_ID);
         $ci_params = json_encode(array(
             'year' => $year,
-            'qualTeams' => [],
+            'host_tea_id' => $HOST_COUNTRY[$year]['tea_id'],
         ));
         $ci = $comp->makeInstance($year,$ci_params);
 
@@ -137,6 +137,15 @@ class WorldCup {
         $haveTeams = is_array($data->$col) ? $data->$col : [] ;
         $haveTeams = array_merge($haveTeams,$teams);
         $data->$col = $haveTeams;
+        $cpi->setData(json_encode($data));
+        $cpi->save();
+    }
+    public function addPlayoffTeam ($schema, $cpi_id, $ass_id, $tea_id) {
+        $cpi = new Competition\Instance($schema);
+        $cpi->get($cpi_id);
+        $data = json_decode($cpi->getData());
+        $col = "playoff_$ass_id";
+        $data->$col = $tea_id;
         $cpi->setData(json_encode($data));
         $cpi->save();
     }

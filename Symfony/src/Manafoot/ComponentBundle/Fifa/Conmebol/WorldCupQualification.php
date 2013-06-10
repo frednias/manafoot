@@ -15,6 +15,7 @@ use \Manafoot\ComponentBundle\Match;
 use \Manafoot\ComponentBundle\Flash;
 use \Manafoot\ComponentBundle\Championship;
 use \Manafoot\ComponentBundle\Team;
+use \Manafoot\ComponentBundle\Fifa;
 
 class WorldCupQualification {
 
@@ -51,6 +52,11 @@ class WorldCupQualification {
         }
         $n = count($teams);
 
+        $data = json_encode(array(
+            'teams' => $teams,
+            'master_cpi_id' => $params->master_cpi_id
+        ));
+
         // insert new cpi
         $comp = new Competition($schema);
         $comp->get(WorldCupQualification::CPT_ID);
@@ -79,18 +85,38 @@ class WorldCupQualification {
         $e->setVisibility('foreground');
         $e->setDescr('Fin du tour preliminaire de la Coupe du Monde, zone Conmebol');
         $e->setStatus('todo');
-        $e->setParams('{"ci":'.$ci->getId().'}');
+        $e->setParams('{"cpi_id":'.$ci->getId().'}');
         $e->save();
+    }
 
+    public function barrage($game, $event) {
+        $db = new Database;
+        $schema = $game->getName();
+        $evtId = $event->getId();
+        $teams = array();
+        $params = json_decode($event->getParams());
+        $hostTeamId = $params->host_tea_id;
+        $ch = new Championship;
+
+        $cpi = new Competition\Instance($schema);
+        $cpi->get($params->cpi_id);
+        $data = json_decode($cpi->getData());
+    
+
+        $rank = $ch->getRank($schema, $params->cpi_id, "%");
+        $qualTeams = [ $rank[0]['tea_id'], $rank[1]['tea_id'], $rank[2]['tea_id'], $rank[3]['tea_id'] ];
+        $wc = new Fifa\WorldCup;
+        $wc->addQualifiedTeams($schema, $data->master_cpi_id,15,$qualTeams);
+        $wc->addPlayoffTeam($schema, $data->master_cpi_id, 15, $rank[4]['tea_id']);
     }
 }
 
 /*
 $g = new Game;
-$g->load('g_5');
-$e = new Event('g_5');
-$e->load(4);
+$g->load('g_9');
+$e = new Event('g_9');
+$e->load(19);
 $w = new WorldCupQualification;
-$w->start($g,$e);
+$w->barrage($g,$e);
 */
 

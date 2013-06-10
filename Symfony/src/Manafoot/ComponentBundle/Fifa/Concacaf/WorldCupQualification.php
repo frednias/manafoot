@@ -15,6 +15,7 @@ use \Manafoot\ComponentBundle\Match;
 use \Manafoot\ComponentBundle\Flash;
 use \Manafoot\ComponentBundle\Championship;
 use \Manafoot\ComponentBundle\Team;
+use \Manafoot\ComponentBundle\Fifa;
 
 class WorldCupQualification {
 
@@ -32,6 +33,7 @@ class WorldCupQualification {
         $teams = array();
         $params = json_decode($event->getParams());
         $li = '';
+        $hostTeamId = $params->host_tea_id;
 
         // find and sort available team by elo points
         $sql = "
@@ -42,6 +44,7 @@ class WorldCupQualification {
             INNER JOIN lk_mbr_ass a2       ON (a2.mbr_ass_id__slave=ass_id and a2.mbr_ass_id__master=1) 
             INNER JOIN $schema.elh_elo_history ON (elh_tea_id=cou_id)
             WHERE elh_date = (select max(elh_date) from $schema.elh_elo_history)
+            AND elh_tea_id <> $hostTeamId
             ORDER BY elh_points desc";        
 
         $db->query($sql);
@@ -51,7 +54,10 @@ class WorldCupQualification {
 
         $n = count($teams);
 
-        $data = json_encode($teams);
+        $data = json_encode(array(
+            'teams' => $teams,
+            'master_cpi_id' => $params->master_cpi_id,
+        ));
 
         $comp = new Competition($schema);
         $comp->get(WorldCupQualification::CPT_ID);
@@ -70,8 +76,8 @@ class WorldCupQualification {
         $matchs = array();
         $d1 = new \DateTime($event->getDate());
         $d2 = new \DateTime($event->getDate());
-        $x = 122;
-        $y = 129;
+        $x = 102;
+        $y = 109;
         $d1->modify("+$x day");
         $d2->modify("+$y day");
         for($m=1;$m<=$n-30;$m++) {
@@ -103,7 +109,7 @@ class WorldCupQualification {
         }
 
         $d = new \DateTime($event->getDate());
-        $d->modify('+131 day');
+        $d->modify('+111 day'); // 2011-07-19
 
         $e = new Event($schema);
         $e->setDate($d->format('Y-m-d'));
@@ -179,15 +185,15 @@ class WorldCupQualification {
         $pot6 = [];
         $pot7 = [];
         for($i=6;$i<=11;$i++) {
-            $pot4[] = $data[$i]->elh_tea_id;
+            $pot4[] = $data->teams[$i]->elh_tea_id;
         }
         for($i=12;$i<=17;$i++) {
-            $pot5[] = $data[$i]->elh_tea_id;
+            $pot5[] = $data->teams[$i]->elh_tea_id;
         }
         for($i=18;$i<=23;$i++) {
-            $pot6[] = $data[$i]->elh_tea_id;
+            $pot6[] = $data->teams[$i]->elh_tea_id;
         }
-        $pot7 = array_merge($teamRound1,[$data[24]->elh_tea_id]);
+        $pot7 = array_merge($teamRound1,[$data->teams[24]->elh_tea_id]);
 
         shuffle($pot4);
         shuffle($pot5);
@@ -249,12 +255,13 @@ class WorldCupQualification {
         $ci = new Competition\Instance($schema);
         $ci->get($ci_id);
         $data = json_decode($ci->getData());
+        $ch = new Championship;
 
-        $pot1 = [$data[0]->elh_tea_id, $data[1]->elh_tea_id, $data[2]->elh_tea_id];
-        $pot2 = [$data[3]->elh_tea_id, $data[4]->elh_tea_id, $data[5]->elh_tea_id];
+        $pot1 = [$data->teams[0]->elh_tea_id, $data->teams[1]->elh_tea_id, $data->teams[2]->elh_tea_id];
+        $pot2 = [$data->teams[3]->elh_tea_id, $data->teams[4]->elh_tea_id, $data->teams[5]->elh_tea_id];
 
         for($g=1;$g<=6;$g++) {
-            $cla = $this->getRank($schema, $ci_id, "2g$g%");
+            $cla = $ch->getRank($schema, $ci_id, "2g$g%");
             $pot3[] = $cla[0]['tea_id'];
         }
 
@@ -311,10 +318,11 @@ class WorldCupQualification {
         $ci = new Competition\Instance($schema);
         $ci->get($ci_id);
         $data = json_decode($ci->getData());
+        $ch = new Championship;
 
         $pot = [];
         for($g=1;$g<=3;$g++) {
-            $cla = $this->getRank($schema, $ci_id, "3g$g%");
+            $cla = $ch->getRank($schema, $ci_id, "3g$g%");
             $pot[] = $cla[0]['tea_id'];
             $pot[] = $cla[1]['tea_id']; // first and second qualifier
         }
@@ -369,98 +377,27 @@ class WorldCupQualification {
         $ci = new Competition\Instance($schema);
         $ci->get($ci_id);
         $data = json_decode($ci->getData());
+        $ch = new Championship;
 
-        $cla = $this->getRank($schema, $ci_id, "4g%");
+        $rank = $ch->getRank($schema, $ci_id, "4g%");
+        $qualTeams = [ $rank[0]['tea_id'], $rank[1]['tea_id'], $rank[2]['tea_id'] ];
 
-        foreach($cla as $rank) {
-            $team = new Team;
-            $team->get($rank['tea_id']);
-            echo $team->getName()."\n";
-        }
+        $wc = new Fifa\WorldCup;
+        $wc->addQualifiedTeams($schema, $data->master_cpi_id,16,$qualTeams);
+        $wc->addPlayoffTeam($schema, $data->master_cpi_id,16,$rank[3]['tea_id']);
+
     }
 
-    public function getRank($schema, $cpi_id, $round = '%') {
-        $db = new Database;
-        $listTeam = [];
-        $qualteam = $f = $a = $w = $d = $l = $pts = $diff = [];
-
-        $sql = "
-            select t1.tea_name as t1name, t2.tea_name as t2name, * 
-            from $schema.mat_match  
-            inner join tea_team t1 on t1.tea_id=mat_tea_id__1
-            inner join tea_team t2 on t2.tea_id=mat_tea_id__2
-            where mat_round like '$round' and mat_cpi_id='$cpi_id'
-            order by mat_date asc;
-        ";
-        $db->query($sql);
-        while ($obj = $db->fetch()) {
-            //$listTeam[] = array($obj->mat_tea_id__1,$obj->t1name);
-            //$listTeam[] = array($obj->mat_tea_id__2,$obj->t2name);
-            if (!isset($listTeam[$obj->mat_tea_id__1])) $listTeam[$obj->mat_tea_id__1] = $obj->t1name;
-            if (!isset($listTeam[$obj->mat_tea_id__2])) $listTeam[$obj->mat_tea_id__2] = $obj->t2name;
-
-            if (!isset($w[$obj->mat_tea_id__1])) $w[$obj->mat_tea_id__1] = 0;
-            if (!isset($d[$obj->mat_tea_id__1])) $d[$obj->mat_tea_id__1] = 0;
-            if (!isset($l[$obj->mat_tea_id__1])) $l[$obj->mat_tea_id__1] = 0;
-            if (!isset($f[$obj->mat_tea_id__1])) $f[$obj->mat_tea_id__1] = 0;
-            if (!isset($a[$obj->mat_tea_id__1])) $a[$obj->mat_tea_id__1] = 0;
-            if (!isset($w[$obj->mat_tea_id__2])) $w[$obj->mat_tea_id__2] = 0;
-            if (!isset($d[$obj->mat_tea_id__2])) $d[$obj->mat_tea_id__2] = 0;
-            if (!isset($l[$obj->mat_tea_id__2])) $l[$obj->mat_tea_id__2] = 0;
-            if (!isset($f[$obj->mat_tea_id__2])) $f[$obj->mat_tea_id__2] = 0;
-            if (!isset($a[$obj->mat_tea_id__2])) $a[$obj->mat_tea_id__2] = 0;
-
-            if ($obj->mat_score__1 > $obj->mat_score__2) {
-                $w[$obj->mat_tea_id__1] ++;
-                $l[$obj->mat_tea_id__2] ++;
-            }
-            else if ($obj->mat_score__1 < $obj->mat_score__2) {
-                $l[$obj->mat_tea_id__1] ++;
-                $w[$obj->mat_tea_id__2] ++;
-            }
-            else {
-                $d[$obj->mat_tea_id__1] ++;
-                $d[$obj->mat_tea_id__2] ++;
-            }
-            $f[$obj->mat_tea_id__1] += $obj->mat_score__1;
-            $f[$obj->mat_tea_id__2] += $obj->mat_score__2;
-            $a[$obj->mat_tea_id__1] += $obj->mat_score__2;
-            $a[$obj->mat_tea_id__2] += $obj->mat_score__1;
-        }
-        $listTeam = array_unique($listTeam);
-        $cla = array();
-        foreach($listTeam as $tea_id => $tea_name) {
-            $clan['tea_id'] = $tea_id;
-            $clan['tea_name'] = $tea_name;
-            $clan['win'] = $w[$tea_id];
-            $clan['draw'] = $d[$tea_id];
-            $clan['lose'] = $l[$tea_id];
-            $clan['for'] = $f[$tea_id];
-            $clan['against'] = $a[$tea_id];
-            $clan['pts'] = 3*$clan['win']+$clan['draw'];
-            $clan['diff'] = $clan['for'] - $clan['against'];
-            $cla[] = $clan;
-        }
-        for ($i=0;$i<count($listTeam)-1;$i++) {
-            for ($j=$i;$j<count($listTeam);$j++) {
-                if ($cla[$i]['pts'] < $cla[$j]['pts'] || $cla[$i]['pts'] == $cla[$j]['pts'] && $cla[$i]['diff'] < $cla[$j]['diff']) {
-                    $tmp = $cla[$i];
-                    $cla[$i] = $cla[$j];
-                    $cla[$j] = $tmp;
-                }
-            }
-        }
-        return $cla;
-    }
 
 }
 
 /*
 $g = new Game;
-$g->load('g_4');
-$e = new Event('g_4');
-$e->load(26);
+$g->load('g_13');
+$e = new Event('g_13');
+$e->load(43);
 $w = new WorldCupQualification;
 $w->barrage($g,$e);
 */
+
 

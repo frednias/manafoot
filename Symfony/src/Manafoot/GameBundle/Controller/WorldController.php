@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Manafoot\ComponentBundle\Database;
 use Manafoot\ComponentBundle\Competition;
 use Manafoot\ComponentBundle\Fifa;
+use Manafoot\ComponentBundle\Championship;
+use Manafoot\ComponentBundle\Cup;
 
 class WorldController extends Controller
 {
@@ -35,6 +37,13 @@ class WorldController extends Controller
     }
     public function fifaWorldCupEditionAction($edition)
     {
+        $cpi = new Competition\Instance($this->schema);
+        $cpi->findOne(array(
+            'cpi_cpt_id' => 1,
+            'cpi_milesime' => $edition,
+        ));
+        $cpi_data = json_decode($cpi->getData());
+print_r($cpi_data);
         $twigParams = [
             'edition' => $edition
         ];
@@ -62,7 +71,7 @@ class WorldController extends Controller
 
         // first round
         $sql = "
-            select mr.mat_tea_id__1, mr.mat_tea_id__2, mr.mat_score__1 as mr1, mr.mat_score__2 as mr2, mr.mat_tab__1, mr.mat_tab__2, ma.mat_score__1 as ma1, ma.mat_score__2 as ma2, c1.cou_name as c1name, c2.cou_name as c2name
+            select mr.mat_tea_id__1, mr.mat_tea_id__2, mr.mat_score__1 as mr1, mr.mat_score__2 as mr2, mr.mat_tab__1 as tab1, mr.mat_tab__2 as tab2, ma.mat_score__1 as ma1, ma.mat_score__2 as ma2, c1.cou_name as c1name, c2.cou_name as c2name
             from $schema.mat_match mr
             inner join $schema.mar_match_referer on mar_mat_id=mat_id
             inner join $schema.mat_match ma on mar_mat_id__referer=ma.mat_id
@@ -81,7 +90,7 @@ class WorldController extends Controller
         }
 
         // second round
-        $wcq = new Fifa\Concacaf\WorldCupQualification;
+        $wcq = new Championship;
         $cla2 = [];
         $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g1%");
         $cla2[] = $wcq->getRank($schema, $cpi->getId(), "2g2%");
