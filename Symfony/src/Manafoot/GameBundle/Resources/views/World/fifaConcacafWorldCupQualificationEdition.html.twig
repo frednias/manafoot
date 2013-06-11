@@ -27,7 +27,7 @@
     <h2>Equipes engagées</h2>
         <div style="column-count: 5; -moz-column-count: 5; -webkit-column-count: 5">
         <ol>
-        {% for team in cpi_data %}
+        {% for team in cpi_data.teams %}
             <li>{{team.cou_name}}
         {% endfor %}
         </ol>
