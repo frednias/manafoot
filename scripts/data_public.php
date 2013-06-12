@@ -16,6 +16,7 @@ INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualifi
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone Asie', 13, 40);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone Afrique', 12, 40);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone Europe', 11, 40);
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Barrages de la Coupe du Monde', 1, 40);
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (101,'Union nord-américaine de football',NULL);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (16,101);

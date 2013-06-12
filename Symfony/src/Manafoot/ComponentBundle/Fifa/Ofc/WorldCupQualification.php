@@ -15,6 +15,7 @@ use \Manafoot\ComponentBundle\Match;
 use \Manafoot\ComponentBundle\Flash;
 use \Manafoot\ComponentBundle\Championship;
 use \Manafoot\ComponentBundle\Team;
+use \Manafoot\ComponentBundle\Fifa;
 
 class WorldCupQualification {
 
@@ -57,7 +58,7 @@ class WorldCupQualification {
         $comp->get(WorldCupQualification::CPT_ID);
         $data = json_encode(array(
             'teams' => $teams,
-            'master_ci_id' => $params->master_ci_id,
+            'master_cpi_id' => $params->master_cpi_id,
         ));
         $ci = $comp->makeInstance($params->year,$data);
 
@@ -204,6 +205,9 @@ class WorldCupQualification {
         $rank = $chrr->getRank($schema, $params->cpi_id, "3.%");
         $bar = $rank[0]['tea_id'];
 
+        $wc = new Fifa\WorldCup;
+        $wc->addPlayoffTeam($schema, $cpi_data->master_cpi_id,14,$rank[0]['tea_id']);
+
         $flash = new Flash($schema);
         $flash->setSubject($rank[0]['tea_name']." se qualifie pour les barrages de la Coupe du Monde");
         $flash->setBody($rank[0]['tea_name']." termine 1er de son groupe de qualification pour la Coupe du Monde et se qualifie pour le match de barrage contre un representant de la zone Concacaf");
@@ -213,11 +217,10 @@ class WorldCupQualification {
 
 /*
 $g = new Game;
-$g->load('g_5');
-$e = new Event('g_5');
-$e->load(14);
+$g->load('g_13');
+$e = new Event('g_13');
+$e->load(36);
 $w = new WorldCupQualification;
 $w->barrage($g,$e);
 */
-
 

@@ -2,7 +2,7 @@
 
 namespace Manafoot\ComponentBundle\Fifa\Afc;
 
-require "/home/www/manafoot.com/tests/autoload.php";
+//require "/home/www/manafoot.com/tests/autoload.php";
 
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -16,6 +16,7 @@ use \Manafoot\ComponentBundle\Flash;
 use \Manafoot\ComponentBundle\Championship;
 use \Manafoot\ComponentBundle\Cup;
 use \Manafoot\ComponentBundle\Team;
+use \Manafoot\ComponentBundle\Fifa;
 use \Manafoot\ComponentBundle\Utils\Range;
 
 class WorldCupQualification {
@@ -286,6 +287,7 @@ class WorldCupQualification {
         $rank2 = $ch->getRank($this->schema, $this->cpi->getId(), "4g2%");
 
         // two first of each group go to WC
+        $quals = [ $rank1[0]['tea_id'], $rank1[1]['tea_id'], $rank2[0]['tea_id'], $rank2[1]['tea_id'] ];
         // 3rd go to playoff
 
         $d = new \DateTime($event->getDate()); // 2013-06-19
@@ -305,6 +307,9 @@ class WorldCupQualification {
         $e->setStatus('todo');
         $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
         $e->save();
+
+        $wc = new Fifa\WorldCup;
+        $wc->addQualifiedTeams($this->schema, $this->cpi_data->master_cpi_id,13,$quals);
     }
 
     public function barrage($game,$event) {
@@ -312,16 +317,20 @@ class WorldCupQualification {
         $cup = new Cup;
 
         $qualTeams = $cup->getQualifiedTeams($game, $this->cpi->getId(), '5b');
-
         // will go to barrage against conmebol
+
+        $wc = new Fifa\WorldCup;
+        $wc->addPlayoffTeam($this->schema, $this->cpi_data->master_cpi_id,13,$qualTeams[0]);
     }
 }
 
+/*
 $g = new Game;
-$g->load('g_6');
-$e = new Event('g_6');
-$e->load(17);
+$g->load('g_14');
+$e = new Event('g_14');
+$e->load(52);
 $w = new WorldCupQualification;
 $w->barrage($g,$e);
+*/
 
 

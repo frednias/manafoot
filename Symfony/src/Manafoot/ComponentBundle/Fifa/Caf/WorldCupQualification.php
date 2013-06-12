@@ -16,6 +16,7 @@ use \Manafoot\ComponentBundle\Flash;
 use \Manafoot\ComponentBundle\Championship;
 use \Manafoot\ComponentBundle\Cup;
 use \Manafoot\ComponentBundle\Team;
+use \Manafoot\ComponentBundle\Fifa;
 use \Manafoot\ComponentBundle\Utils\Range;
 
 /*
@@ -204,30 +205,33 @@ class WorldCupQualification {
 
         $qualTeams = $cup->getQualifiedTeams($game, $this->cpi->getId(), '3b');
 
-        $d = new \DateTime($event->getDate());
-        $d->modify("+1 days");
-        $e = new Event($this->schema);
-        $e->setDate($d->format('Y-m-d'));
-        $e->setAssociation(13);
-        $e->setFunction('Fifa.Afc.WorldCupQualification.barrage');
-        $e->setVisibility('foreground');
-        $e->setDescr('Tirage au sort du barrage de la Coupe du Monde, zone Asie');
-        $e->setStatus('todo');
-        $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
-        //$e->save();
-
+        $li = '';
+        foreach($qualTeams as $tea_id) {
+            $team = new Team($this->schema);
+            $team->get($tea_id);
+            $li .= "<li>".$team->getName()."</li>";
+        }
         $fla = new Flash($this->schema);
-        
+        $fla->setSubject('Qualifications des équipes africaines pour la Coupe du Monde');
+        $fla->setBody("<p>Les équipes suivantes se sont qualifiés pour la Coupe du Monde, à l'issue du dernier tour :
+                        <ul>
+                            $li
+                        </ul>");
+        $fla->save();
+
+        $wc = new Fifa\WorldCup;
+        $wc->addQualifiedTeams($this->schema, $this->cpi_data->master_cpi_id,12,$qualTeams);
     }
 
 }
 
 /*
 $g = new Game;
-$g->load('g_7');
-$e = new Event('g_7');
-$e->load(12);
+$g->load('g_16');
+$e = new Event('g_16');
+$e->load(55);
 $w = new WorldCupQualification;
 $w->end($g,$e);
 */
+
 

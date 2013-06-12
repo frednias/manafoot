@@ -2,11 +2,14 @@
 
 namespace Manafoot\ComponentBundle\Fifa;
 
+require "/home/www/manafoot.com/tests/autoload.php";
+
 use Symfony\Component\HttpFoundation\Session\Session;
 
 use \Manafoot\ComponentBundle\Database;
 use \Manafoot\ComponentBundle\Game;
 use \Manafoot\ComponentBundle\Event;
+use \Manafoot\ComponentBundle\Cup;
 use \Manafoot\ComponentBundle\Competition;
 
 class WorldCup {
@@ -15,6 +18,7 @@ class WorldCup {
     private $event;
 
     const CPT_ID = 1;
+    const PLAYOFF_CPT_ID = 8;
 
     // must be set to third monday of july, 2010-07-19
     public function  start (Game $game, Event $event) {
@@ -44,12 +48,6 @@ class WorldCup {
         $ci = $comp->makeInstance($year,$ci_params);
 
         // dispatch on every international federation
-        // concacaf : 
-        // conmebol
-        // afc
-        // uefa
-        // ofc
-        // caf
 
         $d = new \DateTime($game->getResumeDate());
         $d->modify('+254 day'); // 2011-03-30
@@ -123,10 +121,78 @@ class WorldCup {
         $e->setStatus('todo');
         $e->save();
 
+        // will set international playoff
+        $d = new \DateTime($game->getResumeDate()); // back to 2010-07-19
+        $d->modify('+1186 days');
+
+        $e = new Event($schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setDescr('Tirage au sort des barrages de la coupe du monde de football 2014');
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.barrage');
+        $e->setParams($params);
+        $e->setVisibility('foreground');
+        $e->setStatus('todo');
+        $e->save();
+
+
         $event->setStatus('ok');
         $event->save();
 
         // new Message
+    }
+
+    private $db;
+    private $schema;
+    private $evt_params;
+    private $cpi;
+    private $cpi_data;
+    public function setupEnv($game,$event) {
+        $this->db = new Database;
+        $this->schema = $game->getName();
+        $this->evt_params = json_decode($event->getParams());
+        $this->cpi = new Competition\Instance($this->schema);
+        if (isset($this->evt_params->master_cpi_id)) {
+            $this->cpi->get($this->evt_params->master_cpi_id);
+            $this->cpi_data = json_decode($this->cpi->getData());
+        }
+    }
+    public function barrage($game, $event) {
+        $this->setupEnv($game,$event);
+        // insert new cpi
+        $comp = new Competition($this->schema);
+        $comp->get(self::PLAYOFF_CPT_ID);
+        $data = json_encode(array(
+            'master_cpi_id' => $this->evt_params->master_ci_id,
+        ));
+        $cpi = $comp->makeInstance($this->evt_params->year,$data);
+
+        $teams = [ $this->cpi_data->playoff_13, $this->cpi_data->playoff_14, $this->cpi_data->playoff_15, $this->cpi_data->playoff_16 ];
+        shuffle($teams);
+        $pot1 = [ array_pop($teams), array_pop($teams) ];
+        $pot2 = [ array_pop($teams), array_pop($teams) ];
+        
+        $d = new \DateTime($event->getDate()); // 2013-10-17
+        $d->modify("+29 days");
+        $date1 = $d->format('Y-m-d');
+        $d->modify("+4 days");
+        $date2 = $d->format('Y-m-d');
+        $cup = new Cup;
+        $cup->setHomeAwayMatch($game,$cpi->getId(),'a','b',$pot1,$pot2,$date1,$date2);
+
+        $d->modify('+2 days'); // 2013-11-21
+        $e = new Event($this->schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setDescr('Tirage au sort du 1er tour de la Coupe du monde de football '.$this->cpi_data->year);
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.round1');
+        $e->setParams(json_encode(array(
+            'master_cpi_id' => $this->cpi->getId(),
+            'slave_cpi_id' => $cpi->getId(),
+        )));
+        $e->setVisibility('foreground');
+        $e->setStatus('todo');
+        $e->save();
     }
 
     public function addQualifiedTeams ($schema, $cpi_id, $ass_id, $teams) {
@@ -151,5 +217,14 @@ class WorldCup {
     }
 
 }
+
+
+$g = new Game;
+$g->load('g_18');
+$e = new Event('g_18');
+$e->load(9);
+$w = new WorldCup;
+$w->barrage($g,$e);
+
 
 
