@@ -2,7 +2,7 @@
 
 namespace Manafoot\ComponentBundle\Fifa;
 
-require "/home/www/manafoot.com/tests/autoload.php";
+//require "/home/www/manafoot.com/tests/autoload.php";
 
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -10,7 +10,11 @@ use \Manafoot\ComponentBundle\Database;
 use \Manafoot\ComponentBundle\Game;
 use \Manafoot\ComponentBundle\Event;
 use \Manafoot\ComponentBundle\Cup;
+use \Manafoot\ComponentBundle\Championship;
 use \Manafoot\ComponentBundle\Competition;
+use \Manafoot\ComponentBundle\Utils;
+use \Manafoot\ComponentBundle\Team;
+use \Manafoot\ComponentBundle\Flash;
 
 class WorldCup {
 
@@ -156,6 +160,10 @@ class WorldCup {
             $this->cpi->get($this->evt_params->master_cpi_id);
             $this->cpi_data = json_decode($this->cpi->getData());
         }
+        else if (isset($this->evt_params->cpi_id)) {
+            $this->cpi->get($this->evt_params->cpi_id);
+            $this->cpi_data = json_decode($this->cpi->getData());
+        }
     }
     public function barrage($game, $event) {
         $this->setupEnv($game,$event);
@@ -195,6 +203,213 @@ class WorldCup {
         $e->save();
     }
 
+    public function round1 ($game, $event) {
+        $this->setupEnv($game,$event);
+        $au = new Utils\Range;
+        $cup = new Cup;
+        $ch = new Championship;
+        $caf = $au->subRange($this->cpi_data->qualified_12, 0, 4);
+
+        $cpi = new Competition\Instance($this->schema);
+        $cpi->get($this->evt_params->slave_cpi_id);
+        $playoff = $cup->getQualifiedTeams($game, $cpi->getId(), 'b');
+        $qualTeams = array_merge($this->cpi_data->qualified_11, $caf, $this->cpi_data->qualified_13, $this->cpi_data->qualified_15, $this->cpi_data->qualified_16, $playoff);
+        $qualTeams[] = $this->cpi_data->host_tea_id;
+        $qualTeams = Elo::sortTeam($this->schema, $qualTeams);
+        $pot1 = $au->subRange($qualTeams,0,7);
+        $pot2 = $au->subRange($qualTeams,8,15);
+        $pot3 = $au->subRange($qualTeams,16,23);
+        $pot4 = $au->subRange($qualTeams,24,31);
+        shuffle($pot1);
+        shuffle($pot2);
+        shuffle($pot3);
+        shuffle($pot4);
+        $schedule = [0];
+        $d = new \DateTime($event->getDate()); // 2013-11-21
+        $precDate = '2013-11-21';
+        $scheduleDate = ['2014-06-13', '2014-06-18', '2014-06-23'];
+        foreach($scheduleDate as $date) {
+            $diff = date_diff(new \DateTime($precDate), new \DateTime($date));
+            $d->modify("+".$diff->days." days");
+            $schedule[] = $d->format('Y-m-d');
+            $precDate = $date;
+        }
+        for ($i=1; $i<=8; $i++) {
+            $gr = [ array_pop($pot1), array_pop($pot2), array_pop($pot3), array_pop($pot4) ];
+            $ch->roundRobin($this->schema, $gr, $this->cpi, $schedule, "1g$i.", false);
+        }
+
+        $d->modify('+1 day');
+        $e = new Event($this->schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.round2');
+        $e->setVisibility('foreground');
+        $e->setDescr('Tirage au sort du 2e tour de la Coupe du Monde');
+        $e->setStatus('todo');
+        $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
+        $e->save();
+    }
+
+    
+    public function round2($game, $event) {
+        $this->setupEnv($game,$event);
+        $au = new Utils\Range;
+        $cup = new Cup;
+        $ch = new Championship;
+        $ranks = [];
+
+        for ($i=1; $i<=8; $i++) {
+            $rank = $ch->getRank($this->schema, $this->cpi->getId(), "1g$i%");
+            $ranks[] = $rank;
+        }
+
+        $d = new \DateTime($event->getDate()); // 2014-06-24
+        $d->modify('+4 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.1',$ranks[0][0]['tea_id'], $ranks[1][1]['tea_id'], $date1);
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.2',$ranks[1][0]['tea_id'], $ranks[0][1]['tea_id'], $date1);
+        $d->modify('+1 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.3',$ranks[2][0]['tea_id'], $ranks[3][1]['tea_id'], $date1);
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.4',$ranks[3][0]['tea_id'], $ranks[2][1]['tea_id'], $date1);
+        $d->modify('+1 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.5',$ranks[4][0]['tea_id'], $ranks[5][1]['tea_id'], $date1);
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.6',$ranks[5][0]['tea_id'], $ranks[4][1]['tea_id'], $date1);
+        $d->modify('+1 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.7',$ranks[6][0]['tea_id'], $ranks[7][1]['tea_id'], $date1);
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'2.8',$ranks[7][0]['tea_id'], $ranks[6][1]['tea_id'], $date1);
+
+        $d->modify('+1 day');
+        $e = new Event($this->schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.cup8');
+        $e->setVisibility('foreground');
+        $e->setDescr('Huitiemes de finale de la Coupe du Monde');
+        $e->setStatus('todo');
+        $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
+        $e->save();
+
+    }
+
+    public function cup8($game, $event) {
+        $this->setupEnv($game,$event);
+        $au = new Utils\Range;
+        $cup = new Cup;
+
+        $quals = $cup->getQualifiedNeutralMatch($this->schema, $this->cpi->getId(), '2.');
+
+        $d = new \DateTime($event->getDate()); // 2014--07-02
+        $d->modify('+2 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'3.1',$quals[0], $quals[1], $date1);
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'3.2',$quals[2], $quals[3], $date1);
+        $d->modify('+1 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'3.3',$quals[4], $quals[5], $date1);
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'3.4',$quals[6], $quals[7], $date1);
+
+        $d->modify('+1 day');
+        $e = new Event($this->schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.cup4');
+        $e->setVisibility('foreground');
+        $e->setDescr('Quarts de finale de la Coupe du Monde');
+        $e->setStatus('todo');
+        $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
+        $e->save();
+    }
+
+    public function cup4($game, $event) {
+        $this->setupEnv($game,$event);
+        $au = new Utils\Range;
+        $cup = new Cup;
+
+        $quals = $cup->getQualifiedNeutralMatch($this->schema, $this->cpi->getId(), '3.');
+
+        $d = new \DateTime($event->getDate()); // 2014--07-06
+        $d->modify('+2 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'4.1',$quals[0], $quals[1], $date1);
+        $d->modify('+1 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'4.2',$quals[2], $quals[3], $date1);
+
+        $d->modify('+1 day');
+        $e = new Event($this->schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.cup2');
+        $e->setVisibility('foreground');
+        $e->setDescr('Demi-finales de la Coupe du Monde');
+        $e->setStatus('todo');
+        $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
+        $e->save();
+    }
+    public function cup2($game, $event) {
+        $this->setupEnv($game,$event);
+        $au = new Utils\Range;
+        $cup = new Cup;
+
+        $quals = $cup->getQualifiedNeutralMatch($this->schema, $this->cpi->getId(), '4.');
+
+        $d = new \DateTime($event->getDate()); // 2014-07-10
+        $d->modify('+3 day');
+        $date1 = $d->format('Y-m-d');
+        $cup->setNeutralMatch($this->schema,$this->cpi->getId(),'5.1',$quals[0], $quals[1], $date1);
+
+        $d->modify('+1 day');
+        $e = new Event($this->schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.end');
+        $e->setVisibility('foreground');
+        $e->setDescr('Finale de la Coupe du Monde');
+        $e->setStatus('todo');
+        $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
+        $e->save();
+    }
+
+    public function end($game, $event) {
+        $this->setupEnv($game,$event);
+        $au = new Utils\Range;
+        $cup = new Cup;
+
+        $quals = $cup->getQualifiedNeutralMatch($this->schema, $this->cpi->getId(), '5.');
+
+        $team = new Team;
+        $team->get($quals[0]);
+
+        $d = new \DateTime($event->getDate()); // 2014-07-14
+        $j = (int)$d->format('d');
+        while ($j>7) {
+            $d->modify('-7 days');
+            $j = (int)$d->format('d');
+        }
+        $d->modify('+14 days');
+
+        $e = new Event($this->schema);
+        $e->setDate($d->format('Y-m-d'));
+        $e->setAssociation(1);
+        $e->setFunction('Fifa.WorldCup.start');
+        $e->setVisibility('foreground');
+        $e->setDescr('Preparation de la Coupe du Monde');
+        $e->setStatus('todo');
+        $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
+        $e->save();
+
+        $fla = new Flash($this->schema);
+        $fla->setSubject("Finale de la Coupe du monde");
+        $fla->setBody($team->getName() . " remporte la Coupe du Monde ".$this->cpi->year);
+        $fla->save();
+    }
+
     public function addQualifiedTeams ($schema, $cpi_id, $ass_id, $teams) {
         $cpi = new Competition\Instance($schema);
         $cpi->get($cpi_id);
@@ -218,13 +433,13 @@ class WorldCup {
 
 }
 
-
+/*
 $g = new Game;
-$g->load('g_18');
-$e = new Event('g_18');
-$e->load(9);
+$g->load('g_20');
+$e = new Event('g_20');
+$e->load(74);
 $w = new WorldCup;
-$w->barrage($g,$e);
-
+$w->end($g,$e);
+*/
 
 

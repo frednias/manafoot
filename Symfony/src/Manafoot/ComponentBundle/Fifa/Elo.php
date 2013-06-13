@@ -98,6 +98,18 @@ class Elo {
         $elo2 = round($elo2);
         return [$elo1,$elo2];
     }
+
+    public function sortTeam($schema, $teams) {
+        $db = new Database;
+        $ret = [];
+        $sTeams = implode(',',$teams);
+        $sql = "select * from $schema.elo_elo where elo_tea_id in ($sTeams) order by elo_points desc";
+        $db->query($sql);
+        while ($row = $db->fetch()) {
+            $ret[] = $row->elo_tea_id;
+        }
+        return $ret;
+    }
 }
 
 

@@ -5,7 +5,8 @@ namespace Manafoot\ComponentBundle\Utils;
 class Range
 {
 
-    public function subRange($array, $start,$end) {
+    // from start to end, included
+    public function subRange($array, $start, $end) {
         $ret = [];
         for ($i=$start; $i<=$end; $i++) {
             $ret[] = $array[$i];

@@ -13,6 +13,35 @@ use \Manafoot\ComponentBundle\Team;
 
 class Cup {
 
+    public function getQualifiedNeutralMatch($schema, $cpi_id, $round) {
+        $db = new Database;
+
+        // find qualified teams
+
+        $sql = "
+            select mr.mat_tea_id__1, mr.mat_tea_id__2, mr.mat_score__1 as mr1, mr.mat_score__2 as mr2, mr.mat_tab__1, mr.mat_tab__2
+            from $schema.mat_match mr 
+            where mr.mat_cpi_id={$cpi_id} and mr.mat_round like '{$round}%'
+            order by mat_round asc;
+        ";
+        $db->query($sql);
+        while ($obj = $db->fetch()) {
+            if ($obj->mr1 > $obj->mr2) {
+                $qualTeams[] = $obj->mat_tea_id__1;
+            }
+            else if ($obj->mr2 > $obj->mr1) {
+                $qualTeams[] = $obj->mat_tea_id__2;
+            }
+            else if ($obj->mat_tab__1 > $obj->mat_tab__2) {
+                $qualTeams[] = $obj->mat_tea_id__1;
+            }
+            else {
+                $qualTeams[] = $obj->mat_tea_id__2;
+            }
+        }
+
+        return $qualTeams;
+    }
     public function getQualifiedTeams($game, $cpi_id, $round) {
         $db = new Database;
         $schema = $game->getName();
@@ -56,6 +85,17 @@ class Cup {
         return $qualTeams;
     }
 
+    public function setNeutralMatch($schema,$cpi_id,$round1,$tea_id_1,$tea_id_2,$date1) {
+            $mat1 = new Match($schema);
+            $mat1->setCompetitionInstance($cpi_id);
+            $mat1->setRound($round1);
+            $mat1->setTeam1($tea_id_1);
+            $mat1->setTeam2($tea_id_2);
+            $mat1->setDate($date1);
+            $mat1->setType(3);
+            $mat1->setPlayed(0);
+            $mat1->save();
+    }
     public function setHomeAwayMatch($game,$cpi_id,$round1,$round2,$pot1,$pot2,$date1,$date2) {
 
         shuffle($pot1);
