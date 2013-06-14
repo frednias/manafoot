@@ -14,6 +14,7 @@ class Entity {
 
     protected static $table;
     protected static $prefix;
+    protected static $schema;
     protected $params;
     protected static $sequence;
 
@@ -91,13 +92,35 @@ class Entity {
             $where .= "$key = '$value' and ";
         }
         $where = substr($where,0,-4);
-        $sql = "select * from ".static::$table." where $where";
+        $sql = "select * from ".static::$table." where $where order by ".static::$prefix."id limit 1";
         $ress = pg_query($sql);
         $res = pg_fetch_array($ress,null,PGSQL_ASSOC);
         foreach($res as $key => $value) {
             $this->params[$key] = $value;
         }
         $this->id = $this->params[static::$prefix.'id'];
+    }
+
+    public function getFiltered($params)
+    {
+        $where = '';
+        foreach ($params as $key => $value) {
+            $where .= "$key = '$value' and ";
+        }
+        $where = substr($where,0,-4);
+        $sql = "select * from ".static::$table." where $where order by ".static::$prefix."id";
+        $ress = pg_query($sql);
+        
+        $listObj = [];
+        while ($res = pg_fetch_array($ress,null,PGSQL_ASSOC)) {
+            $obj = new static(static::$schema);
+            foreach($res as $key => $value) {
+                $obj->params[$key] = $value;
+            }
+            $obj->id = $obj->params[static::$prefix.'id'];
+            $listObj[] = $obj;
+        }
+        return $listObj;
     }
 
     public function getId() {

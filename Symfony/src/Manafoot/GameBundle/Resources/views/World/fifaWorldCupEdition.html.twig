@@ -17,15 +17,136 @@
   </div>
   <div class="span9">
     <p>Home / Fifa / Coupe du Monde / {{edition}}
-    <p>Eliminatoires :
+    <h2>Eliminatoires</h2>
     <ul>
         <li><a href="/fifa/concacaf/worldCupQualification/{{edition}}">Zone Concacaf</a>
-        <li>Conmebol
-        <li>Uefa
-        <li>Afc
-        <li>Ofc
-        <li>Caf
+        <li><a href="/fifa/conmebol/worldCupQualification/{{edition}}">Zone Conmebol</a>
+        <li><a href="/fifa/uefa/worldCupQualification/{{edition}}">Zone Uefa</a>
+        <li><a href="/fifa/afc/worldCupQualification/{{edition}}">Zone Afc</a>
+        <li><a href="/fifa/ofc/worldCupQualification/{{edition}}">Zone Ofc</a>
+        <li><a href="/fifa/caf/worldCupQualification/{{edition}}">Zone Caf</a>
     </ul>
+    <h2>Barrages</h2>
+    <h2>1er tour</h2>
+    {% for group in groups1 %}
+        <h3>Groupe {{loop.index}}</h3>
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                    <th>#</td>
+                    <th>Nom</td>
+                    <th>Pts</td>
+                    <th>J</td>
+                    <th>G</td>
+                    <th>N</td>
+                    <th>P</td>
+                    <th>Bp</td>
+                    <th>Bp</td>
+                    <th>Diff</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank in group %}
+                        <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{rank.tea_name}}</td>
+                        <td>{{rank.pts}}</td>
+                        <td>{{rank.win+rank.draw+rank.lose}}</td>
+                        <td>{{rank.win}}</td>
+                        <td>{{rank.draw}}</td>
+                        <td>{{rank.lose}}</td>
+                        <td>{{rank.for}}</td>
+                        <td>{{rank.against}}</td>
+                        <td>{{rank.diff}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    {%endfor%}
+    <h2>huitièmes de finale</h2>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>Equipe 1</th>
+                    <th>Résultat</th>
+                    <th>Equipe 2</th>
+                    <th>t.a.b.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in duals2 %}
+                    <tr>
+                        <td>{{d.c2name}}</td>
+                        <td>{{d.mr2}} - {{d.mr1}}</td>
+                        <td>{{d.c1name}}</td>
+                        <td>{{d.tab2}} - {{d.tab1}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <h2>Quarts de finale</h2>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>Equipe 1</th>
+                    <th>Résultat</th>
+                    <th>Equipe 2</th>
+                    <th>t.a.b.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in duals3 %}
+                    <tr>
+                        <td>{{d.c2name}}</td>
+                        <td>{{d.mr2}} - {{d.mr1}}</td>
+                        <td>{{d.c1name}}</td>
+                        <td>{{d.tab2}} - {{d.tab1}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <h2>Demi-finales</h2>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>Equipe 1</th>
+                    <th>Résultat</th>
+                    <th>Equipe 2</th>
+                    <th>t.a.b.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in duals4 %}
+                    <tr>
+                        <td>{{d.c1name}}</td>
+                        <td>{{d.mr1}} - {{d.mr2}}</td>
+                        <td>{{d.c2name}}</td>
+                        <td>{{d.tab1}} - {{d.tab2}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <h2>Finale</h2>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+                <tr>
+                    <th>Equipe 1</th>
+                    <th>Résultat</th>
+                    <th>Equipe 2</th>
+                    <th>t.a.b.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in duals5 %}
+                    <tr>
+                        <td>{{d.c1name}}</td>
+                        <td>{{d.mr1}} - {{d.mr2}}</td>
+                        <td>{{d.c2name}}</td>
+                        <td>{{d.tab1}} - {{d.tab2}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
   </div>
   <div class="span1">
   </div>

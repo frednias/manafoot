@@ -17,7 +17,9 @@
   </div>
   <div class="span9">
     <p>Home / Fifa / Coupe du Monde
-    <p><a href="/fifa/worldCup/2014">Coupe du Monde 2014</a>
+    {% for cpi in instances %}
+        <p><a href="/fifa/worldCup/{{cpi.getMilesime}}">Coupe du Monde {{cpi.getMilesime}}</a>
+    {% endfor %}
   </div>
   <div class="span1">
   </div>

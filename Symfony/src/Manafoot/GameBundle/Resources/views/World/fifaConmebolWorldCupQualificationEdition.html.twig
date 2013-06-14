@@ -1,0 +1,75 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Fifa - Manafoot{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<div class="row-fluid">
+  <div class="span2">
+    <ul class="nav nav-list">
+      <li class="nav-header">Home</li>
+      <li class="active"><a href="#">Overview</a></li>
+      <li class="nav-header">Organisations</li>
+      <li><a href="/fifa">FIFA</a></li>
+      <li><a href="#">UEFA</a></li>
+      ...
+    </ul>
+  </div>
+  <div class="span9">
+    <ul class="breadcrumb">
+        <li>Home <span class="divider">/</span></li>
+        <li>Fifa <span class="divider">/</span></li>
+        <li>Coupe du Monde  <span class="divider">/</span></li>
+        <li>{{edition}} <span class="divider">/</span></li>
+        <li class="active">Concacaf</li>
+    </ul>
+    <h1>Qualifications pour la Coupe du Monde {{edition}} - Zone Conmebol</h1>
+    <h2>Equipes engagées</h2>
+        <div style="column-count: 5; -moz-column-count: 5; -webkit-column-count: 5">
+        <ol>
+        {% for team in teams %}
+            <li>{{team.getName}}
+        {% endfor %}
+        </ol>
+        </div>
+
+    <h2>1er tour</h2>
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                    <th>#</td>
+                    <th>Nom</td>
+                    <th>Pts</td>
+                    <th>J</td>
+                    <th>G</td>
+                    <th>N</td>
+                    <th>P</td>
+                    <th>Bp</td>
+                    <th>Bp</td>
+                    <th>Diff</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rank in clag %}
+                        <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{rank.tea_name}}</td>
+                        <td>{{rank.pts}}</td>
+                        <td>{{rank.win+rank.draw+rank.lose}}</td>
+                        <td>{{rank.win}}</td>
+                        <td>{{rank.draw}}</td>
+                        <td>{{rank.lose}}</td>
+                        <td>{{rank.for}}</td>
+                        <td>{{rank.against}}</td>
+                        <td>{{rank.diff}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+  </div>
+  <div class="span1">
+  </div>
+</div>
+</div>
+
+{% endblock %}

@@ -38,6 +38,26 @@ fifa_concacaf_world_cup_qualification_edition:
     pattern: /fifa/concacaf/worldCupQualification/{edition}
     defaults: { _controller: ManafootGameBundle:World:fifaConcacafWorldCupQualificationEdition }
 
+fifa_conmebol_world_cup_qualification_edition:
+    pattern: /fifa/conmebol/worldCupQualification/{edition}
+    defaults: { _controller: ManafootGameBundle:World:fifaConmebolWorldCupQualificationEdition }
+
+fifa_uefa_world_cup_qualification_edition:
+    pattern: /fifa/uefa/worldCupQualification/{edition}
+    defaults: { _controller: ManafootGameBundle:World:fifaUefaWorldCupQualificationEdition }
+
+fifa_caf_world_cup_qualification_edition:
+    pattern: /fifa/caf/worldCupQualification/{edition}
+    defaults: { _controller: ManafootGameBundle:World:fifaCafWorldCupQualificationEdition }
+
+fifa_afc_world_cup_qualification_edition:
+    pattern: /fifa/afc/worldCupQualification/{edition}
+    defaults: { _controller: ManafootGameBundle:World:fifaAfcWorldCupQualificationEdition }
+
+fifa_ofc_world_cup_qualification_edition:
+    pattern: /fifa/ofc/worldCupQualification/{edition}
+    defaults: { _controller: ManafootGameBundle:World:fifaOfcWorldCupQualificationEdition }
+
 fifa_concacaf:
     pattern: /fifa/concacaf
     defaults: { _controller: ManafootGameBundle:World:fifaConcacaf }

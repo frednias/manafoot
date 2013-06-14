@@ -10,11 +10,13 @@ class Instance extends Entity {
     protected static $table;
     protected static $prefix;
     protected static $sequence;
+    protected static $schema;
 
     public function __construct($schema) {
         self::$table = $schema.'.cpi_competition_instance';
         self::$prefix = 'cpi_';
         self::$sequence = $schema.'.cpi_competition_instance_cpi_id_seq';
+        self::$schema = $schema;
         $this->params = array(
         );
         parent::__construct();
@@ -26,6 +28,9 @@ class Instance extends Entity {
 
     public function setMilesime($milesime) {
         $this->params['cpi_milesime'] = $milesime;
+    }
+    public function getMilesime() {
+        return $this->params['cpi_milesime'];
     }
 
     public function setData($data) {

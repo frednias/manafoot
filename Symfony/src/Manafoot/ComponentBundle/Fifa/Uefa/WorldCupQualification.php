@@ -65,7 +65,7 @@ class WorldCupQualification {
         ));
         $cpi = $comp->makeInstance($this->evt_params->year,$data);
 
-        $n = count($teams); // 52 or 53, TODO : exclude mauritanie
+        $n = count($teams); // 52 or 53
         $pot1 = $au->subRange($teams,0,8);
         $pot2 = $au->subRange($teams,9,17);
         $pot3 = $au->subRange($teams,18,26);
