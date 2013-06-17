@@ -9,8 +9,7 @@ class Competition extends Entity {
     protected static $table;
     protected static $prefix;
     protected static $sequence;
-
-    private $schema;
+    protected static $schema;
 
     public function __construct($schema) {
         self::$table = 'cpt_competition';
@@ -18,8 +17,8 @@ class Competition extends Entity {
         self::$sequence = 'cpt_competition_cpt_id_seq';
         $this->params = array(
         );
+        self::$schema = $schema;
         parent::__construct();
-        $this->schema = $schema;
     }
 
     public function getId() {
@@ -27,7 +26,7 @@ class Competition extends Entity {
     }
 
     public function makeInstance($milesime,$data) {
-        $ci = new Competition\Instance($this->schema);
+        $ci = new Competition\Instance(self::$schema);
         $ci->setCompetition($this->getId());
         $ci->setMilesime($milesime);
         $ci->setData($data);

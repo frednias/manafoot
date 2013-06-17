@@ -1,6 +1,37 @@
 Matchs :
     Real Penalty process
+    Review match computation
     
 World Cup :
     More verbose flash for World Cup
     Host designation
+
+Uefa :
+    European Championship
+    France :
+        Ligue 1
+        Ligue 2
+        Naational
+        Cup
+        Ligue Cup
+    Spain :
+        Liga
+    Germany
+    England
+    Italy
+    
+Players :
+    French
+    Italian
+    Bresilian
+    Spanish
+    English
+    Deutch
+
+Team :
+    Short name
+    All country
+
+I18N :
+    English traduction
+

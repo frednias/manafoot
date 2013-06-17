@@ -67,7 +67,8 @@ class Entity {
         $sql = "update ".static::$table." set ";
         foreach( $this->params as $key => $value) {
             if (!is_null($value)) {
-                $sql .= "$key = '$value',";
+                $value = pg_escape_literal($value);
+                $sql .= "$key = $value,";
             }
         }
         $sql = substr($sql,0,-1);

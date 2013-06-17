@@ -1,7 +1,6 @@
 INSERT INTO init.evt_event (evt_date, evt_descr, evt_ass_id, evt_function, evt_visibility, evt_status) VALUES ( '2011-03-09', 'Classement mondial FIFA - Mars 2011', 1, 'Fifa.Elo.pub', 'foreground', 'todo');
 INSERT INTO init.evt_event ( evt_date, evt_descr, evt_function, evt_visibility, evt_status, evt_params) VALUES ( '2010-07-19', 'Preparation des Éliminatoires de la coupe du monde de football 2014', 'Fifa.WorldCup.start', 'background','todo', '{"year":2014}');
--- INSERT INTO init.evt_event ( evt_date, evt_descr) VALUES ( '2011-03-10', 'Tirage au sort éliminatoires de la coupe du monde de football 2014 : zone Amérique du Nord, Centrale et Caraïbes', 16, 'Concacaf.cdm');
-
+INSERT INTO init.evt_event ( evt_date, evt_descr, evt_ass_id, evt_function, evt_status, evt_params) VALUES ( '2010-07-20', 'Tirage au sort éliminatoires du Championnat d''Europe de football 2014', 11, 'Fifa.Uefa.EuropeanChampionship.start', 'todo', '{"year":2012}');
 
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (1,1880);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (2,1730);
