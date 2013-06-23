@@ -58,7 +58,7 @@ class EuropeanChampionship {
         $e->setStatus('todo');
         $e->setParams(json_encode(array(
             'year' => $this->evt_params->year,
-            'host_tea_id' => $HOST_COUNTRY[$this->evt_params->year],
+            'host_tea_id' => $HOST_COUNTRY[$this->evt_params->year]['tea_id'],
             'master_cpi_id' => $cpi->getId(),
         )));
         $e->save();

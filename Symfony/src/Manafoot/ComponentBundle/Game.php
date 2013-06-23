@@ -40,7 +40,14 @@ class Game extends Entity {
     }
 
     public function destroy() {
-	$this->db->dropSchema($this->getName());
+        $this->db->dropSchema($this->getName());
+    }
+
+    public function end() {
+        $this->destroy();
+        $id = $this->getId();
+        $sql = "delete from gam_game where gam_id = $id";
+        $this->db->query($sql);
     }
 
     public function duplicateSchema() {

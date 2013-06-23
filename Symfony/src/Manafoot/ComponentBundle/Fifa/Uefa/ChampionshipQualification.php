@@ -60,13 +60,12 @@ class ChampionshipQualification {
         // insert new cpi
         $comp = new Competition($schema);
         $comp->get(WorldCupQualification::CPT_ID);
-        $cpi = $comp->makeInstance($this->evt_params->year,$data);
         $data = json_encode(array(
             'teams' => $teams,
+            'master_cpi_id' => $this->evt_params->master_cpi_id,
         ));
-
-return;
-        $n = count($teams); // 52 or 53
+        $cpi = $comp->makeInstance($this->evt_params->year,$data);
+        $n = count($teams); // 51 or 52
         $pot1 = $au->subRange($teams,0,8);
         $pot2 = $au->subRange($teams,9,17);
         $pot3 = $au->subRange($teams,18,26);
@@ -75,9 +74,9 @@ return;
         $pot6 = $au->subRange($teams,45,53);
 
         $schedule = [0];
-        $d = new \DateTime($event->getDate()); // 2011-07-30
-        $precDate = '2011-07-30';
-        $scheduleDate = ['2012-09-07', '2012-09-11', '2012-10-12', '2012-10-16', '2013-03-22', '2013-03-26', '2013-09-06', '2013-09-10', '2013-10-11', '2013-10-15'];
+        $d = new \DateTime($event->getDate()); // 2010-07-20
+        $precDate = '2010-07-20';
+        $scheduleDate = ['2010-09-03', '2010-09-07', '2010-10-08', '2010-10-12', '2011-03-26', '2011-06-04', '2011-09-02', '2011-09-06', '2011-10-07', '2011-10-11'];
         foreach($scheduleDate as $date) {
             $diff = date_diff(new \DateTime($precDate), new \DateTime($date));
             $d->modify("+".$diff->days." days");
@@ -95,14 +94,13 @@ return;
             $gr[] = array_pop($pot6);
             $cal = $ch->roundRobin($schema, $gr, $cpi, $schedule, "1g$i.", true);
         }
-
         $d->modify("+1 days");
         $e = new Event($schema);
         $e->setDate($d->format('Y-m-d'));
         $e->setAssociation(11);
-        $e->setFunction('Fifa.Uefa.WorldCupQualification.round2');
+        $e->setFunction('Fifa.Uefa.ChampionshipQualification.barrage');
         $e->setVisibility('foreground');
-        $e->setDescr('Tirage au sort du 2e tour preliminaire de la Coupe du Monde, zone Europe');
+       $e->setDescr("Tirage au sort des barrages pour l'Euro ".$cpi->getMilesime());
         $e->setStatus('todo');
         $e->setParams('{"cpi_id":'.$cpi->getId().'}');
         $e->save();
@@ -225,10 +223,11 @@ return;
 
 /*
 $g = new Game;
-$g->load('g_8');
-$e = new Event('g_8');
-$e->load(11);
-$w = new WorldCupQualification;
-$w->end($g,$e);
+$g->load('g_27');
+$e = new Event('g_27');
+$e->load(12);
+$w = new ChampionshipQualification;
+$w->start($g,$e);
 */
+
 

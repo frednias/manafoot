@@ -6,6 +6,10 @@ _new_game:
     pattern: /game/new
     defaults: { _controller: ManafootGameBundle:NewGame:NewGame }
 
+delete:
+    pattern: /delete/{name}
+    defaults: { _controller: ManafootGameBundle:DeleteGame:delete }
+
 resume:
     pattern: /resume/{name}
     defaults: { _controller: ManafootGameBundle:ResumeGame:resume }

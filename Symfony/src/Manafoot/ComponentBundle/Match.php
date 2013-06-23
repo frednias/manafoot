@@ -175,9 +175,10 @@ class Match extends Entity {
     }
 }
 
+/*
 $g = new Game;
 $g->load('g_8');
 $w = new Match('g_8');
 $w->computeAll($g->getResumeDate());
-
+*/
 
