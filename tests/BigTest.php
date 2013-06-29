@@ -10,7 +10,7 @@ $game = new Game;
 $game->load($argv[1]);
 $d = new \DateTime($game->getResumeDate());
 
-while ($d->format('Y-m-d')!='2022-07-31') {
+while ($d->format('Y-m-d')!='2011-11-20') {
 
 
     echo $d->format('Y-m-d')." live...";

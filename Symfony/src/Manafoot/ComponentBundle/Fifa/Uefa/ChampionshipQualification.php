@@ -59,7 +59,7 @@ class ChampionshipQualification {
 
         // insert new cpi
         $comp = new Competition($schema);
-        $comp->get(WorldCupQualification::CPT_ID);
+        $comp->get(self::CPT_ID);
         $data = json_encode(array(
             'teams' => $teams,
             'master_cpi_id' => $this->evt_params->master_cpi_id,
@@ -106,7 +106,7 @@ class ChampionshipQualification {
         $e->save();
     }
 
-    public function round2($game,$event) {
+    public function barrage($game,$event) {
         $this->setupEnv($game,$event);
         $cup = new Cup;
         $ch = new Championship;
@@ -133,15 +133,16 @@ class ChampionshipQualification {
             }
         }
         $second = $ch->sort($second);
+        $quals[] = $second[0]['tea_id'];
         $pot1 = $pot2 = [];
-        for ($i=0; $i<4; $i++) {
+        for ($i=1; $i<5; $i++) {
             $pot1[] = $second[$i]['tea_id'];
         }
-        for ($i=4; $i<8; $i++) {
+        for ($i=5; $i<9; $i++) {
             $pot2[] = $second[$i]['tea_id'];
         }
 
-        $d = new \DateTime($event->getDate()); // 2011-10-16
+        $d = new \DateTime($event->getDate()); // 2011-10-12
         $d->modify("+30 days");
         $date1 = $d->format('Y-m-d');
         $d->modify("+4 days");
@@ -153,9 +154,9 @@ class ChampionshipQualification {
         $e = new Event($this->schema);
         $e->setDate($d->format('Y-m-d'));
         $e->setAssociation(11);
-        $e->setFunction('Fifa.Uefa.WorldCupQualification.end');
+        $e->setFunction('Fifa.Uefa.ChampionshipQualification.end');
         $e->setVisibility('foreground');
-        $e->setDescr('Fin du tour preliminaire de la Coupe du Monde, zone Europe');
+        $e->setDescr("Fin du tour preliminaire de l'Euro");
         $e->setStatus('todo');
         $e->setParams('{"cpi_id":'.$this->cpi->getId().'}');
         $e->save();
@@ -167,14 +168,14 @@ class ChampionshipQualification {
             $li .= "<li>".$team->getName()."</li>";
         }
         $fla = new Flash($this->schema);
-        $fla->setSubject('Qualifications des équipes européennes pour la Coupe du Monde');
-        $fla->setBody("<p>Les équipes suivantes, terminant 1ere de leur groupe, se sont qualifiés pour la Coupe du Monde. :
+        $fla->setSubject("Qualifications des équipes européennes pour l'Euro");
+        $fla->setBody("<p>Les équipes suivantes, terminant 1ere de leur groupe, se sont qualifiés pour l'Euro :
                         <ul>
                             $li
                         </ul>");
         $fla->save();
 
-        $wc = new Fifa\WorldCup;
+        $wc = new Fifa\Uefa\EuropeanChampionship;
         $wc->addQualifiedTeams($this->schema, $this->cpi_data->master_cpi_id,11,$quals);
     }
 
@@ -208,14 +209,14 @@ class ChampionshipQualification {
             $li .= "<li>".$team->getName()."</li>";
         }
         $fla = new Flash($this->schema);
-        $fla->setSubject('Qualifications des équipes européennes pour la Coupe du Monde');
-        $fla->setBody("<p>Les équipes suivantes se sont qualifiés pour la Coupe du Monde, à l'issue des barrages :
+        $fla->setSubject("Qualifications des équipes européennes pour l'Euro");
+        $fla->setBody("<p>Les équipes suivantes se sont qualifiés pour l'Euro, à l'issue des barrages :
                         <ul>
                             $li
                         </ul>");
         $fla->save();
 
-        $wc = new Fifa\WorldCup;
+        $wc = new Fifa\Uefa\EuropeanChampionship;
         $wc->addQualifiedTeams($this->schema, $this->cpi_data->master_cpi_id,11,$qualTeams);
     }
 
@@ -223,11 +224,9 @@ class ChampionshipQualification {
 
 /*
 $g = new Game;
-$g->load('g_27');
-$e = new Event('g_27');
-$e->load(12);
+$g->load('g_29');
+$e = new Event('g_29');
+$e->load(37);
 $w = new ChampionshipQualification;
-$w->start($g,$e);
+$w->end($g,$e);
 */
-
-
