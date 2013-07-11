@@ -29,7 +29,8 @@ DROP TABLE tea_team;
 CREATE TABLE tea_team (
 	tea_id SERIAL,
 	tea_name TEXT,
-	tea_ass_id INTEGER
+	tea_ass_id INTEGER,
+    tea_gender varchar(1) default 'M'
 );
 
 DROP TABLE gam_game;
@@ -53,3 +54,14 @@ CREATE TABLE mtt_match_type (
     mtt_label TEXT
 );
 
+DROP TABLE chi_championship_info;
+CREATE TABLE chi_championship_info (
+    chi_id SERIAL,
+    chi_cpt_id INTEGER,
+    chi_ass_id INTEGER,
+    chi_nb_team INTEGER, -- per group
+    chi_nb_group INTEGER,
+    chi_nb_promote INTEGER,
+    chi_nb_relegate INTEGER,
+    chi_level INTEGER -- pyramidal level
+);

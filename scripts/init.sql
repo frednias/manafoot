@@ -63,3 +63,11 @@ CREATE TABLE init.mar_match_referer (
     mar_mat_id INTEGER,
     mar_mat_id__referer INTEGER
 );
+
+CREATE TABLE init.lk_chp_cpt_tea (
+    chp_id SERIAL,
+    chp_cpt_id INTEGER,
+    chp_tea_id INTEGER
+);
+
+

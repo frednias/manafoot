@@ -2,7 +2,6 @@
 
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1,'FIFA',NULL);
-INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Coupe du Monde', 1, 60);
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (11,'UEFA',NULL);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (12,'CAF',NULL);
@@ -11,6 +10,7 @@ INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (14,'OFC',NULL);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (15,'CONMABOL',NULL);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (16,'CONCACAF',NULL);
 
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Coupe du Monde', 1, 60);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone CONCACAF', 16, 40);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone CONMEBOL', 15, 40);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone Océanie', 14, 40);
@@ -20,6 +20,13 @@ INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualifi
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Barrages de la Coupe du Monde', 1, 40);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat d''Europe de Football', 11, 50);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualifications pour le Championnat d''Europe de Football', 11, 40);
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - Ligue 1', 71, 40); -- #11
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - Ligue 2', 71, 40); -- #12
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - National', 71, 40); -- #13
+
+insert into chi_championship_info (chi_cpt_id,chi_ass_id,chi_nb_team,chi_nb_group,chi_nb_promote,chi_nb_relegate,chi_level) values (11,71,20,1,0,3,1);
+insert into chi_championship_info (chi_cpt_id,chi_ass_id,chi_nb_team,chi_nb_group,chi_nb_promote,chi_nb_relegate,chi_level) values (12,71,20,1,3,3,2);
+insert into chi_championship_info (chi_cpt_id,chi_ass_id,chi_nb_team,chi_nb_group,chi_nb_promote,chi_nb_relegate,chi_level) values (13,71,20,1,3,4,3);
 
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (101,'Union nord-américaine de football',NULL);
@@ -1433,25 +1440,110 @@ INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe du Vanuatu de footba
 INSERT INTO cou_country (cou_name) VALUES ('Kiribati'); -- 218
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1218,'Fédération des Kiribati de football',218);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (14,1218);
-INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Kiribati de football',1218);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Kiribati',1218);
 
 INSERT INTO cou_country (cou_name) VALUES ('Micronésie'); -- 219
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1219,'Fédération des États fédérés de Micronésie de football',219);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (14,1219);
-INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Micronésie de football',1219);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Micronésie',1219);
 
 INSERT INTO cou_country (cou_name) VALUES ('Niué'); -- 220
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1220,'Fédération de Niué de football',220);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (14,1220);
-INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Niue de football',1220);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe de Niue',1220);
 
 INSERT INTO cou_country (cou_name) VALUES ('Palaos'); -- 221
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1221,'Fédération des Palaos de football',221);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (14,1221);
-INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Palaos de football',1221);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Palaos',1221);
 
 INSERT INTO cou_country (cou_name) VALUES ('Tuvalu'); -- 222
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1222,'Fédération des Tuvalu de football',222);
 INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (14,1222);
-INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Tuvalu de football',1222);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Équipe des Tuvalu',1222);
+
+
+-- Football clubs
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10001,'Paris Saint-Germain',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10001);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Paris Saint-Germain',10001);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10002,'Olympique de Marseille',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10002);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Marseille',10002);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10003,'Olympique Lyonnais',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10003);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Lyon',10003);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10004,'Girondins de Bordeaux',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10004);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Bordeaux',10004);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10005,'Lille OSC',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10005);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Lille',10005);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10006,'Stade Rennais',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10006);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Rennes',10006);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10007,'Montpellier HSC',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10007);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Montpellier',10007);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10008,'FC Sochaux',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10008);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Sochaux',10008);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10009,'Valenciennes FC',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10009);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Valenciennes',10009);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10010,'AS Nancy Lorraine',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10010);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Nancy',10010);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10011,'FC Loriant',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10011);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Lorient',10011);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10012,'AC Arles-Avignon',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10012);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Arles-Avignon',10012);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10013,'RC Lens',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10013);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Lens',10013);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10014,'Stade Brestois',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10014);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Brest',10014);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10015,'AS Saint-Etienne',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10015);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Saint-Etienne',10015);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10016,'AS Monaco',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10016);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Monaco',10016);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10017,'SM Caen',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10017);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Caen',10017);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10018,'OGC Nice',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10018);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Nice',10018);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10019,'AJ Auxerre',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10019);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Auxerre',10019);
+
+INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (10020,'Toulouse FC',null);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (71,10020);
+INSERT INTO tea_team (tea_name,tea_ass_id) VALUES ('Toulouse',10020);
+
+
 
