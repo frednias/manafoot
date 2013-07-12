@@ -4,11 +4,17 @@
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (1,'FIFA',NULL);
 
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (11,'UEFA',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,11);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (12,'CAF',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,12);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (13,'AFC',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,13);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (14,'OFC',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,14);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (15,'CONMABOL',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,15);
 INSERT INTO ass_association (ass_id,ass_name,ass_cou_id) values (16,'CONCACAF',NULL);
+INSERT INTO lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values (1,16);
 
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Coupe du Monde', 1, 60);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualification de la Coupe du Monde - Zone CONCACAF', 16, 40);
@@ -20,9 +26,9 @@ INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualifi
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Barrages de la Coupe du Monde', 1, 40);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat d''Europe de Football', 11, 50);
 INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Qualifications pour le Championnat d''Europe de Football', 11, 40);
-INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - Ligue 1', 71, 40); -- #11
-INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - Ligue 2', 71, 40); -- #12
-INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - National', 71, 40); -- #13
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - Ligue 1', 1071, 40); -- #11
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - Ligue 2', 1071, 40); -- #12
+INSERT INTO cpt_competition (cpt_name,cpt_ass_id,cpt_elo_level) values ('Championnat de France - National', 1071, 40); -- #13
 
 insert into chi_championship_info (chi_cpt_id,chi_ass_id,chi_nb_team,chi_nb_group,chi_nb_promote,chi_nb_relegate,chi_level) values (11,71,20,1,0,3,1);
 insert into chi_championship_info (chi_cpt_id,chi_ass_id,chi_nb_team,chi_nb_group,chi_nb_promote,chi_nb_relegate,chi_level) values (12,71,20,1,3,3,2);
