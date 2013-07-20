@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script src="/bundles/three.min.js"></script>
+    <script defer="defer">
+      // revolutions per second
+      var angularSpeed = 0.2; 
+      var lastTime = 0;
+ 
+      // this function is executed on each animation frame
+      function animate(){
+        // update
+        var time = (new Date()).getTime();
+        var timeDiff = time - lastTime;
+        var angleChange = angularSpeed * timeDiff * 2 * Math.PI / 1000;
+        //plane.rotation.x += angleChange;
+        //camera.rotation.z += angleChange;
+        lastTime = time;
+ 
+        // render
+        renderer.render(scene, camera);
+ 
+        // request new frame
+        requestAnimationFrame(function(){
+            animate();
+        });
+      }
+
+      // renderer
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // scene
+      var scene = new THREE.Scene();
+ 
+      // camera
+      var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+        scene.add(camera);
+      camera.position.set(64,0,15);
+        camera.lookAt(new THREE.Vector3(0,0,1));
+    camera.rotation.z = Math.PI*90/180;
+        //camera.rotation.z = Math.PI/4;
+        //camera.rotation.x = -Math.PI/30;
+ 
+ 
+      // plane
+        var pelouse = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      var plane = new THREE.Mesh(new THREE.PlaneGeometry(108, 65), pelouse);
+      //plane.overdraw = true;
+        //plane.rotation.x = -66 * (Math.PI/180);
+      scene.add(plane);
+
+    function createTribune(longueur) {
+        var tribPoints = [];
+        tribPoints.push( new THREE.Vector2(0,0));
+        tribPoints.push( new THREE.Vector2(0,10));
+        tribPoints.push( new THREE.Vector2(1,10));
+        tribPoints.push( new THREE.Vector2(1,9));
+        tribPoints.push( new THREE.Vector2(2,9));
+        tribPoints.push( new THREE.Vector2(2,8));
+        tribPoints.push( new THREE.Vector2(3,8));
+        tribPoints.push( new THREE.Vector2(3,7));
+        tribPoints.push( new THREE.Vector2(4,7));
+        tribPoints.push( new THREE.Vector2(4,6));
+        tribPoints.push( new THREE.Vector2(5,6));
+        tribPoints.push( new THREE.Vector2(5,5));
+        tribPoints.push( new THREE.Vector2(6,5));
+        tribPoints.push( new THREE.Vector2(6,4));
+        tribPoints.push( new THREE.Vector2(7,4));
+        tribPoints.push( new THREE.Vector2(7,3));
+        tribPoints.push( new THREE.Vector2(8,3));
+        tribPoints.push( new THREE.Vector2(8,2));
+        tribPoints.push( new THREE.Vector2(9,2));
+        tribPoints.push( new THREE.Vector2(9,1));
+        tribPoints.push( new THREE.Vector2(10,1));
+        tribPoints.push( new THREE.Vector2(10,0));
+ 
+        var tribShape = new THREE.Shape( tribPoints );
+
+    var extrusionSettings = {
+        size: 30, height: 3, curveSegments: 3, amount: longueur,
+        bevelThickness: 1, bevelSize: 2, bevelEnabled: false,
+        material: 0, extrudeMaterial: 1
+    };
+
+    var tribGeometry = new THREE.ExtrudeGeometry( tribShape, extrusionSettings );
+    var wireframeTexture = new THREE.MeshBasicMaterial( { color: 0xcccccc, wireframe: false, transparent: true } );
+    var trib = new THREE.Mesh( tribGeometry, wireframeTexture );
+        return trib;
+    }
+
+    // tribune nord
+    var trib = createTribune(108);
+    trib.position.set(54,0,0);
+    trib.rotation.x = 90*Math.PI/180;
+    trib.rotation.y = -Math.PI/2;
+    trib.position.y = 42.5;
+    scene.add(trib);
+
+    // tribune ouest
+    var trib = createTribune(65);
+    trib.rotation.x = Math.PI/2;
+    trib.position.y = 32.5;
+    trib.position.x = -64;
+    scene.add(trib);
+
+    // tribune est
+    var trib = createTribune(65);
+    trib.rotation.x = Math.PI/2;
+    trib.rotation.y = Math.PI;
+    trib.position.set(64,-32.5,0);
+    //scene.add(trib);
+
+    // tribune sub
+    var trib = createTribune(108);
+    trib.rotation.x = Math.PI/2;
+    trib.rotation.y = Math.PI/2;
+    trib.position.set(-54,-42.5,0);
+    scene.add(trib);
+
+
+      // start animation
+      animate();
+    </script>
+  </body>
+</html>
+

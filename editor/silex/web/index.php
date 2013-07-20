@@ -13,6 +13,24 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 /* TODO
 */
 
+$app->post('/championship/create/{id}', function($id) use ($app,$db) {
+    $chi_level = $_POST['chi_level'];
+    $chi_nb_team = $_POST['chi_nb_team'];
+    $chi_nb_group = $_POST['chi_nb_group'];
+    $chi_nb_promote = $_POST['chi_nb_promote'];
+    $chi_nb_relegate = $_POST['chi_nb_relegate'];
+    $sql = "insert into chi_championship_info (chi_cpt_id,chi_level,chi_nb_team,chi_nb_group,chi_nb_promote,chi_nb_relegate) values ($id, $chi_level, $chi_nb_team, $chi_nb_group, $chi_nb_promote, $chi_nb_relegate)";
+    $db->query($sql);
+    return $app->redirect('/competition/view/'.$id);
+});
+
+$app->post('/team/create/{ass_id}', function($ass_id) use ($app,$db) {
+    $name = pg_escape_literal($_POST['tea_name']);
+    $gender = $_POST['tea_gender'];
+    $sql = "insert into tea_team (tea_name,tea_ass_id,tea_gender) values ($name, $ass_id, '$gender')";
+    $db->query($sql);
+    return $app->redirect('/association/view/'.$ass_id);
+});
 $app->post('/competition/create', function () use ($app,$db) {
     $matchs = [];
     preg_match('/\[(\d+)\]\s.*/', $_POST['ass_name'], $matchs);
@@ -20,8 +38,13 @@ $app->post('/competition/create', function () use ($app,$db) {
     return $app->redirect('/competition/list');
 });
 
+$app->get('/country/lookup/{query}', function ($query) use ($app,$db) {
+    $res = $db->select("select * from cou_country where cou_name ilike '%{$query}%' limit 5");
+    return json_encode($res);
+});
+
 $app->get('/association/lookup/{query}', function ($query) use ($app,$db) {
-    $res = $db->select("select * from ass_association where ass_name ilike '%{$query}%'");
+    $res = $db->select("select * from ass_association where ass_name ilike '%{$query}%' limit 5");
     return json_encode($res);
 });
 
@@ -34,9 +57,13 @@ $app->get('/elo', function () use ($app,$db) {
 });
 
 $app->get('/competition/view/{id}', function ($id) use ($app,$db) {
+    $sql = "select * from chi_championship_info where chi_cpt_id=$id";
+    $res = $db->select($sql);
     $competition = $db->select("select * from cpt_competition inner join ass_association on ass_id=cpt_ass_id where cpt_id=$id");
     return $app['twig']->render('competitionview.tpl', array(
         'competition' => $competition,
+        'cpt_id' => $id,
+        'nb_chi' => count($res),
     ));
 });
 
@@ -63,11 +90,36 @@ $app->get('/team/view/{id}', function ($id) use ($app,$db) {
     ));
 });
 
-$app->get('/association/list', function () use ($app,$db) {
-    $association = $db->select('select * from ass_association left join cou_country on ass_cou_id=cou_id' );
+function associationListPagination($page) {
+    global $app,$db;
+    $count = $db->select('select count(*) as nb from ass_association left join cou_country on ass_cou_id=cou_id' );
+    $n = $count[0]->nb;
+    $offset = 20*$page-20;
+    $association = $db->select("select * from ass_association left join cou_country on ass_cou_id=cou_id order by ass_id asc limit 20 offset $offset" );
     return $app['twig']->render('associationlist.tpl', array(
         'association' => $association,
+        'page' => $page,
+        'count' => $n,
     ));
+}
+$app->get('/association/list/{page}', function ($page) use ($app,$db) {
+    return associationListPagination($page);
+});
+$app->get('/association/list', function () use ($app,$db) {
+    return associationListPagination(1);
+});
+
+$app->post('/association/create/slave/{id}', function ($id) use ($app,$db) {
+    $association = $db->select('select * from ass_association left join cou_country on ass_cou_id=cou_id where ass_id='.$id)[0];
+    $ass_cou_id = $association->ass_cou_id;
+    $ass_name = pg_escape_literal($_POST['ass_name']);
+    $sql = "insert into ass_association (ass_name,ass_cou_id) values ($ass_name, '$ass_cou_id') returning currval('ass_association_ass_id_seq')";
+    $ress = $db->query($sql);
+    $fch = pg_fetch_row($ress);
+    $last_id = $fch[0];
+    $sql = "insert into lk_mbr_ass (mbr_ass_id__master,mbr_ass_id__slave) values ($id,$last_id)";
+    $db->query($sql);
+    return $app->redirect('/association/view/'.$id);
 });
 
 $app->get('/association/view/{id}', function ($id) use ($app,$db) {
@@ -82,6 +134,7 @@ $app->get('/association/view/{id}', function ($id) use ($app,$db) {
         'slave' => $slave,
         'competition' => $competition,
         'team' => $team,
+        'ass_id' => $id,
     ));
 });
 
