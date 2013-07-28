@@ -1,0 +1,131 @@
+object cou_country {
+ cou_id integer
+ cou_name varchar
+}
+
+object ass_association {
+ ass_id integer
+ ass_name varchar
+ ass_cou_id integer
+}
+ass_association --> cou_country
+
+object lk_mbr_ass {
+ mbr_ass_id__master
+ mbr_ass_id__slave
+}
+lk_mbr_ass --> ass_association
+lk_mbr_ass --> ass_association
+
+object tea_team {
+ tea_id
+ tea_name
+ tea_ass_id
+ tea_gender
+}
+tea_team --> ass_association
+
+object cpt_competition {
+ cpt_id
+ cpt_name
+ cpt_ass_id
+ cpt_elo_level
+}
+cpt_competition --> ass_association
+
+object mtt_match_type {
+ mtt_id
+ mtt_label
+}
+
+object chi_championship_info {
+ chi_id
+ chi_cpt_id
+ chi_ass_id
+ chi_nb_team
+ chi_nb_group
+ chi_nb_promote
+ chi_nb_relegate
+ chi_level
+}
+chi_championship_info --> cpt_competition
+
+object init.elo_elo {
+ elo_tea_id
+elo_points
+}
+init.elo_elo --> tea_team
+
+object init.evt_event {
+ evt_id
+ evt_ins_date
+ evt_date
+ evt_descr
+ evt_ass_id
+ evt_function
+ evt_params
+ evt_visibility
+ evt_status
+}
+init.evt_event --> ass_association
+
+object init.elh_elo_history {
+ elh_tea_id
+ elh_points
+ elh_evt_id
+ elh_date
+}
+init.elh_elo_history --> tea_team
+init.elh_elo_history --> init.evt_event
+
+object init.cpi_competition_instance {
+ cpi_id
+ cpi_ins_date
+ cpi_cpt_id
+ cpi_milesime
+ cpi_data
+}
+init.cpi_competition_instance --> cpt_competition
+
+object init.mat_match {
+ mat_id
+ mat_ins_date
+ mat_cpi_id
+ mat_round
+ mat_tea_id__1
+ mat_tea_id__2
+ mat_score__1
+ mat_score__2
+ mat_date
+ mat_mtt_id
+ mat_tab__1
+ mat_tab__2
+ mat_played
+}
+init.mat_match --> init.cpi_competition_instance
+init.mat_match --> tea_team
+init.mat_match --> tea_team
+init.mat_match --> mtt_match_type
+
+object init.fla_flash {
+ fla_id
+ fla_ins_date
+ fla_subject
+ fla_body
+}
+
+object init.mar_match_referer {
+ mar_mat_id
+ mat_mat_id__referer
+}
+init.mar_match_referer --> init.mat_match
+init.mar_match_referer --> init.mat_match
+
+object init.lk_chp_cpt_tea {
+ cho_id
+ chp_cpt_id
+ chp_tea_id
+}
+init.lk_chp_cpt_tea --> tea_team
+init.lk_chp_cpt_tea --> cpt_competition
+

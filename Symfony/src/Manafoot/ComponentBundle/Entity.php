@@ -57,7 +57,7 @@ class Entity {
         $values = implode(',',$this->listValue);
 
         $sql = "insert into ".static::$table." ($keys) values ($values)";
-        $ress = pg_query("$sql RETURNING Currval('".static::$sequence."')");
+        $ress = pg_query("$sql RETURNING Currval('global_seq')");
         $fch = pg_fetch_row($ress);
         $last_id = $fch[0];
         $this->id = $last_id;

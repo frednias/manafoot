@@ -13,6 +13,13 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 /* TODO
 */
 
+$app->post('/competition/member/add/{id}', function ($id) use ($app,$db) {
+    $tea_id = $_POST['team'];
+    $sql = "insert into init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values ($id,$tea_id)";
+    $db->query($sql);
+    return $app->redirect('/competition/view/'.$id);
+});
+
 $app->post('/championship/create/{id}', function($id) use ($app,$db) {
     $chi_level = $_POST['chi_level'];
     $chi_nb_team = $_POST['chi_nb_team'];
@@ -58,12 +65,18 @@ $app->get('/elo', function () use ($app,$db) {
 
 $app->get('/competition/view/{id}', function ($id) use ($app,$db) {
     $sql = "select * from chi_championship_info where chi_cpt_id=$id";
-    $res = $db->select($sql);
+    $chi = $db->select($sql);
     $competition = $db->select("select * from cpt_competition inner join ass_association on ass_id=cpt_ass_id where cpt_id=$id");
+    $teams = $db->select("select * from tea_team inner join ass_association on ass_id=tea_ass_id inner join lk_mbr_ass on mbr_ass_id__slave=ass_id where mbr_ass_id__master=1071;");
+    $chp = $db->select("select * from init.lk_chp_cpt_tea inner join tea_team on tea_id=chp_tea_id where chp_cpt_id=$id");
+
     return $app['twig']->render('competitionview.tpl', array(
         'competition' => $competition,
         'cpt_id' => $id,
-        'nb_chi' => count($res),
+        'nb_chi' => count($chi),
+        'chi' => $chi[0],
+        'teams' => $teams,
+        'chp' => $chp,
     ));
 });
 

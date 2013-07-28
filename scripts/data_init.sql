@@ -213,25 +213,3 @@ INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (215,19);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (216,23);
 INSERT INTO init.elo_elo (elo_tea_id,elo_points) VALUES (217,75);
 
-
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10001);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10002);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10003);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10004);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10005);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10006);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10007);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10008);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10009);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10010);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10011);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10012);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10013);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10014);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10015);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10016);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10017);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10018);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10019);
-INSERT INTO init.lk_chp_cpt_tea (chp_cpt_id, chp_tea_id) values (11, 10020);
-

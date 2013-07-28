@@ -67,7 +67,7 @@ class Database {
     }
 
     public function copyTable($fromTable,$toTable) {
-	$sql = "create table $toTable as table $fromTable";
+	$sql = "create table $toTable (like $fromTable including all)";
         pg_query($sql);
     }
 }

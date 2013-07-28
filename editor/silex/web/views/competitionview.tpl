@@ -19,9 +19,31 @@
 </table>
 
 {% if nb_chi > 0 %}
+<table class="table table-striped table-bordered table-hover table-condensed">
+<tr><th>chi_id</th><td>{{chi.chi_id}}</td></tr>
+<tr><th>chi_cpt_id</th><td>{{chi.chi_cpt_id}}</td></tr>
+<tr><th>chi_nb_team</th><td>{{chi.chi_nb_team}}</td></tr>
+<tr><th>chi_nb_group</th><td>{{chi.chi_nb_group}}</td></tr>
+<tr><th>chi_nb_promote</th><td>{{chi.chi_nb_promote}}</td></tr>
+<tr><th>chi_nb_relegate</th><td>{{chi.chi_nb_relegate}}</td></tr>
+<tr><th>chi_level</th><td>{{chi.chi_level}}</td></tr>
+</table>
 
-select team
+<form action="/competition/member/add/{{cpt_id}}" method=post>
+<select name="team">
+{% for team in teams %}
+<option value="{{team.tea_id}}">{{team.tea_name}}</option>
+{% endfor %}
+<input type=submit value="Add team">
+</select>
+</form>
 
+<table class="table table-striped table-bordered table-hover table-condensed">
+<tr><th>chp_tea_id</th><th>tea_name</th></tr>
+{% for ch in chp %}
+<tr><td>{{ch.chp_tea_id}}</td><td>{{ch.tea_name}}</td></tr>
+{% endfor %}
+</table>
 {% else %}
 
 <!-- Button to trigger modal -->
