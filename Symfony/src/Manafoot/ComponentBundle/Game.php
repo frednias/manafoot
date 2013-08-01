@@ -72,6 +72,76 @@ class Game extends Entity {
         }
 
     }
+    public function startingEvents($game, $event) // 2010-07-19
+    {
+        $schema = $game->getName();
+
+        $game->setCycleDate($event->getDate());
+        $game->save();
+
+        $d = new \DateTime($event->getDate());
+        $year = $d->format('Y');
+        $toYear = 1 + $year;
+        $yearCdm = 4 + $year;
+        $yearEuro = 2 + $year;
+
+        // tomorrow
+        $dp1 = new \DateTime($event->getDate());
+        $dp1->modify('+1 day');
+
+        $events = array(
+            array(
+                'descr' => "Preparation de la Coupe du monde de football $yearCdm",
+                'date' => $event->getDate(),
+                'function' => 'Fifa.WorldCup.start',
+                'params' => '{"year":2014}',
+                'ass_id' => 1,
+            ),
+            array(
+                'descr' => "Preparation du Championnat d\'Europe de football $yearEuro",
+                'date' => $dp1->format('Y-m-d'),
+                'function' => 'Fifa.Uefa.EuropeanChampionship.start',
+                'params' => '{"year":2012}',
+                'ass_id' => 11,
+            ),
+            array(
+                'descr' => 'Creation des championats nationaux',
+                'date' => $event->getDate(),
+                'function' => 'Championship.createNationalChampionship',
+                'params' => '{"year":"'.$year.'-'.$toYear.'"}',
+                'ass_id' => 1,
+            ),
+        );
+        foreach ($events as $event) {
+            $descr = pg_escape_literal($event['descr']);
+            $sql = "
+                insert into $schema.evt_event
+                    (  
+                        evt_ins_date,
+                        evt_date,
+                        evt_descr,
+                        evt_ass_id,
+                        evt_function,
+                        evt_params,
+                        evt_visibility,
+                        evt_status
+                    )
+                values
+                    (
+                        now(),
+                        '{$event['date']}',
+                        $descr,
+                        {$event['ass_id']},
+                        '{$event['function']}',
+                        '{$event['params']}',
+                        'background',
+                        'todo'
+                    )
+            ";
+            $this->db->query($sql);
+        }
+
+    }
 
     public function getName() {
         return 'g_'.$this->getId();
@@ -89,6 +159,16 @@ class Game extends Entity {
     }
     public function getResumeDate() {
         return $this->params['gam_resume_date'];
+    }
+
+    public function setCycleDate($cycleDate)
+    {
+        $this->params['gam_cycle_date'] = $cycleDate;
+    }
+
+    public function getCycleDate()
+    {
+        return $this->params['gam_cycle_date'];
     }
 }
 

@@ -171,11 +171,112 @@ class Championship {
         }
         return $listTeam;
     }
+
+    private $db;
+    private $schema;
+    private $evt_params;
+    private $cpi;
+    private $cpi_data;
+    public function setupEnv($game,$event) {
+        $this->db = new Database;
+        $this->schema = $game->getName();
+        $this->evt_params = json_decode($event->getParams());
+        $this->cpi = new Competition\Instance($this->schema);
+        if (isset($this->evt_params->cpi_id)) {
+            $this->cpi->get($this->evt_params->cpi_id);
+            $this->cpi_data = json_decode($this->cpi->getData());
+        }
+    }
+
+    // 2010-07-19
+    public function createNationalChampionship($game, $event)
+    {
+        $this->setupEnv($game,$event);
+        $d = new \DateTime($event->getDate());
+
+        // for each championship
+        $sql = "select * from chi_championship_info";
+        $chi = $this->db->select($sql);
+        foreach($chi as $key => $cc) {
+            $cpt_id = $cc->chi_cpt_id;
+
+            // create cpi
+            $comp = new Competition($game->getName());
+            $comp->get($cc->chi_cpt_id);
+            $year = $this->evt_params->year;
+            $cpi_params = json_encode(array(
+            ));
+            $cpi = $comp->makeInstance($year,$cpi_params);
+
+            // liste teams
+            $sql = "select * from init.lk_chp_cpt_tea where chp_cpt_id=$cpt_id";
+            $chp = $this->db->select($sql);
+
+            $teams = [];
+            foreach($chp as $part) {
+                $teams[] = $part->chp_tea_id;
+            }
+
+            // get calendar
+            $cal = $this->getCalByYear($d->format('Y'));
+
+            // rebase calendar
+            $cal = $this->rebaseDate($cal,'2010-07-19', $game->getCycleDate());
+            $schedule = array_merge([0],$cal);
+
+            $res = $this->roundRobin($game->getName(), $teams, $cpi, $schedule, $prefix = '', $homeaway = true);
+        }
+    }
+
+    private function rebaseDate($cal, $refDate, $cycleDate)
+    {
+        $diffcal = [];
+        $d1 = new \DateTime($refDate);
+        $d2 = new \DateTime($cycleDate);
+        $interval = date_diff($d1,$d2);
+        $jdiff = $interval->format('%a');
+
+        foreach ($cal as $jcal) {
+            $d = new \DateTime($jcal);
+            $d->modify("+$jdiff days");
+            $diffcal[] = $d->format('Y-m-d');
+        }
+
+        return $diffcal;
+    }
+
+    // ref_date = '2010-07-19';
+    private function getCalByYear($year)
+    {
+        $id = $year % 4;
+        switch ($id) {
+            case 0:
+            case 1:
+                $cal = array(
+                    '2013-08-10'
+                );
+            case 2:
+                $cal = array(
+                    '2010-08-07','2010-08-14','2010-08-21','2010-08-28','2010-09-11',
+                    '2010-09-18','2010-09-25','2010-10-02','2010-10-16','2010-10-23',
+                    '2010-10-30','2010-11-06','2010-11-13','2010-11-20','2010-11-27',
+                    '2010-12-04','2010-12-11','2010-12-18','2010-12-22','2011-01-15',
+                    '2011-01-29','2011-02-05','2011-02-12','2011-02-19','2011-02-26',
+                    '2011-03-05','2011-03-12','2011-03-19','2011-04-02','2011-04-09',
+                    '2011-04-16','2011-04-24','2011-04-30','2011-05-07','2011-05-11',
+                    '2011-05-15','2011-05-21','2011-05-29'
+                );
+                break;
+            case 3:
+        }
+
+        return $cal;
+    }
+
 }
 
 /*
 $cc = new Championship;
-$res = $cc->roundRobin(array(1,2,3,4,5,6));
+$res = $cc->createNationalChampionship(1,2);
 print_r($res);
 */
-

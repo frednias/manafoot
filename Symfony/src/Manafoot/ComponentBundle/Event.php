@@ -13,7 +13,6 @@ class Event extends Entity {
     public function __construct($schema) {
         self::$table = $schema.'.evt_event';
         self::$prefix = 'evt_';
-        self::$sequence = $schema.'.evt_event_evt_id_seq';
         $this->params = array(
         );
         parent::__construct();

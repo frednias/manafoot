@@ -25,10 +25,7 @@ class EuropeanChampionship {
 
     const CPT_ID = 9;
 
-    // Starting World Cup Qualifications
-    // Enters all Afc national team = X {52)
-    // exclude world wup host team
-
+    // preparation of european championship, set on 2010-07-20
     public function start (Game $game, Event $event) {
         $HOST_COUNTRY = array(
             2012 => array('tea_id'=>[90,102], 'host_name'=>'Pologne/Ukraine'),

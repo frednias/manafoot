@@ -1,3 +1,4 @@
+@startuml
 object cou_country {
  cou_id integer
  cou_name varchar
@@ -128,4 +129,5 @@ object init.lk_chp_cpt_tea {
 }
 init.lk_chp_cpt_tea --> tea_team
 init.lk_chp_cpt_tea --> cpt_competition
+@enduml
 

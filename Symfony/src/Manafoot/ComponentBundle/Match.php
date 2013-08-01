@@ -12,8 +12,7 @@ class Match extends Entity {
     protected static $table;
     protected static $prefix;
     protected static $sequence;
-
-    private $schems;
+    protected static $schema;
 
     public function __construct($schema) {
         self::$table = $schema.'.mat_match';
@@ -22,7 +21,7 @@ class Match extends Entity {
         $this->params = array(
         );
         parent::__construct();
-        $this->schema = $schema;
+        self::$schema = $schema;
     }
 
     public function getId() {
@@ -77,7 +76,7 @@ class Match extends Entity {
     }
 
     public function computeAll($date) {
-        $schema = $this->schema;
+        $schema = self::$schema;
         $elo = new Fifa\Elo;
 
         $sql = "
@@ -96,7 +95,7 @@ class Match extends Entity {
         $objectList = parent::select($sql);
 
         foreach ($objectList as $match) {
-            $mat = new Match($this->schema);
+            $mat = new Match(self::$schema);
             $mat->load($match->mat_id);
             $K = $match->cpt_elo_level;
             $elo1 = $match->elo1;
