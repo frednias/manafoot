@@ -9,7 +9,7 @@ World Cup :
     Host designation
 
 Uefa :
-    European Championship
+    European Championship : html view
     France :
         Ligue 1
         Ligue 2
@@ -33,6 +33,7 @@ Players :
 Team :
     Short name
     All country
+    Create with Elo
 
 I18N :
     English traduction

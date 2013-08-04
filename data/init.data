@@ -1,0 +1,469 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: init; Type: SCHEMA; Schema: -; Owner: manafoot
+--
+
+CREATE SCHEMA init;
+
+
+ALTER SCHEMA init OWNER TO manafoot;
+
+SET search_path = init, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: cpi_competition_instance; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE cpi_competition_instance (
+    cpi_id bigint DEFAULT nextval('public.global_seq'::regclass) NOT NULL,
+    cpi_cpt_id bigint,
+    cpi_milesime text,
+    cpi_data text,
+    cpi_ins_date timestamp without time zone
+);
+
+
+ALTER TABLE init.cpi_competition_instance OWNER TO manafoot;
+
+--
+-- Name: elh_elo_history; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE elh_elo_history (
+    elh_tea_id bigint,
+    elh_points integer,
+    elh_evt_id bigint,
+    elh_date date
+);
+
+
+ALTER TABLE init.elh_elo_history OWNER TO manafoot;
+
+--
+-- Name: elo_elo; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE elo_elo (
+    elo_tea_id bigint,
+    elo_points integer
+);
+
+
+ALTER TABLE init.elo_elo OWNER TO manafoot;
+
+--
+-- Name: evt_event; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE evt_event (
+    evt_id bigint DEFAULT nextval('public.global_seq'::regclass) NOT NULL,
+    evt_ins_date date,
+    evt_date date,
+    evt_descr text,
+    evt_ass_id bigint,
+    evt_function text,
+    evt_params text,
+    evt_visibility public.e_visibility,
+    evt_status public.e_status
+);
+
+
+ALTER TABLE init.evt_event OWNER TO manafoot;
+
+--
+-- Name: fla_flash; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE fla_flash (
+    fla_id bigint DEFAULT nextval('public.global_seq'::regclass) NOT NULL,
+    fla_ins_date date,
+    fla_subject text,
+    fla_body text
+);
+
+
+ALTER TABLE init.fla_flash OWNER TO manafoot;
+
+--
+-- Name: lk_chp_cpt_tea; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE lk_chp_cpt_tea (
+    chp_id bigint DEFAULT nextval('public.global_seq'::regclass) NOT NULL,
+    chp_cpt_id bigint,
+    chp_tea_id bigint
+);
+
+
+ALTER TABLE init.lk_chp_cpt_tea OWNER TO manafoot;
+
+--
+-- Name: mar_match_referer; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE mar_match_referer (
+    mar_mat_id bigint,
+    mar_mat_id__referer bigint
+);
+
+
+ALTER TABLE init.mar_match_referer OWNER TO manafoot;
+
+--
+-- Name: mat_match; Type: TABLE; Schema: init; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE mat_match (
+    mat_id bigint DEFAULT nextval('public.global_seq'::regclass) NOT NULL,
+    mat_round text,
+    mat_tea_id__1 bigint,
+    mat_tea_id__2 bigint,
+    mat_score__1 integer,
+    mat_score__2 integer,
+    mat_date date,
+    mat_cpi_id bigint,
+    mat_mtt_id bigint,
+    mat_tab__1 integer,
+    mat_tab__2 integer,
+    mat_played boolean,
+    mat_ins_date timestamp without time zone
+);
+
+
+ALTER TABLE init.mat_match OWNER TO manafoot;
+
+--
+-- Data for Name: cpi_competition_instance; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY cpi_competition_instance (cpi_id, cpi_cpt_id, cpi_milesime, cpi_data, cpi_ins_date) FROM stdin;
+\.
+
+
+--
+-- Data for Name: elh_elo_history; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY elh_elo_history (elh_tea_id, elh_points, elh_evt_id, elh_date) FROM stdin;
+\.
+
+
+--
+-- Data for Name: elo_elo; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY elo_elo (elo_tea_id, elo_points) FROM stdin;
+1	1883
+2	1659
+3	872
+4	969
+5	295
+6	32
+7	584
+8	204
+9	644
+10	85
+11	343
+12	323
+13	0
+14	168
+15	11
+16	34
+17	174
+18	91
+19	108
+20	215
+21	33
+22	158
+24	203
+26	167
+27	39
+28	5
+29	18
+30	368
+32	0
+33	52
+34	26
+35	110
+37	19
+38	87
+40	187
+41	405
+42	32
+43	1289
+44	1536
+45	1152
+46	988
+47	961
+48	545
+49	725
+50	726
+51	592
+52	570
+53	435
+54	1464
+55	2
+56	1125
+57	318
+58	536
+59	266
+60	589
+61	403
+62	546
+63	672
+64	523
+65	968
+66	785
+67	699
+68	321
+69	206
+70	576
+71	890
+72	237
+73	975
+74	534
+75	734
+76	540
+77	385
+78	733
+79	982
+80	184
+81	579
+82	126
+83	571
+84	209
+85	504
+86	105
+87	350
+88	448
+89	366
+90	547
+91	1062
+92	769
+93	697
+94	956
+95	0
+96	969
+97	829
+98	917
+99	747
+100	940
+101	810
+102	870
+103	878
+104	759
+105	1053
+106	318
+107	371
+108	519
+109	261
+110	285
+111	286
+112	19
+113	94
+114	62
+115	338
+116	130
+117	535
+118	646
+119	843
+120	874
+121	548
+122	110
+123	773
+124	421
+125	710
+126	0
+127	263
+128	185
+129	755
+130	110
+131	0
+132	185
+133	125
+134	18
+135	92
+136	115
+137	210
+138	457
+139	233
+140	39
+141	198
+142	0
+143	235
+145	504
+146	356
+147	331
+148	43
+149	101
+150	121
+151	425
+152	37
+153	377
+154	203
+155	37
+156	155
+157	446
+158	238
+160	17
+161	471
+162	911
+163	460
+164	104
+165	9
+166	122
+167	21
+168	33
+169	393
+170	284
+171	660
+172	351
+173	17
+174	152
+175	160
+176	141
+177	276
+178	768
+179	522
+180	300
+181	74
+182	365
+183	39
+184	106
+185	12
+186	124
+187	117
+188	32
+189	94
+190	374
+191	352
+192	75
+193	48
+194	67
+195	300
+196	198
+197	96
+198	334
+199	69
+200	144
+201	273
+202	4
+203	150
+204	179
+205	248
+207	167
+208	17
+209	60
+210	82
+211	557
+212	0
+213	38
+214	0
+215	19
+216	23
+217	75
+235	1300
+234	1290
+233	1280
+232	1270
+231	1260
+230	1250
+229	1240
+228	1230
+227	1220
+226	1210
+225	1200
+224	1190
+223	1180
+240	1170
+241	1160
+242	1150
+239	1140
+238	1130
+237	1120
+236	1110
+21168	1100
+21170	1090
+21172	1080
+\.
+
+
+--
+-- Data for Name: evt_event; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY evt_event (evt_id, evt_ins_date, evt_date, evt_descr, evt_ass_id, evt_function, evt_params, evt_visibility, evt_status) FROM stdin;
+20005	\N	2010-07-19	Classement mondial FIFA - Juillet 2010	1	Fifa.Elo.pub	\N	foreground	todo
+20039	\N	2010-07-19	Event dispatcher	\N	Game.startingEvents	\N	background	todo
+\.
+
+
+--
+-- Data for Name: fla_flash; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY fla_flash (fla_id, fla_ins_date, fla_subject, fla_body) FROM stdin;
+\.
+
+
+--
+-- Data for Name: lk_chp_cpt_tea; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY lk_chp_cpt_tea (chp_id, chp_cpt_id, chp_tea_id) FROM stdin;
+20019	11	242
+20020	11	241
+20021	11	240
+20022	11	239
+20023	11	238
+20024	11	237
+20025	11	236
+20026	11	235
+20027	11	234
+20028	11	233
+20029	11	232
+20030	11	231
+20031	11	230
+20032	11	229
+20033	11	228
+20034	11	227
+20035	11	226
+20036	11	225
+20037	11	224
+20038	11	223
+\.
+
+
+--
+-- Data for Name: mar_match_referer; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY mar_match_referer (mar_mat_id, mar_mat_id__referer) FROM stdin;
+\.
+
+
+--
+-- Data for Name: mat_match; Type: TABLE DATA; Schema: init; Owner: manafoot
+--
+
+COPY mat_match (mat_id, mat_round, mat_tea_id__1, mat_tea_id__2, mat_score__1, mat_score__2, mat_date, mat_cpi_id, mat_mtt_id, mat_tab__1, mat_tab__2, mat_played, mat_ins_date) FROM stdin;
+\.
+
+
+--
+-- PostgreSQL database dump complete
+--
+

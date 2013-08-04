@@ -72,7 +72,7 @@ class Match extends Entity {
     public function setMatchReferer($mat_id) {
         $this->params['mat_id'] = 7;
         $db = new Database;
-        $db->query("insert into ".$this->schema.".mar_match_referer (mar_mat_id,mar_mat_id__referer) values (".$this->getId().",$mat_id)");
+        $db->query("insert into ".self::$schema.".mar_match_referer (mar_mat_id,mar_mat_id__referer) values (".$this->getId().",$mat_id)");
     }
 
     public function computeAll($date) {

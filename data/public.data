@@ -1,0 +1,1586 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: e_status; Type: TYPE; Schema: public; Owner: manafoot
+--
+
+CREATE TYPE e_status AS ENUM (
+    'todo',
+    'ok',
+    'err'
+);
+
+
+ALTER TYPE public.e_status OWNER TO manafoot;
+
+--
+-- Name: e_visibility; Type: TYPE; Schema: public; Owner: manafoot
+--
+
+CREATE TYPE e_visibility AS ENUM (
+    'background',
+    'foreground'
+);
+
+
+ALTER TYPE public.e_visibility OWNER TO manafoot;
+
+--
+-- Name: global_seq; Type: SEQUENCE; Schema: public; Owner: manafoot
+--
+
+CREATE SEQUENCE global_seq
+    START WITH 20000
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.global_seq OWNER TO manafoot;
+
+--
+-- Name: global_seq; Type: SEQUENCE SET; Schema: public; Owner: manafoot
+--
+
+SELECT pg_catalog.setval('global_seq', 21172, true);
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ass_association; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE ass_association (
+    ass_id bigint DEFAULT nextval('global_seq'::regclass) NOT NULL,
+    ass_name text,
+    ass_cou_id bigint
+);
+
+
+ALTER TABLE public.ass_association OWNER TO manafoot;
+
+--
+-- Name: chi_championship_info; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE chi_championship_info (
+    chi_id bigint DEFAULT nextval('global_seq'::regclass) NOT NULL,
+    chi_cpt_id bigint,
+    chi_nb_team integer,
+    chi_nb_group integer,
+    chi_nb_promote integer,
+    chi_nb_relegate integer,
+    chi_level integer
+);
+
+
+ALTER TABLE public.chi_championship_info OWNER TO manafoot;
+
+--
+-- Name: cou_country; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE cou_country (
+    cou_id bigint DEFAULT nextval('global_seq'::regclass) NOT NULL,
+    cou_name text
+);
+
+
+ALTER TABLE public.cou_country OWNER TO manafoot;
+
+--
+-- Name: cpt_competition; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE cpt_competition (
+    cpt_id bigint DEFAULT nextval('global_seq'::regclass) NOT NULL,
+    cpt_name text,
+    cpt_ass_id bigint,
+    cpt_elo_level integer
+);
+
+
+ALTER TABLE public.cpt_competition OWNER TO manafoot;
+
+--
+-- Name: gam_game; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE gam_game (
+    gam_id bigint DEFAULT nextval('global_seq'::regclass) NOT NULL,
+    gam_ins_date timestamp without time zone,
+    gam_resume_date date,
+    gam_cycle_date date
+);
+
+
+ALTER TABLE public.gam_game OWNER TO manafoot;
+
+--
+-- Name: gam_game_gam_id_seq; Type: SEQUENCE; Schema: public; Owner: manafoot
+--
+
+CREATE SEQUENCE gam_game_gam_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.gam_game_gam_id_seq OWNER TO manafoot;
+
+--
+-- Name: gam_game_gam_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: manafoot
+--
+
+ALTER SEQUENCE gam_game_gam_id_seq OWNED BY gam_game.gam_id;
+
+
+--
+-- Name: gam_game_gam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: manafoot
+--
+
+SELECT pg_catalog.setval('gam_game_gam_id_seq', 32, true);
+
+
+--
+-- Name: lk_mbr_ass; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE lk_mbr_ass (
+    mbr_ass_id__master bigint,
+    mbr_ass_id__slave bigint
+);
+
+
+ALTER TABLE public.lk_mbr_ass OWNER TO manafoot;
+
+--
+-- Name: mtt_match_type; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE mtt_match_type (
+    mtt_id bigint DEFAULT nextval('global_seq'::regclass) NOT NULL,
+    mtt_label text
+);
+
+
+ALTER TABLE public.mtt_match_type OWNER TO manafoot;
+
+--
+-- Name: tea_team; Type: TABLE; Schema: public; Owner: manafoot; Tablespace: 
+--
+
+CREATE TABLE tea_team (
+    tea_id bigint DEFAULT nextval('global_seq'::regclass) NOT NULL,
+    tea_name text,
+    tea_ass_id bigint,
+    tea_gender character varying(1) DEFAULT 'M'::character varying
+);
+
+
+ALTER TABLE public.tea_team OWNER TO manafoot;
+
+--
+-- Data for Name: ass_association; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY ass_association (ass_id, ass_name, ass_cou_id) FROM stdin;
+1	FIFA	\N
+11	UEFA	\N
+12	CAF	\N
+13	AFC	\N
+14	OFC	\N
+15	CONMABOL	\N
+16	CONCACAF	\N
+101	Union nord-américaine de football	\N
+102	Union centre-américaine de football	\N
+103	Union caribéenne de football	\N
+104	Union nord-africaine de football	\N
+105	Union des fédérations ouest-africaines de football	\N
+106	Union des fédérations de football d'Afrique centrale	\N
+107	Council for East and Central Africa Football Association	\N
+108	Council of Southern Africa Football Associations	\N
+1001	Fédération royale espagnole de football	1
+1002	Fédération royale néerlandaise de football	2
+1003	Fédération du Mexique de football	3
+1004	Fédération des États-Unis de soccer	4
+1005	Association canadienne de soccer	5
+1006	Fédération du Bélize de football	6
+1007	Fédération du Costa Rica de football	7
+1008	Fédération du Guatemala de football	8
+1009	Fédération du Honduras de football	9
+1010	Fédération du Nicaragua de football	10
+1011	Fédération du Salvador de football	11
+1012	Fédération du Panama de football	12
+1013	Fédération d'Anguilla de football	13
+1014	Fédération du Antigua-et-Barbuda de football	14
+1015	Fédération d'Aruba de football	15
+1016	Fédération des Bahamas de football	16
+1017	Fédération de la Barbade de football	17
+1018	Fédération des Bermudes de football	18
+1019	Fédération de Curaçao de football	19
+1020	Fédération de Cuba de football	20
+1021	Fédération de Dominique de football	21
+1022	Fédération grenadienne de football	22
+1023	Ligue guadeloupéenne de football	23
+1024	Fédération du Guyana de football	24
+1025	Ligue de football de la Guyane	25
+1026	Fédération haïtienne de football	26
+1027	Fédération des Ïles Caïmans de football	27
+1028	Fédération des Ïles Vierges des États-Unis de football	28
+1029	Fédération des Ïles Vierges britanniques de football	29
+1030	Fédération de Jamaïque de football	30
+1031	Ligue de football de la Martinique	31
+1032	Fédération de Montserrat de football	32
+1033	Fédération de Porto Rico de football	33
+1034	Fédération de République dominicaine de football	34
+1035	Fédération de Saint-Christophe-et-Nièvès de football	35
+1036	Comité de football des Ïles du Nord	36
+1037	Fédération de Sainte-Lucie de football	37
+1038	Fédération de Saint-Vincent-et-les-Grenadines de football	38
+1039	Fédération de Sint Maarten de football	39
+1040	Fédération du Suriname de football	40
+1041	Fédération de Trinité-et-Tobago de football	41
+1042	Fédération des Ïles Turques-et-Caïques de football	42
+1043	Association du football argentin	43
+1044	Confédération brésilienne de football	44
+1045	Association uruguayenne de football	45
+1046	Fédération du Chili de football	46
+1047	Association paraguayenne de football	47
+1048	Fédération équatorienne de football	48
+1049	Fédération colombienne de football	49
+1050	Fédération péruvienne de football	50
+1051	Fédération vénézuélienne de football	51
+1052	Fédération bolivienne de football	52
+1053	Fédération albanaise de football	53
+1054	Fédération allemande de football	54
+1055	Fédération d'Andorre de football	55
+1056	Fédération anglaise de football	56
+1057	Fédération de football d'Arménie	57
+1058	Fédération autrichienne de football	58
+1059	Fédération d'Azerbaïdjan de football	59
+1060	Union royale belge des sociétés de football association	60
+1061	Fédération biélorusse de football	61
+1062	Fédération de football de Bosnie-Herzégovine	62
+1063	Fédération de Bulgarie de football	63
+1064	Fédération chypriote de football	64
+1065	Fédération croate de football	65
+1066	Fédération danoise de football	66
+1067	Fédération écossaise de football	67
+1068	Fédération estonienne de football	68
+1069	Fédération des Ïles Féroé de football	69
+1070	Association finlandaise de football	70
+1071	Fédération française de football	71
+1072	Fédération de Géorgie de football	72
+1073	Fédération hellénique de football	73
+1074	Fédération hongroise de football	74
+1075	Fédération d'Irlande de football	75
+1076	Association irlandaise de football	76
+1077	Fédération d'Islande de football	77
+1078	Fédération d'Israël de football	78
+1079	Fédération italienne de football	79
+1080	Fédération du Kazakhstan de football	80
+1081	Fédération de Lettonie de football	81
+1082	Fédération du Liechtenstein de football	82
+1083	Fédération de Lituanie de football	83
+1084	Fédération luxembourgeoise de football	84
+1085	Fédération de Macédoine de football	85
+1086	Fédération de Malte de football	86
+1087	Fédération moldave de football	87
+1088	Fédération du Monténégro de football	88
+1089	Fédération de football de Galles	89
+1090	Fédération polonaise de football	90
+1091	Fédération portugaise de football	91
+1092	Fédération de République tchèque de football	92
+1093	Fédération roumaine de football	93
+1094	Fédération de Russie de football	94
+1095	Fédération de Saint-Marin de football	95
+1096	Fédération de Serbie de football	96
+1097	Fédération slovaque de football	97
+1098	Fédération de Slovénie de football	98
+1099	Fédération suèdoise de football	99
+1100	Association suisse de football	100
+1101	Fédération de Turquie de football	101
+1102	Fédération de football d'Ukraine	102
+1103	Fédération de Norvège de football	103
+1104	Fédération algérienne de football	104
+1105	Fédération égyptienne de football	105
+1106	Fédération de Libye de football	106
+1107	Fédération royale marocaine de football	107
+1108	Fédération tunisienne de football	108
+1109	Fédération du Cap-Vert de football	109
+1110	Fédération de Gambie de football	110
+1111	Fédération guinéenne de football	111
+1112	Fédération de Guinée-Bissau de football	112
+1113	Fédération du Liberia de football	113
+1114	Fédération de football de la République islamique de Mauritanie	114
+1115	Fédération sénégalaise de football	115
+1116	Fédération de Sierra Leone de football	116
+1117	Fédération béninoise de football	117
+1118	Fédération burkinabé de football	118
+1119	Fédération ivoirienne de football	119
+1120	Fédération du Ghana de football	120
+1121	Fédération malienne de football	121
+1122	Fédération nigérienne de football	122
+1123	Fédération du Nigeria de football	123
+1124	Fédération togolaise de football	124
+1125	Fédération camerounaise de football	125
+1126	Fédération centrafricaine de football	126
+1127	Fédération congolaise de football	127
+1128	Fédération congolaise de football association	128
+1129	Fédération gabonaise de football	129
+1130	Fédération de Guinée Équatoriale de football	130
+1131	Fédération de Sao Tomé-et-Principe de football	131
+1132	Fédération tchadienne de football	132
+1133	Fédération de football du Burundi	133
+1134	Fédération djiboutienne de football	134
+1135	Fédération d'Érythrée de football	135
+1136	Fédération d'Éthiopie de football	136
+1137	Fédération du Kenya de football	137
+1138	Fédération d'Ouganda de football	138
+1139	Fédération rwandaise de football amateur	139
+1140	Fédération de Somalie de football	140
+1141	Fédération du Soudan de football	141
+1142	Fédération de football du Soudan du Sud	142
+1143	Fédération de Tanzanie de football	143
+1144	Fédération de Zanzibar de football	144
+1145	Fédération sud-africaine de football	145
+1146	Fédération d'Angola de football	146
+1147	Fédération du Botswana de football	147
+1148	Fédération comorienne de football	148
+1149	Fédération du Lesotho de football	149
+1150	Fédération malgache de football	150
+1151	Fédération du Malawi de football	151
+1152	Fédération de Maurice de football	152
+1153	Fédération du Mozambique de football	153
+1154	Fédération de Namibie de football	154
+1155	Fédération des Seychelles de football	155
+1156	Fédération du Swaziland de football	156
+1157	Fédération de Zambie de football	157
+1158	Fédération du Zimbabwe de football	158
+1159	Ligue réunionnaise de football	159
+1160	Fédération d'Afghanistan de football	160
+1161	Fédération d'Arabie saoudite de football	161
+1162	Fédération d'Australie de football	162
+1163	Fédération de Bahreïn de football	163
+1164	Fédération du Bangladesh de football	164
+1165	Fédération du Bhoutan de football	165
+1166	Fédération de Birmanie de football	166
+1167	Fédération de Brunei de football	167
+1168	Fédération du Cambodge de football	168
+1169	Fédération de Chine de football	169
+1170	Fédération de Corée du Nord de football	170
+1171	Fédération de Corée du Sud de football	171
+1172	Fédération des Émirats arabes unis de football	172
+1173	Fédération de Guam de football	173
+1174	Fédération de Hong Kong de football	174
+1175	Fédération d'Inde de football	175
+1176	Fédération d'Indonésie de football	176
+1177	Fédération d'Irak de football|Fédération	177
+1178	Fédération du Japon de football	178
+1179	Fédération d'Iran de football	179
+1180	Fédération de Jordanie de football	180
+1181	Fédération du Kirghizistan de football	181
+1182	Fédération du Koweït de football	182
+1183	Fédération du Laos de football	183
+1184	Fédération du Liban de football	184
+1185	Fédération de Macao de football	185
+1186	Fédération de Malaisie de football	186
+1187	Fédération des Maldives de football	187
+1188	Fédération de Mongolie de football	188
+1189	Fédération du Népal de football	189
+1190	Fédération d'Oman de football	190
+1191	Fédération d'Ouzbékistan de football	191
+1192	Fédération du Pakistan de football	192
+1193	Fédération de Palestine de football	193
+1194	Fédération des Philippines de football	194
+1195	Fédération du Qatar de football	195
+1196	Fédération de Singapour de football	196
+1197	Fédération du Sri Lanka de football	197
+1198	Fédération de Syrie de football	198
+1199	Fédération de Taïwan de football	199
+1200	Fédération du Tadjikistan de football	200
+1201	Fédération de Thaïlande de football	201
+1202	Fédération du Timor oriental de football	202
+1203	Fédération du Turkménistan de football	203
+1204	Fédération du Viêt Nam de football	204
+1205	Fédération du Yémen de football	205
+1206	Fédération des Ïles Mariannes du Nord de football	206
+1207	Fédération de Fidji de football	207
+1208	Fédération des Ïles Cook de football	208
+1209	Fédération des Ïles Salomon de football	209
+1210	Fédération calédonienne de football	210
+1211	Fédération de Nouvelle-Zélande de football	211
+1212	Fédération papouane-néo-guinéen de football	212
+1213	Fédération des Samoa de football	213
+1214	Fédération des Samoa américaines de football	214
+1215	Fédération tahitienne de football	215
+1216	Fédération des Tonga de football	216
+1217	Fédération du Vanuatu de football	217
+1218	Fédération des Kiribati de football	218
+1219	Fédération des États fédérés de Micronésie de football	219
+1220	Fédération de Niué de football	220
+1221	Fédération des Palaos de football	221
+1222	Fédération des Tuvalu de football	222
+10001	Paris Saint-Germain Football Club	71
+10002	Association sportive Nancy-Lorraine	71
+10003	Racing Club de Lens	71
+10004	Valenciennes Football Club	71
+10005	Stade rennais football club	71
+10006	Association sportive de Monaco football club	71
+10007	Football Club Lorient	71
+10008	Football Club des Girondins de Bordeaux	71
+10009	Montpellier Hérault Sport Club	71
+10010	LOSC Lille	71
+10011	Association de la jeunesse auxerroise	71
+10012	Olympique lyonnais	71
+10013	Olympique de Marseille	71
+10014	Athlétic Club Arles-Avignon	71
+10015	Stade brestois 29	71
+10016	Stade Malherbe Caen Calvados Basse-Normandie	71
+10017	Association sportive de Saint-Étienne	71
+10018	Toulouse Football Club	71
+10019	Olympique Gymnaste Club Nice Côte d'Azur	71
+10020	Football Club Sochaux-Montbéliard	71
+21161	Le Mans Football Club	71
+21169	Union sportive Boulogne Côte d'Opale	71
+21171	Grenoble Foot 38	71
+\.
+
+
+--
+-- Data for Name: chi_championship_info; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY chi_championship_info (chi_id, chi_cpt_id, chi_nb_team, chi_nb_group, chi_nb_promote, chi_nb_relegate, chi_level) FROM stdin;
+3	11	20	1	0	3	1
+\.
+
+
+--
+-- Data for Name: cou_country; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY cou_country (cou_id, cou_name) FROM stdin;
+1	Espagne
+2	Pays-Bas
+3	Mexique
+4	États-Unis
+5	Canada
+6	Bélize
+7	Costa Rica
+8	Guatemala
+9	Honduras
+10	Nicaragua
+11	Salvador
+12	Panama
+13	Anguilla
+14	Antigua-et-Barbuda
+15	Aruba
+16	Bahamas
+17	Barbade
+18	Bermudes
+19	Curaçao
+20	Cuba
+21	Dominique
+22	Grenade
+23	Guadeloupe
+24	Guyana
+25	Guyane
+26	Haïti
+27	Ïles Caïmans
+28	Ïles Vierges des États-Unis
+29	Ïles Vierges britanniques
+30	Jamaïque
+31	Martinique
+32	Montserrat
+33	Porto Rico
+34	République dominicaine
+35	Saint-Christophe-et-Nièvès
+36	Saint-Martin (FR)
+37	Sainte-Lucie
+38	Saint-Vincent-et-les-Grenadines
+39	Sint Maarten
+40	Suriname
+41	Trinité-et-Tobago
+42	Ïles Turques-et-Caïques
+43	Argentine
+44	Brésil
+45	Uruguay
+46	Chili
+47	Paraguay
+48	Equateur
+49	Colombie
+50	Pérou
+51	Venezuela
+52	Bolivie
+53	Albanie
+54	Allemagne
+55	Andorre
+56	Angleterre
+57	Arménie
+58	Autriche
+59	Azerbaïdjan
+60	Belgique
+61	Biélorussie
+62	Bosnie-Herzégovine
+63	Bulgarie
+64	Chypre
+65	Croatie
+66	Danemark
+67	Écosse
+68	Estonie
+69	Ïles Féroé
+70	Finlande
+71	France
+72	Géorgie
+73	Grèce
+74	Hongrie
+75	Irlande
+76	Irlande Du Nord
+77	Islande
+78	Israël
+79	Italie
+80	Kazakhstan
+81	Lettonie
+82	Liechtenstein
+83	Lituanie
+84	Luxembourg
+85	Macédoine
+86	Malte
+87	Moldavie
+88	Monténégro
+89	Pays de Galles
+90	Pologne
+91	Portugal
+92	République tchèque
+93	Roumanie
+94	Russie
+95	Saint-Marin
+96	Serbie
+97	Slovaquie
+98	Slovénie
+99	Suède
+100	Suisse
+101	Turquie
+102	Ukraine
+103	Norvège
+104	Algérie
+105	Égypte
+106	Libye
+107	Maroc
+108	Tunisie
+109	Cap-Vert
+110	Gambie
+111	Guinée
+112	Guinée-Bissau
+113	Liberia
+114	Mauritanie
+115	Sénégal
+116	Sierra Leone
+117	Bénin
+118	Burkina Faso
+119	Côte d'Ivoire
+120	Ghana
+121	Mali
+122	Niger
+123	Nigeria
+124	Togo
+125	Cameroun
+126	République centrafricaine
+127	Congo
+128	RD Congo
+129	Gabon
+130	Guinée Équatoriale
+131	Sao Tomé-et-Principe
+132	Tchad
+133	Burundi
+134	Djibouti
+135	Érythrée
+136	Éthiopie
+137	Kenya
+138	Ouganda
+139	Rwanda
+140	Somalie
+141	Soudan
+142	Soudan du Sud
+143	Tanzanie
+144	Zanzibar
+145	Afrique du Sud
+146	Angola
+147	Botswana
+148	Comores
+149	Lesotho
+150	Madagascar
+151	Malawi
+152	Maurice
+153	Mozambique
+154	Namibie
+155	Seychelles
+156	Swaziland
+157	Zambie
+158	Zimbabwe
+159	Réunion
+160	Afghanistan
+161	Arabie saoudite
+162	Australie
+163	Bahreïn
+164	Bangladesh
+165	Bhoutan
+166	Birmanie
+167	Brunei
+168	Cambodge
+169	Chine
+170	Corée du Nord
+171	Corée du Sud
+172	Émirats arabes unis
+173	Guam
+174	Hong Kong
+175	Inde
+176	Indonésie
+177	Irak
+178	Japon
+179	Iran
+180	Jordanie
+181	Kirghizistan
+182	Koweït
+183	Laos
+184	Liban
+185	Macao
+186	Malaisie
+187	Maldives
+188	Mongolie
+189	Népal
+190	Oman
+191	Ouzbékistan
+192	Pakistan
+193	Palestine
+194	Philippines
+195	Qatar
+196	Singapour
+197	Sri Lanka
+198	Syrie
+199	Taïwan
+200	Tadjikistan
+201	Thaïlande
+202	Timor oriental
+203	Turkménistan
+204	Viêt Nam
+205	Yémen
+206	Ïles Mariannes du Nord
+207	Fidji
+208	Ïles Cook
+209	Ïles Salomon
+210	Nouvelle-Calédonie
+211	Nouvelle-Zélande
+212	Papouasie-Nouvelle-Guinée
+213	Samoa
+214	Samoa américaines
+215	Tahiti
+216	Tonga
+217	Vanuatu
+218	Kiribati
+219	Micronésie
+220	Niué
+221	Palaos
+222	Tuvalu
+\.
+
+
+--
+-- Data for Name: cpt_competition; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY cpt_competition (cpt_id, cpt_name, cpt_ass_id, cpt_elo_level) FROM stdin;
+1	Coupe du Monde	1	60
+2	Qualification de la Coupe du Monde - Zone CONCACAF	16	40
+3	Qualification de la Coupe du Monde - Zone CONMEBOL	15	40
+4	Qualification de la Coupe du Monde - Zone Océanie	14	40
+5	Qualification de la Coupe du Monde - Zone Asie	13	40
+6	Qualification de la Coupe du Monde - Zone Afrique	12	40
+7	Qualification de la Coupe du Monde - Zone Europe	11	40
+8	Barrages de la Coupe du Monde	1	40
+9	Championnat d'Europe de Football	11	50
+10	Qualifications pour le Championnat d'Europe de Football	11	40
+11	Championnat de France de Ligue 1	1071	30
+\.
+
+
+--
+-- Data for Name: gam_game; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY gam_game (gam_id, gam_ins_date, gam_resume_date, gam_cycle_date) FROM stdin;
+20061	2013-08-01 11:17:43.916035	2010-07-19	\N
+20462	2013-08-01 11:54:19.789329	2010-08-20	2010-07-19
+\.
+
+
+--
+-- Data for Name: lk_mbr_ass; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY lk_mbr_ass (mbr_ass_id__master, mbr_ass_id__slave) FROM stdin;
+16	101
+16	102
+16	103
+12	104
+12	105
+12	106
+12	107
+12	108
+1	1001
+11	1001
+1	1002
+11	1002
+1	1003
+16	1003
+101	1003
+1	1004
+16	1004
+101	1004
+1	1005
+16	1005
+101	1005
+1	1006
+16	1006
+102	1006
+1	1007
+16	1007
+102	1007
+1	1008
+16	1008
+102	1008
+1	1009
+16	1009
+102	1009
+1	1010
+16	1010
+102	1010
+1	1011
+16	1011
+102	1011
+1	1012
+16	1012
+102	1012
+1	1013
+16	1013
+103	1013
+1	1014
+16	1014
+103	1014
+1	1015
+16	1015
+103	1015
+1	1016
+16	1016
+103	1016
+1	1017
+16	1017
+103	1017
+1	1018
+16	1018
+103	1018
+1	1019
+16	1019
+103	1019
+1	1020
+16	1020
+103	1020
+1	1021
+16	1021
+103	1021
+1	1022
+16	1022
+103	1022
+16	1023
+103	1023
+1	1024
+16	1024
+103	1024
+16	1025
+103	1025
+1	1026
+16	1026
+103	1026
+1	1027
+16	1027
+103	1027
+1	1028
+16	1028
+103	1028
+1	1029
+16	1029
+103	1029
+1	1030
+16	1030
+103	1030
+16	1031
+103	1031
+1	1032
+16	1032
+103	1032
+1	1033
+16	1033
+103	1033
+1	1034
+16	1034
+103	1034
+1	1035
+16	1035
+103	1035
+16	1036
+103	1036
+1	1037
+16	1037
+103	1037
+1	1038
+16	1038
+103	1038
+16	1039
+103	1039
+1	1040
+16	1040
+103	1040
+1	1041
+16	1041
+103	1041
+1	1042
+16	1042
+103	1042
+1	1043
+15	1043
+1	1044
+15	1044
+1	1045
+15	1045
+1	1046
+15	1046
+1	1047
+15	1047
+1	1048
+15	1048
+1	1049
+15	1049
+1	1050
+15	1050
+1	1051
+15	1051
+1	1052
+15	1052
+1	1053
+11	1053
+1	1054
+11	1054
+1	1055
+11	1055
+1	1056
+11	1056
+1	1057
+11	1057
+1	1058
+11	1058
+1	1059
+11	1059
+1	1060
+11	1060
+1	1061
+11	1061
+1	1062
+11	1062
+1	1063
+11	1063
+1	1064
+11	1064
+1	1065
+11	1065
+1	1066
+11	1066
+1	1067
+11	1067
+1	1068
+11	1068
+1	1069
+11	1069
+1	1070
+11	1070
+1	1071
+11	1071
+1	1072
+11	1072
+1	1073
+11	1073
+1	1074
+11	1074
+1	1075
+11	1075
+1	1076
+11	1076
+1	1077
+11	1077
+1	1078
+11	1078
+1	1079
+11	1079
+1	1080
+11	1080
+1	1081
+11	1081
+1	1082
+11	1082
+1	1083
+11	1083
+1	1084
+11	1084
+1	1085
+11	1085
+1	1086
+11	1086
+1	1087
+11	1087
+1	1088
+11	1088
+1	1089
+11	1089
+1	1090
+11	1090
+1	1091
+11	1091
+1	1092
+11	1092
+1	1093
+11	1093
+1	1094
+11	1094
+1	1095
+11	1095
+1	1096
+11	1096
+1	1097
+11	1097
+1	1098
+11	1098
+1	1099
+11	1099
+1	1100
+11	1100
+1	1101
+11	1101
+1	1102
+11	1102
+1	1103
+11	1103
+1	1104
+12	1104
+104	1104
+1	1105
+12	1105
+104	1105
+1	1106
+12	1106
+104	1106
+1	1107
+12	1107
+104	1107
+1	1108
+12	1108
+104	1108
+1	1109
+12	1109
+105	1109
+1	1110
+12	1110
+105	1110
+1	1111
+12	1111
+105	1111
+1	1112
+12	1112
+105	1112
+1	1113
+12	1113
+105	1113
+1	1114
+12	1114
+105	1114
+1	1115
+12	1115
+105	1115
+1	1116
+12	1116
+105	1116
+1	1117
+12	1117
+105	1117
+1	1118
+12	1118
+105	1118
+1	1119
+12	1119
+105	1119
+1	1120
+12	1120
+105	1120
+1	1121
+12	1121
+105	1121
+1	1122
+12	1122
+105	1122
+1	1123
+12	1123
+105	1123
+1	1124
+12	1124
+105	1124
+1	1125
+12	1125
+106	1125
+1	1126
+12	1126
+106	1126
+1	1127
+12	1127
+106	1127
+1	1128
+12	1128
+106	1128
+1	1129
+12	1129
+106	1129
+1	1130
+12	1130
+106	1130
+1	1131
+12	1131
+106	1131
+1	1132
+12	1132
+106	1132
+1	1133
+12	1133
+107	1133
+1	1134
+12	1134
+107	1134
+1	1135
+12	1135
+107	1135
+1	1136
+12	1136
+107	1136
+1	1137
+12	1137
+107	1137
+1	1138
+12	1138
+107	1138
+1	1139
+12	1139
+107	1139
+1	1140
+12	1140
+107	1140
+1	1141
+12	1141
+107	1141
+1	1142
+12	1142
+107	1142
+1	1143
+12	1143
+107	1143
+12	1144
+107	1144
+1	1145
+12	1145
+108	1145
+1	1146
+12	1146
+108	1146
+1	1147
+12	1147
+108	1147
+1	1148
+12	1148
+108	1148
+1	1149
+12	1149
+108	1149
+1	1150
+12	1150
+108	1150
+1	1151
+12	1151
+108	1151
+1	1152
+12	1152
+108	1152
+1	1153
+12	1153
+108	1153
+1	1154
+12	1154
+108	1154
+1	1155
+12	1155
+108	1155
+1	1156
+12	1156
+108	1156
+1	1157
+12	1157
+108	1157
+1	1158
+12	1158
+108	1158
+12	1159
+108	1159
+1	1160
+13	1160
+1	1161
+13	1161
+1	1162
+13	1162
+1	1163
+13	1163
+1	1164
+13	1164
+1	1165
+13	1165
+1	1166
+13	1166
+1	1167
+13	1167
+1	1168
+13	1168
+1	1169
+13	1169
+1	1170
+13	1170
+1	1171
+13	1171
+1	1172
+13	1172
+1	1173
+13	1173
+1	1174
+13	1174
+1	1175
+13	1175
+1	1176
+13	1176
+1	1177
+13	1177
+1	1178
+13	1178
+1	1179
+13	1179
+1	1180
+13	1180
+1	1181
+13	1181
+1	1182
+13	1182
+1	1183
+13	1183
+1	1184
+13	1184
+1	1185
+13	1185
+1	1186
+13	1186
+1	1187
+13	1187
+1	1188
+13	1188
+1	1189
+13	1189
+1	1190
+13	1190
+1	1191
+13	1191
+1	1192
+13	1192
+1	1193
+13	1193
+1	1194
+13	1194
+1	1195
+13	1195
+1	1196
+13	1196
+1	1197
+13	1197
+1	1198
+13	1198
+1	1199
+13	1199
+1	1200
+13	1200
+1	1201
+13	1201
+1	1202
+13	1202
+1	1203
+13	1203
+1	1204
+13	1204
+1	1205
+13	1205
+13	1206
+1	1207
+14	1207
+1	1208
+14	1208
+1	1209
+14	1209
+1	1210
+14	1210
+1	1211
+14	1211
+1	1212
+14	1212
+1	1213
+14	1213
+1	1214
+14	1214
+1	1215
+14	1215
+1	1216
+14	1216
+1	1217
+14	1217
+14	1218
+14	1219
+14	1220
+14	1221
+14	1222
+1	11
+1	12
+1	13
+1	14
+1	15
+1	16
+1071	10001
+1071	10002
+1071	10003
+1071	10004
+1071	10005
+1071	10006
+1071	10007
+1071	10008
+1071	10009
+1071	10010
+1071	10011
+1071	10012
+1071	10013
+1071	10014
+1071	10015
+1071	10016
+1071	10017
+1071	10018
+1071	10019
+1071	10020
+1071	21161
+1071	21169
+1071	21171
+\.
+
+
+--
+-- Data for Name: mtt_match_type; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY mtt_match_type (mtt_id, mtt_label) FROM stdin;
+1	Simple match
+2	Championship match
+3	Single Cup match
+4	Cup match - First leg
+5	Cup match - Second leg
+\.
+
+
+--
+-- Data for Name: tea_team; Type: TABLE DATA; Schema: public; Owner: manafoot
+--
+
+COPY tea_team (tea_id, tea_name, tea_ass_id, tea_gender) FROM stdin;
+1	Équipe d'Espagne de football	1001	M
+2	Équipe des Pays-Bas de football	1002	M
+3	Équipe du Mexique de football	1003	M
+4	Équipe des États-Unis de soccer	1004	M
+5	Équipe du Canada de soccer	1005	M
+6	Équipe du Belize de football	1006	M
+7	Équipe du Costa Rica de football	1007	M
+8	Équipe du Guatemala de football	1008	M
+9	Équipe du Honduras de football	1009	M
+10	Équipe du Nicaragua de football	1010	M
+11	Équipe du Salvador de football	1011	M
+12	Équipe du Panama de football	1012	M
+13	Équipe d'Anguilla de football	1013	M
+14	Équipe d'Antigua-et-Barbuda de football	1014	M
+15	Équipe d'Aruba de football	1015	M
+16	Équipe des Bahamas de football	1016	M
+17	Équipe de la Barbade de football	1017	M
+18	Équipe des Bermudes de football	1018	M
+19	Équipe de Curaçao de football	1019	M
+20	Équipe de Cuba de football	1020	M
+21	Équipe de Dominique de football	1021	M
+22	Équipe de Grenade de football	1022	M
+23	Équipe de Guadeloupe de football	1023	M
+24	Équipe du Guyana de football	1024	M
+25	Équipe de Guyane de football	1025	M
+26	Équipe d'Haïti de football	1026	M
+27	Équipe des Ïles Caïmans de football	1027	M
+28	Équipe des Ïles Vierges des États-Unis de football	1028	M
+29	Équipe des Ïles Vierges britanniques de football	1029	M
+30	Équipe de Jamaïque de football	1030	M
+31	Équipe de la Martinique de football	1031	M
+32	Équipe de Montserrat de football	1032	M
+33	Équipe de Porto Rico de football	1033	M
+34	Équipe de République dominicaine de football	1034	M
+35	Équipe de Saint-Christophe-et-Nièvès de football	1035	M
+36	Équipe de Saint-Martin de football	1036	M
+37	Équipe de Sainte-Lucie de football	1037	M
+38	Équipe de Saint-Vincent-et-les-Grenadines de football	1038	M
+39	Équipe de Sint Maarten de football	1039	M
+40	Équipe du Suriname de football	1040	M
+41	Équipe de Trinité-et-Tobago de football	1041	M
+42	Équipe des Ïles Turques-et-Caïques de football	1042	M
+43	Équipe d'Argentine de football	1043	M
+44	Équipe du Brésil de football	1044	M
+45	Équipe d'Uruguay de football	1045	M
+46	Équipe du Chili de football	1046	M
+47	Équipe du Paraguay de football	1047	M
+48	Équipe d'Équateur de football	1048	M
+49	Équipe de Colombie de football	1049	M
+50	Équipe du Pérou de football	1050	M
+51	Équipe du Venezuela de football	1051	M
+52	Équipe de Bolivie de football	1052	M
+53	Équipe d'Albanie de football	1053	M
+54	Équipe d'Allemagne de football	1054	M
+55	Équipe d'Andorre de football	1055	M
+56	Équipe d'Angleterre de football	1056	M
+57	Équipe d'Arménie de football	1057	M
+59	Équipe d'Azerbaïdjan de football	1059	M
+60	Équipe de Belgique de football	1060	M
+61	Équipe de Biélorussie de football	1061	M
+62	Équipe de Bosnie-Herzégovine de football	1062	M
+63	Équipe de Bulgarie de football	1063	M
+64	Équipe de Chypre de football	1064	M
+65	Équipe de Croatie de football	1065	M
+66	Équipe du Danemark de football	1066	M
+67	Équipe d'Écosse de football	1067	M
+68	Équipe d'Estonie de football	1068	M
+69	Équipe des Ïles Féroé de football	1069	M
+70	Équipe de Finlande de football	1070	M
+71	Équipe de France de football	1071	M
+72	Équipe de Géorgie de football	1072	M
+73	Équipe de Grèce de football	1073	M
+74	Équipe de Hongrie de football	1074	M
+75	Équipe de République d'Irlande de football	1075	M
+76	Équipe d'Irlande du Nord de football	1076	M
+77	Équipe d'Islande de football	1077	M
+78	Équipe d'Israël de football	1078	M
+79	Équipe d'Italie de football	1079	M
+80	Équipe du Kazakhstan de football	1080	M
+81	Équipe de Lettonie de football	1081	M
+82	Équipe de Liechtenstein de football	1082	M
+83	Équipe de Lituanie de football	1083	M
+84	Équipe du Luxembourg de football	1084	M
+85	Équipe de Macédoine de football	1085	M
+86	Équipe de Malte de football	1086	M
+87	Équipe de Moldavie de football	1087	M
+88	Équipe du Monténégro de football	1088	M
+89	Équipe du pays de Galles de football	1089	M
+90	Équipe de Pologne de football	1090	M
+91	Équipe du Portugal de football	1091	M
+92	Équipe de République tchèque de football	1092	M
+93	Équipe de Roumanie de football	1093	M
+94	Équipe de Russie de football	1094	M
+95	Équipe de Saint-Marin de football	1095	M
+96	Équipe de Serbie de football	1096	M
+97	Équipe de Slovaquie de football	1097	M
+98	Équipe de Slovénie de football	1098	M
+99	Équipe de Suède de football	1099	M
+100	Équipe de Suisse de football	1100	M
+101	Équipe de Turquie de football	1101	M
+102	Équipe d'Ukraine de football	1102	M
+103	Équipe de Norvège de football	1103	M
+104	Équipe d'Algérie de football	1104	M
+105	Équipe d'Égypte de football	1105	M
+106	Équipe de Libye de football	1106	M
+107	Équipe du Maroc de football	1107	M
+108	Équipe de Tunisie de football	1108	M
+109	Équipe du Cap-Vert de football	1109	M
+110	Équipe de Gambie de football	1110	M
+111	Équipe de Guinée de football	1111	M
+112	Équipe de Guinée-Bissau de football	1112	M
+113	Équipe du Liberia de football	1113	M
+114	Équipe de Mauritanie de football	1114	M
+115	Équipe du Sénégal de football	1115	M
+116	Équipe de Sierra Leone de football	1116	M
+117	Équipe du Bénin de football	1117	M
+118	Équipe du Burkina Faso de football	1118	M
+119	Équipe de Côte d'Ivoire de football	1119	M
+120	Équipe du Ghana de football	1120	M
+121	Équipe du Mali de football	1121	M
+122	Équipe du Niger de football	1122	M
+123	Équipe du Nigeria de football	1123	M
+124	Équipe du Togo de football	1124	M
+125	Équipe du Cameroun de football	1125	M
+126	Équipe de République centrafricaine de football	1126	M
+127	Équipe du Congo de football	1127	M
+128	Équipe de République démocratique du Congo de football	1128	M
+129	Équipe du Gabon de football	1129	M
+130	Équipe de Guinée Équatoriale de football	1130	M
+131	Équipe de Sao Tomé-et-Principe de football	1131	M
+132	Équipe du Tchad de football	1132	M
+133	Équipe du Burundi de football	1133	M
+134	Équipe de Djibouti de football	1134	M
+135	Équipe d'Érythrée de football	1135	M
+136	Équipe d'Éthiopie de football	1136	M
+137	Équipe du Kenya de football	1137	M
+138	Équipe d'Ouganda de football	1138	M
+139	Équipe du Rwanda de football	1139	M
+140	Équipe de Somalie de football	1140	M
+141	Équipe du Soudan de football	1141	M
+142	Équipe du Soudan du Sud de football	1142	M
+143	Équipe de Tanzanie de football	1143	M
+144	Équipe de Zanzibar de football	1144	M
+145	Équipe d'Afrique du Sud de football	1145	M
+146	Équipe d'Angola de football	1146	M
+147	Équipe du Botswana de football	1147	M
+148	Équipe des Comores de football	1148	M
+149	Équipe du Lesotho de football	1149	M
+150	Équipe de Madagascar de football	1150	M
+151	Équipe du Malawi de football	1151	M
+152	Équipe de Maurice de football	1152	M
+153	Équipe du Mozambique de football	1153	M
+154	Équipe de Namibie de football	1154	M
+155	Équipe des Seychelles de football	1155	M
+156	Équipe du Swaziland de football	1156	M
+157	Équipe de Zambie de football	1157	M
+158	Équipe du Zimbabwe de football	1158	M
+159	Équipe de La Réunion de football	1159	M
+160	Équipe d'Afghanistan de football	1160	M
+161	Équipe d'Arabie saoudite de football	1161	M
+162	Équipe d'Australie de football	1162	M
+163	Équipe de Bahreïn de football	1163	M
+164	Équipe du Bangladesh de football	1164	M
+165	Équipe du Bhoutan de football	1165	M
+166	Équipe de Birmanie de football	1166	M
+167	Équipe de Brunei de football	1167	M
+168	Équipe du Cambodge de football	1168	M
+169	Équipe de Chine de football	1169	M
+170	Équipe de Corée du Nord de football	1170	M
+171	Équipe de Corée du Sud de football	1171	M
+172	Équipe des Émirats arabes unis de football	1172	M
+173	Équipe de Guam de football	1173	M
+174	Équipe de Hong Kong de football	1174	M
+175	Équipe d'Inde de football	1175	M
+176	Équipe d'Indonésie de football	1176	M
+177	Équipe d'Irak de football	1177	M
+178	Équipe du Japon de football	1178	M
+179	Équipe d'Iran de football	1179	M
+180	Équipe de Jordanie de football	1180	M
+181	Équipe du Kirghizistan de football	1181	M
+182	Équipe du Koweït de football	1182	M
+183	Équipe du Laos de football	1183	M
+184	Équipe du Liban de football	1184	M
+185	Équipe de Macao de football	1185	M
+186	Équipe de Malaisie de football	1186	M
+187	Équipe des Maldives de football	1187	M
+188	Équipe de Mongolie de football	1188	M
+189	Équipe du Népal de football	1189	M
+190	Équipe d'Oman de football	1190	M
+191	Équipe d'Ouzbékistan de football	1191	M
+192	Équipe du Pakistan de football	1192	M
+193	Équipe de Palestine de football	1193	M
+194	Équipe des Philippines de football	1194	M
+195	Équipe du Qatar de football	1195	M
+196	Équipe de Singapour de football	1196	M
+197	Équipe du Sri Lanka de football	1197	M
+198	Équipe de Syrie de football	1198	M
+199	Équipe de Taïwan de football	1199	M
+200	Équipe du Tadjikistan de football	1200	M
+201	Équipe de Thaïlande de football	1201	M
+202	Équipe du Timor oriental de football	1202	M
+203	Équipe du Turkménistan de football	1203	M
+204	Équipe du Viêt Nam de football	1204	M
+205	Équipe du Yémen de football	1205	M
+206	Équipe des Ïles Mariannes du Nord de football	1206	M
+207	Équipe de Fidji de football	1207	M
+208	Équipe des Ïles Cook de football	1208	M
+209	Équipe des Ïles Salomon de football	1209	M
+210	Équipe de Nouvelle-Calédonie de football	1210	M
+211	Équipe de Nouvelle-Zélande de football	1211	M
+212	Équipe de Papouasie-Nouvelle-Guinée de football	1212	M
+213	Équipe des Samoa de football	1213	M
+214	Équipe des Samoa américaines de football	1214	M
+215	Équipe de Tahiti de football	1215	M
+216	Équipe des Tonga de football	1216	M
+217	Équipe du Vanuatu de football	1217	M
+218	Équipe des Kiribati de football	1218	M
+219	Équipe de Micronésie de football	1219	M
+220	Équipe de Niue de football	1220	M
+221	Équipe des Palaos de football	1221	M
+222	Équipe des Tuvalu de football	1222	M
+58	Équipe d'Autriche de football	1058	M
+223	Paris SG	10001	M
+224	Nancy	10002	M
+225	Lens	10003	M
+226	Valenciennes	10004	M
+227	Rennes	10005	M
+228	Monaco	10006	M
+229	Lorient	10007	M
+230	Bordeaux	10008	M
+231	Montpellier	10009	M
+232	Lille	10010	M
+233	Auxerre	10011	M
+234	Lyon	10012	M
+235	Marseille	10013	M
+236	Arles-Avignon	10014	M
+237	Brest	10015	M
+238	Caen	10016	M
+239	Saint-Étienne	10017	M
+240	Toulouse	10018	M
+241	Nice	10019	M
+242	Sochaux	10020	M
+21168	Le Mans	21161	M
+21170	US Boulogne	21169	M
+21172	Grenoble Foot 38	21171	M
+\.
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

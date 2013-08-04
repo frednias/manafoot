@@ -34,7 +34,12 @@ $app->post('/championship/create/{id}', function($id) use ($app,$db) {
 $app->post('/team/create/{ass_id}', function($ass_id) use ($app,$db) {
     $name = pg_escape_literal($_POST['tea_name']);
     $gender = $_POST['tea_gender'];
-    $sql = "insert into tea_team (tea_name,tea_ass_id,tea_gender) values ($name, $ass_id, '$gender')";
+    $sql = "insert into tea_team (tea_name,tea_ass_id,tea_gender) values ($name, $ass_id, '$gender')  returning currval('global_seq')";
+    $ress = $db->query($sql);
+    $fch = pg_fetch_row($ress);
+    $tea_id = $fch[0];
+    $elo_points = $_POST['elo_points'];
+    $sql = "insert into init.elo_elo (elo_tea_id,elo_points) values ($tea_id, $elo_points)";
     $db->query($sql);
     return $app->redirect('/association/view/'.$ass_id);
 });
@@ -60,6 +65,25 @@ $app->get('/elo', function () use ($app,$db) {
 
     return $app['twig']->render('elo.tpl', array(
         'elo' => $elo,
+    ));
+});
+
+$app->post('/elo/edit/{id}', function($id) use ($app,$db) {
+
+    $pts = $_POST['elo_points'];
+    $sql = "update init.elo_elo set elo_points=$pts where elo_tea_id=$id";
+    $db->query($sql);
+
+    return $app->redirect('/elo');
+});
+
+$app->get('/elo/edit/{id}', function($id) use ($app,$db) {
+
+    $elo = $db->select("select * from init.elo_elo inner join tea_team on tea_id=elo_tea_id where tea_id=$id");
+
+    return $app['twig']->render('eloedit.tpl', array(
+        'elo' => $elo,
+        'id' => $id,
     ));
 });
 
@@ -126,7 +150,7 @@ $app->post('/association/create/slave/{id}', function ($id) use ($app,$db) {
     $association = $db->select('select * from ass_association left join cou_country on ass_cou_id=cou_id where ass_id='.$id)[0];
     $ass_cou_id = $association->ass_cou_id;
     $ass_name = pg_escape_literal($_POST['ass_name']);
-    $sql = "insert into ass_association (ass_name,ass_cou_id) values ($ass_name, '$ass_cou_id') returning currval('ass_association_ass_id_seq')";
+    $sql = "insert into ass_association (ass_name,ass_cou_id) values ($ass_name, '$ass_cou_id') returning currval('global_seq')";
     $ress = $db->query($sql);
     $fch = pg_fetch_row($ress);
     $last_id = $fch[0];

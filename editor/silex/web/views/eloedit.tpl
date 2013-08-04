@@ -1,6 +1,7 @@
 {% extends "index.tpl" %}
 
 {% block body %}
+<form action="/elo/edit/{{id}}" method=post>
 <table class="table table-striped table-bordered table-hover table-condensed">
 <tr>
     <th>tea_name</th>
@@ -9,12 +10,12 @@
 </tr>
 {% for e in elo %}
 <tr>
-    <td><a href='/team/view/{{e.elo_tea_id}}'>{{ e.tea_name }}</a></td>
-    <td>{{ e.elo_points }}</td>
-    <td><a href="/elo/edit/{{e.elo_tea_id}}">edit</a></td>
+    <td>{{ e.tea_name }}</td>
+    <td><input type=text name="elo_points" value="{{ e.elo_points }}"></td>
+    <td><input type=submit value="submit"</td>
 </tr>
 {% endfor %}
 </table>
-
+</form>
 {% endblock %}
 

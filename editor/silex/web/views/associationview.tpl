@@ -119,7 +119,13 @@ Have teams :
   <div class="control-group">
     <label class="control-label" for="tea_gender">tea_gender</label>
     <div class="controls">
-      <input type="text" id="tea_gender" placeholder="tea_gender" name="tea_gender"i value='M'>
+      <input type="text" id="tea_gender" placeholder="tea_gender" name="tea_gender" value='M'>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="elo_points">elo_points</label>
+    <div class="controls">
+      <input type="text" id="elo_points" placeholder="elo_points" name="elo_points" value='1000'>
     </div>
   </div>
 
