@@ -40,7 +40,12 @@
 
     <p><b>Prochains événements :</b><br>
     {% for event in events %}
-    {{event.date}} : {{event.descr}}</p>
+    {{event.date}} : {{event.descr}}
+    <br>
+    {% endfor %}
+    <p><b>Prochains matchs :</b><br>
+    {% for match in matchs %}
+    {{match.mat_date}} : {{match.name1}} - {{match.name2}}
     <br>
     {% endfor %}
   </div>

@@ -225,7 +225,29 @@ class Championship {
             $schedule = array_merge([0],$cal);
 
             $res = $this->roundRobin($game->getName(), $teams, $cpi, $schedule, $prefix = '', $homeaway = true);
+
+            $rev = array_reverse($cal);
+            $lastDay = $rev[0];
+            $ld = new \DateTime($lastDay);
+            $ld->modify('+1 day');
+
         }
+
+        $nextYear = 1 + $d->format('Y');
+        $e = new Event($this->schema);
+        $e->setDate($ld->format('Y-m-d'));
+        $e->setAssociation(1);
+        $e->setFunction('Championship.CelebrateNationalChampionship');
+        $e->setVisibility('background');
+        $e->setDescr('Compute ranking and next Calendar');
+        $e->setStatus('todo');
+        $e->setParams('');
+        $e->save();
+    }
+
+    public function rollupNationalChampionship($game, $event)
+    {
+        // step 2, 3, 1
     }
 
     private function rebaseDate($cal, $refDate, $cycleDate)

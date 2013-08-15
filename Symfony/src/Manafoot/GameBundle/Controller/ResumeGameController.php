@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Manafoot\ComponentBundle\Game;
 use Manafoot\ComponentBundle\Event;
 use Manafoot\ComponentBundle\Flash;
+use Manafoot\ComponentBundle\Match;
 
 class ResumeGameController extends Controller
 {
@@ -31,10 +32,13 @@ class ResumeGameController extends Controller
 
         $flashList = Flash::getRecentFlash($g->getName(), $resumeDate, $limit=10);
 
+        $matchList = Match::getNextScheduledMatch($g->getName(), $resumeDate, $limit=15);
+
         $twigParams = array(
             'events' => $eventList,
             'date' => $resumeDate,
             'flashs' => $flashList,
+            'matchs' => $matchList,
         );
         return $this->render('ManafootGameBundle:ResumeGame:resume.html.twig', $twigParams);
     }

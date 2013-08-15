@@ -26,7 +26,7 @@ class Elo {
             from $schema.elh_elo_history 
             inner join tea_team on elh_tea_id=tea_id 
             inner join ass_association on ass_id=tea_ass_id
-            inner join lk_mbm_ass on mbr_ass_id__slave=ass_id
+            inner join lk_mbr_ass on mbr_ass_id__slave=ass_id
             inner join cou_country on cou_id=ass_cou_id 
             where mbr_ass_id__master=11
             order by elh_points desc 

@@ -172,6 +172,23 @@ class Match extends Entity {
         }
         return [$goal1,$goal2];
     }
+
+    public static function getNextScheduledMatch($schema, $resumeDate, $limit)
+    {
+        $matchList = [];
+        $db = new Database;
+        $sql = "select mat_date, t1.tea_name as name1, t2.tea_name as name2 from $schema.mat_match 
+                inner join tea_team t1 on t1.tea_id=mat_tea_id__1
+                inner join tea_team t2 on t2.tea_id=mat_tea_id__2
+                where mat_played=false 
+                order by mat_date asc 
+                limit $limit";
+        $db->query($sql);
+        while ($row = $db->fetch()) {
+            $matchList[] = $row;
+        }
+        return $matchList;
+    }
 }
 
 /*
