@@ -140,8 +140,17 @@ class Match extends Entity {
             $mat->save();
 
             list($newelo1,$newelo2) = $elo->computeNewElo($elo1,$elo2,$goal1,$goal2,$K);
+            $elodiff = $newelo1 - $elo1;
             $elo->update($schema, $match->mat_tea_id__1, $newelo1);
             $elo->update($schema, $match->mat_tea_id__2, $newelo2);
+
+            $fla = new Flash(self::$schema);
+            $fla->setSubject("{$match->e1} $goal1 - $goal2 {$match->e2}");
+            $fla->setBody("<p>Elo avant : {$match->e1} $elo1 - $elo2 {$match->e2}</p>
+                            <p>Elo apres : {$match->e1} $newelo1 - $newelo2 {$match->e2}</p>
+                            <p>Ecart Elo : $elodiff</p>
+            ");
+            $fla->save();
         }
     }
 
@@ -154,18 +163,18 @@ class Match extends Entity {
     }
 
     public function play($goal1,$goal2,$minute, $estimation) {
-        $max = 45;
+        $max = 38;
         for($i=1;$i<=$minute;$i++) {
             $t = rand(0,100);
             if ($t>$estimation) {
                 //e2
-                if (rand(0,$max)==0) {
+                if (rand(1,$max)==1) {
                     $goal2++;
                 }
             }
             else {
                 //e1
-                if (rand(0,$max)==0) {
+                if (rand(1,$max)==1) {
                     $goal1++;
                 }
             }
@@ -177,7 +186,8 @@ class Match extends Entity {
     {
         $matchList = [];
         $db = new Database;
-        $sql = "select mat_date, t1.tea_name as name1, t2.tea_name as name2 from $schema.mat_match 
+        $sql = "select mat_date, t1.tea_name as name1, t2.tea_name as name2, mat_cpi_id
+                from $schema.mat_match 
                 inner join tea_team t1 on t1.tea_id=mat_tea_id__1
                 inner join tea_team t2 on t2.tea_id=mat_tea_id__2
                 where mat_played=false 

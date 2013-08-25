@@ -22,24 +22,35 @@ class Elo {
         $db->query($sql);
 
         $sql = "
-            select tea_id,cou_name 
+            select tea_id,cou_name,elh_points 
             from $schema.elh_elo_history 
             inner join tea_team on elh_tea_id=tea_id 
             inner join ass_association on ass_id=tea_ass_id
             inner join lk_mbr_ass on mbr_ass_id__slave=ass_id
             inner join cou_country on cou_id=ass_cou_id 
             where mbr_ass_id__master=11
+            and elh_evt_id = {$event->getId()}
             order by elh_points desc 
             limit 5;
         ";
         $db->query($sql);
-        $first = $db->fetch();
+        $rank = [];
+        $i = 1;
+        $flashtext = '<p>';
+        while ($obj = $db->fetch()) {
+            $rank[] = $obj;
+            $flashtext .= "[$i] ({$obj->elh_points}) {$obj->cou_name}<br>";
+            $i++;
+        }
+        $flashtext .= '</p>';
+        $first = $rank[0];
         $name = $first->cou_name;
 
+        
         // new Message
         $m = new Flash($schema);
         $m->setSubject($event->getDescr());
-        $m->setBody("$name est en tête du classement");
+        $m->setBody("<p>$name est en tête du classement :</p>".$flashtext);
         $m->save();
 
         // next Elo publishing

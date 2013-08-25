@@ -9,7 +9,9 @@ class Range
     public function subRange($array, $start, $end) {
         $ret = [];
         for ($i=$start; $i<=$end; $i++) {
-            $ret[] = $array[$i];
+            if (isset($array[$i])) {
+                $ret[] = $array[$i];
+            }
         }
         return $ret;
     }

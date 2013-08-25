@@ -1,0 +1,70 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Game dashboard{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+<div class="row-fluid">
+  <div class="span2">
+    <ul class="nav nav-list">
+      <li class="nav-header">Home</li>
+      <li class="active"><a href="#">Overview</a></li>
+      <li class="nav-header">Organisations</li>
+      <li><a href="/fifa">FIFA</a></li>
+      <li><a href="#">UEFA</a></li>
+      <li class="nav-header">Competitions</li>
+      <li>
+        <div class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="/championship/">Championnats <b class="caret"></b></a>
+        <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">France</a></li>
+        </ul>
+        </div>
+      </li>
+      <li><a href="/cup/">Coupes</a></li>
+    </ul>
+  </div>
+  <div class="span9">
+    <p>
+
+            <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                    <th>#</td>
+                    <th>Nom</td>
+                    <th>Pts</td>
+                    <th>J</td>
+                    <th>G</td>
+                    <th>N</td>
+                    <th>P</td>
+                    <th>Bp</td>
+                    <th>Bp</td>
+                    <th>Diff</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in rank %}
+                        <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{r.tea_name}}</td>
+                        <td>{{r.pts}}</td>
+                        <td>{{r.win+r.draw+r.lose}}</td>
+                        <td>{{r.win}}</td>
+                        <td>{{r.draw}}</td>
+                        <td>{{r.lose}}</td>
+                        <td>{{r.for}}</td>
+                        <td>{{r.against}}</td>
+                        <td>{{r.diff}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+  </div>
+</div>
+</div>
+{% endblock %}
+
+

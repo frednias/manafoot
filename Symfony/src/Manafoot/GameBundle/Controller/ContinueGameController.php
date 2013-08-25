@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 use \Manafoot\ComponentBundle\Game;
 use \Manafoot\ComponentBundle\Event;
+use \Manafoot\ComponentBundle\Match;
 
 class ContinueGameController extends Controller
 {
@@ -41,6 +42,10 @@ class ContinueGameController extends Controller
             return $this->render('ManafootGameBundle:ContinueGame:continue.html.twig', $twigParams);
         }
         else {
+            // play matchs
+            $w = new Match($game->getName());
+            $w->computeAll($game->getResumeDate());
+
             $d = new \DateTime($this->session->get('resumeDate'));
             $d->modify('+1 day');
             $game->setResumeDate($d->format('Y-m-d'));

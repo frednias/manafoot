@@ -65,3 +65,8 @@ fifa_ofc_world_cup_qualification_edition:
 fifa_concacaf:
     pattern: /fifa/concacaf
     defaults: { _controller: ManafootGameBundle:World:fifaConcacaf }
+
+championship:
+    pattern: /championship/{cpi_id}
+    defaults: { _controller: ManafootGameBundle:Championship:championship }
+

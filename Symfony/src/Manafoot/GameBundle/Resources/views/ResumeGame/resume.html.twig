@@ -13,7 +13,16 @@
       <li class="nav-header">Organisations</li>
       <li><a href="/fifa">FIFA</a></li>
       <li><a href="#">UEFA</a></li>
-      ...
+      <li class="nav-header">Competitions</li>
+      <li>
+        <div class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="/championship/">Championnats <b class="caret"></b></a>
+        <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#">France</a></li>
+        </ul>
+        </div>
+      </li>
+      <li><a href="/cup/">Coupes</a></li>
     </ul>
   </div>
   <div class="span9">
@@ -43,9 +52,10 @@
     {{event.date}} : {{event.descr}}
     <br>
     {% endfor %}
+
     <p><b>Prochains matchs :</b><br>
     {% for match in matchs %}
-    {{match.mat_date}} : {{match.name1}} - {{match.name2}}
+    <a href="/championship/{{match.mat_cpi_id}}">{{match.mat_date}} : {{match.name1}} - {{match.name2}}</a>
     <br>
     {% endfor %}
   </div>
