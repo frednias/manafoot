@@ -73,10 +73,10 @@ class Elo {
     }
 
     public function getEstimatedResult($elo1,$elo2) {
-        $dr1 = $elo1+100-$elo2;
+        $dr1 = $elo1+130-$elo2;
         $We1 = 1/(1+pow(10,(0-$dr1)/400));
-        $dr2 = $elo2-100-$elo1;
-        $We2 = 1/(1+pow(10,(0-$dr2)/400));
+        //$dr2 = $elo2-100-$elo1;
+        //$We2 = 1/(1+pow(10,(0-$dr2)/400));
         $c = 100*$We1;
         return $c;
     }

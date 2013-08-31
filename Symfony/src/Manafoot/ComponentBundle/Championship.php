@@ -6,7 +6,12 @@ namespace Manafoot\ComponentBundle;
 use \Manafoot\ComponentBundle\Entity;
 use \Manafoot\ComponentBundle\Database;
 
-class Championship {
+class Championship
+{
+    public function CelebrateNationalChampionship()
+    {
+        echo "TODO\n";
+    }
 
     public function roundRobin($schema, $items, $ci, $schedule = null, $prefix = '', $homeaway = true) {
         $n = count($items);
