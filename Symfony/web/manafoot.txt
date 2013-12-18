@@ -51,6 +51,20 @@ object chi_championship_info {
 }
 chi_championship_info --> cpt_competition
 
+object init.chins_championship_instance {
+ chins_id
+ chins_cpt_id
+ chins_edition
+ chins_nb_team
+ chins_nb_group
+ chins_nb_promote
+ chins_nb_relegate
+ chins_level
+ chins_data
+ chins_ins_date
+}
+init.chins_championship_instance ..> init.cpi_competition_instance
+
 object init.elo_elo {
  elo_tea_id
 elo_points
